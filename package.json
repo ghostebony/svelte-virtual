@@ -1,6 +1,11 @@
 {
 	"name": "svelte-virtual",
 	"version": "0.0.1",
+	"license": "MIT",
+	"author": "Pedro Américo",
+	"repository": "github:ghostebony/svelte-virtual",
+	"description": "Virtual List and Grid components for Svelte",
+	"homepage": "https://svelte-virtual.pages.dev",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -25,9 +30,16 @@
 		"svelte": "^3.44.0",
 		"svelte-check": "^2.7.1",
 		"svelte-preprocess": "^4.10.6",
+		"svelte2tsx": "^0.5.12",
 		"tslib": "^2.3.1",
 		"typescript": "^4.7.4",
 		"vite": "^3.0.0"
 	},
+	"keywords": [
+		"svelte",
+		"virtual",
+		"grid",
+		"list"
+	],
 	"type": "module"
 }
