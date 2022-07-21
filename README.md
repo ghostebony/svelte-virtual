@@ -1,38 +1,63 @@
-# create-svelte
+# svelte-virtual
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Installation
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm init svelte
-
-# create a new project in my-app
-npm init svelte my-app
+```
+npm install -D svelte-virtual
 ```
 
-## Developing
+## Usage
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Vertical List (default)
 
-```bash
-npm run dev
+```svelte
+<script lang="ts">
+	import List from "svelte-virtual";
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+	let items = [...Array(100000).keys()];
+</script>
+
+<List itemCount={items.length} itemSize={20} height={500} width={60}>
+	<div slot="item" let:index let:style {style}>
+		{items[index]}
+	</div>
+</List>
 ```
 
-## Building
+### Horizontal List
 
-To create a production version of your app:
+```svelte
+<script lang="ts">
+	import List from "svelte-virtual";
 
-```bash
-npm run build
+	let items = [...Array(100000).keys()];
+</script>
+
+<List itemCount={items.length} itemSize={60} height={40} width={500} layout="horizontal">
+	<div slot="item" let:index let:style {style}>
+		{items[index]}
+	</div>
+</List>
 ```
 
-You can preview the production build with `npm run preview`.
+### Grid
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+```svelte
+<script lang="ts">
+	import Grid from "svelte-virtual";
+
+	let items = [...Array(100000).keys()];
+</script>
+
+<Grid itemCount={items.length} itemHeight={50} itemWidth={50} height={500} width={500}>
+	<div slot="item" let:index let:style {style}>
+		{items[index]}
+	</div>
+</Grid>
+```
+
+See [documentation](https://svelte-virtual.pages.dev "Svelte Virtual documentation") for more.
+
+## License
+
+This library is licensed under the MIT license; see the LICENSE file for more.
