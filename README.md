@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-npm install -D svelte-virtual
+npm i -D svelte-virtual
 ```
 
 ## Usage
@@ -12,11 +12,7 @@ npm install -D svelte-virtual
 
 ```js
 import List from "svelte-virtual/List.svelte";
-```
 
-or
-
-```js
 import Grid from "svelte-virtual/List.svelte";
 ```
 
