@@ -56,7 +56,31 @@ npm install -D svelte-virtual
 </Grid>
 ```
 
-See [documentation](https://svelte-virtual.pages.dev "Svelte Virtual documentation") for more.
+## Props
+
+### List
+
+| Property   | Type                         | Required? |
+| :--------- | :--------------------------- | :-------: |
+| itemCount  | `number`                     |     ✓     |
+| itemSize   | `number`                     |     ✓     |
+| height     | `number`                     |     ✓     |
+| width      | `number`                     |     ✓     |
+| marginLeft | `number`                     |           |
+| marginTop  | `number`                     |           |
+| layout     | `"vertical" \| "horizontal"` |           |
+
+### Grid
+
+| Property   | Type     | Required? |
+| :--------- | :------- | :-------: |
+| itemCount  | `number` |     ✓     |
+| itemHeight | `number` |     ✓     |
+| itemWidth  | `number` |     ✓     |
+| height     | `number` |     ✓     |
+| width      | `number` |     ✓     |
+| marginLeft | `number` |           |
+| marginTop  | `number` |           |
 
 ## License
 
