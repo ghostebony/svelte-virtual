@@ -1,11 +1,10 @@
 {
 	"name": "svelte-virtual",
-	"version": "0.0.1",
+	"version": "0.0.2-alpha",
 	"license": "MIT",
 	"author": "Pedro Américo",
 	"repository": "github:ghostebony/svelte-virtual",
 	"description": "Virtual List and Grid components for Svelte",
-	"homepage": "https://svelte-virtual.pages.dev",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
