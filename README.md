@@ -23,7 +23,7 @@ import Grid from "svelte-virtual/List.svelte";
 ### Vertical List [default] ([demo](https://svelte.dev/repl/70b159e914024f869180c28b8e7eb92d?version=3.49.0))
 
 ```svelte
-<script lang="ts">
+<script>
   import { List } from "svelte-virtual";
 
   let items = [...Array(100000).keys()];
@@ -39,7 +39,7 @@ import Grid from "svelte-virtual/List.svelte";
 ### Horizontal List ([demo](https://svelte.dev/repl/160a5bf2e2a8484c8ffd03b219f5eb27?version=3.49.0))
 
 ```svelte
-<script lang="ts">
+<script>
   import { List } from "svelte-virtual";
 
   let items = [...Array(100000).keys()];
@@ -55,7 +55,7 @@ import Grid from "svelte-virtual/List.svelte";
 ### Grid ([demo](https://svelte.dev/repl/8e2b877da06c4532ae50482236abbcac?version=3.49.0))
 
 ```svelte
-<script lang="ts">
+<script>
   import { Grid } from "svelte-virtual";
 
   let items = [...Array(100000).keys()];
