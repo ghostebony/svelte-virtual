@@ -3,10 +3,11 @@
 
 	export let itemCount: number;
 	export let itemSize: number;
-	export let marginLeft: number = 0;
-	export let marginTop: number = 0;
 	export let height: number;
 	export let width: number;
+
+	export let marginLeft: number = 0;
+	export let marginTop: number = 0;
 	export let layout: "vertical" | "horizontal" = "vertical";
 
 	let isVertical = layout === "vertical";

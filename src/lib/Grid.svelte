@@ -4,10 +4,11 @@
 	export let itemCount: number;
 	export let itemHeight: number;
 	export let itemWidth: number;
-	export let marginLeft: number = 0;
-	export let marginTop: number = 0;
 	export let height: number;
 	export let width: number;
+
+	export let marginLeft: number = 0;
+	export let marginTop: number = 0;
 
 	let columnCount: number;
 	let innerHeight: number;
