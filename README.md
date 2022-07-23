@@ -6,8 +6,22 @@ Svelte components for efficiently rendering large lists. Instead of rendering al
 
 ## Installation
 
+With npm:
+
 ```
 npm i -D svelte-virtual
+```
+
+With yarn:
+
+```
+yarn add -D svelte-virtual
+```
+
+With pnpm:
+
+```
+pnpm add -D svelte-virtual
 ```
 
 ## Usage
