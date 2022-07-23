@@ -43,9 +43,9 @@
 
 {#if mounted}
 	<div
+		style="position: relative; overflow: auto; height: {height}px; width: {width}; will-change: scroll-position;"
 		on:scroll={(e) =>
 			(scroll = Math.max(0, e.currentTarget[isVertical ? "scrollTop" : "scrollLeft"]))}
-		style="position: relative; overflow: auto; height: {height}px; width: {width}; will-change: scroll-position;"
 		bind:offsetHeight
 		bind:offsetWidth
 	>

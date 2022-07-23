@@ -56,8 +56,8 @@
 
 {#if mounted}
 	<div
-		on:scroll={(e) => (scrollTop = Math.max(0, e.currentTarget.scrollTop))}
 		style="position: relative; overflow: auto; height: {height}px; width: {width}; will-change: scroll-position;"
+		on:scroll={(e) => (scrollTop = Math.max(0, e.currentTarget.scrollTop))}
 		bind:offsetWidth
 		bind:clientWidth
 	>
