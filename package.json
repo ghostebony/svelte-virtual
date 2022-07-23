@@ -6,6 +6,7 @@
 	"repository": "github:ghostebony/svelte-virtual",
 	"description": "Virtual List and Grid components for Svelte",
 	"scripts": {
+		"preinstall": "npx only-allow pnpm",
 		"dev": "vite dev",
 		"build": "vite build",
 		"package": "svelte-kit package",
