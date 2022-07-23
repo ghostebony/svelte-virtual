@@ -1,5 +1,9 @@
 # svelte-virtual
 
+## About
+
+Svelte components for efficiently rendering large lists data
+
 ## Installation
 
 ```
