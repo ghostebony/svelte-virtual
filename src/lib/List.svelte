@@ -4,7 +4,7 @@
 	export let itemCount: number;
 	export let itemSize: number;
 	export let height: number;
-	export let width: number;
+	export let width: string = "100%";
 
 	export let marginLeft: number = 0;
 	export let marginTop: number = 0;
@@ -18,11 +18,13 @@
 
 	let mounted = false;
 	let scroll = 0;
+	let offsetHeight: number = 0;
+	let offsetWidth: number = 0;
 
 	let indexes: number[];
 
 	$: if (mounted) {
-		const size = isVertical ? height : width;
+		const size = isVertical ? offsetHeight : offsetWidth;
 
 		innerSize = Math.max(itemCount * itemSize, size);
 
@@ -41,9 +43,11 @@
 
 {#if mounted}
 	<div
-		style="position: relative; overflow: auto; height: {height}px; width: {width}px; will-change: scroll-position;"
 		on:scroll={(e) =>
 			(scroll = Math.max(0, e.currentTarget[isVertical ? "scrollTop" : "scrollLeft"]))}
+		style="position: relative; overflow: auto; height: {height}px; width: {width}; will-change: scroll-position;"
+		bind:offsetHeight
+		bind:offsetWidth
 	>
 		<div
 			style="height: {isVertical ? `${innerSize}px` : '100%'}; width: {!isVertical
@@ -58,10 +62,10 @@
 				}); ${
 					isVertical
 						? `height: ${itemSize}px; width: ${
-								marginLeft ? `${width - marginLeft * 2}px` : "100%"
+								marginLeft ? `${offsetWidth - marginLeft * 2}px` : "100%"
 						  };`
 						: `height: ${
-								marginTop ? `${height - marginTop * 2}px` : "100%"
+								marginTop ? `${offsetHeight - marginTop * 2}px` : "100%"
 						  }; width: ${itemSize}px;`
 				} will-change: transform, contents;`}
 

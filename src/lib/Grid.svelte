@@ -5,7 +5,7 @@
 	export let itemHeight: number;
 	export let itemWidth: number;
 	export let height: number;
-	export let width: number;
+	export let width: string = "100%";
 
 	export let marginLeft: number = 0;
 	export let marginTop: number = 0;
@@ -25,7 +25,7 @@
 
 	$: if (mounted) {
 		columnCount = Math.max(
-			Math.floor((width - marginLeft - (offsetWidth - clientWidth)) / itemWidth),
+			Math.floor((offsetWidth - marginLeft - (offsetWidth - clientWidth)) / itemWidth),
 			1
 		);
 		innerHeight = Math.max(
@@ -56,8 +56,8 @@
 
 {#if mounted}
 	<div
-		style="position: relative; overflow: auto; height: {height}px; width: {width}px; will-change: scroll-position;"
 		on:scroll={(e) => (scrollTop = Math.max(0, e.currentTarget.scrollTop))}
+		style="position: relative; overflow: auto; height: {height}px; width: {width}; will-change: scroll-position;"
 		bind:offsetWidth
 		bind:clientWidth
 	>
