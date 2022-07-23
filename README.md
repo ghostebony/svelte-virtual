@@ -2,7 +2,7 @@
 
 ## About
 
-Svelte components for efficiently rendering large lists. Instead of rendering all your date, svelte-virtual renders only what's visible
+Svelte components for efficiently rendering large lists. Instead of rendering all your data, svelte-virtual renders only what's visible
 
 ## Installation
 
