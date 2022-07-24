@@ -10,45 +10,85 @@
 	export let marginLeft: number = 0;
 	export let marginTop: number = 0;
 
+	export let scrollToIndex: number | undefined = undefined;
+	export let scrollToBehaviour: "auto" | "smooth" = "auto";
+
 	let columnCount: number;
 	let innerHeight: number;
-	let startIndex = 0;
-	let tempStartIndex = 0;
-	let endIndex = 0;
+	let startIndex: number = 0;
+	let tempStartIndex: number = 0;
+	let endIndex: number = 0;
 
-	let mounted = false;
-	let scrollTop = 0;
+	let grid: HTMLElement;
+	let mounted: boolean = false;
+	let scrollTop: number = 0;
+	let headerHeight: number = 0;
 	let offsetWidth: number = 0;
 	let clientWidth: number = 0;
 
 	let indexes: number[];
 
-	$: if (mounted) {
+	const roundTo = (x: number, mutiple: number) => Math.ceil(x / mutiple) * mutiple;
+
+	const getIndexes = () => {
+		const idxs = [];
+
 		columnCount = Math.max(
 			Math.floor((offsetWidth - marginLeft - (offsetWidth - clientWidth)) / itemWidth),
 			1
 		);
 		innerHeight = Math.max(
-			(Math.ceil(itemCount / columnCount) * columnCount * itemHeight) / columnCount,
+			(roundTo(itemCount, columnCount) * itemHeight) / columnCount,
 			height
 		);
 
-		tempStartIndex = Math.floor(
-			Math.ceil(((scrollTop / itemHeight) * columnCount) / columnCount) * columnCount
-		);
+		tempStartIndex = Math.floor(roundTo((scrollTop / itemHeight) * columnCount, columnCount));
 
 		endIndex = Math.min(
 			itemCount,
-			Math.floor(
-				Math.ceil((((scrollTop + height) / itemHeight) * columnCount) / columnCount) *
-					columnCount
-			)
+			roundTo(((scrollTop + height) / itemHeight) * columnCount, columnCount)
 		);
 
 		startIndex = tempStartIndex > 0 ? tempStartIndex - columnCount : tempStartIndex;
 
-		indexes = [];
-		for (let i = 0; i < endIndex - startIndex; i++) indexes.push(i + startIndex);
+		for (let i = 0; i < endIndex - startIndex; i++) idxs.push(i + startIndex);
+
+		indexes = idxs;
+	};
+
+	const getStyle = (index: number) =>
+		`position: absolute; transform: translate(${
+			(index % columnCount) * itemWidth + marginLeft
+		}px, ${
+			(Math.ceil((index + 1) / columnCount) - 1) * itemHeight + marginTop
+		}px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform, contents;`;
+
+	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
+		if (!scrollToIndex) {
+			scrollTop = Math.max(0, currentTarget.scrollTop - headerHeight);
+		}
+	};
+
+	$: if (grid && typeof scrollToIndex === "number") {
+		grid.scrollTo({
+			top:
+				(Math.ceil((scrollToIndex + 1) / columnCount) - 1) * itemHeight +
+				headerHeight +
+				marginTop,
+			behavior: scrollToBehaviour,
+		});
+		scrollToIndex = undefined;
+	}
+
+	$: {
+		itemCount,
+			itemHeight,
+			itemWidth,
+			height,
+			offsetWidth,
+			clientWidth,
+			scrollTop;
+		getIndexes();
 	}
 
 	onMount(() => (mounted = true));
@@ -57,23 +97,23 @@
 {#if mounted}
 	<div
 		style="position: relative; overflow: auto; height: {height}px; width: {width}; will-change: scroll-position;"
-		on:scroll={(e) => (scrollTop = Math.max(0, e.currentTarget.scrollTop))}
+		on:scroll={onScroll}
+		bind:this={grid}
 		bind:offsetWidth
 		bind:clientWidth
 	>
+		{#if $$slots.header}
+			<div bind:offsetHeight={headerHeight}>
+				<slot name="header" />
+			</div>
+		{/if}
+
 		<div style="height: {innerHeight}px; width: 100%; will-change: contents;">
 			{#each indexes as index}
-				{@const x = (index % columnCount) * itemWidth + marginLeft}
-				{@const y = (Math.ceil((index + 1) / columnCount) - 1) * itemHeight + marginTop}
-
-				<slot
-					name="item"
-					{index}
-					style="position: absolute; transform: translate({x}px, {y}px); height: {itemHeight}px; width: {itemWidth}px; will-change: transform, contents;"
-				>
-					Missing template
-				</slot>
+				<slot name="item" {index} style={getStyle(index)}>Missing template</slot>
 			{/each}
 		</div>
+
+		<slot name="footer" />
 	</div>
 {/if}

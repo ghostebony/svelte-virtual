@@ -86,27 +86,31 @@ import Grid from "svelte-virtual/Grid.svelte";
 
 ### List
 
-| Property   | Type                         | Required? |
-| :--------- | :--------------------------- | :-------: |
-| itemCount  | `number`                     |     ✓     |
-| itemSize   | `number`                     |     ✓     |
-| height     | `number`                     |     ✓     |
-| width      | `string`                     |           |
-| marginLeft | `number`                     |           |
-| marginTop  | `number`                     |           |
-| layout     | `"vertical" \| "horizontal"` |           |
+| Property          | Type                         | Required? |
+| :---------------- | :--------------------------- | :-------: |
+| itemCount         | `number`                     |     ✓     |
+| itemSize          | `number`                     |     ✓     |
+| height            | `number`                     |     ✓     |
+| width             | `string`                     |           |
+| marginLeft        | `number`                     |           |
+| marginTop         | `number`                     |           |
+| layout            | `"vertical" \| "horizontal"` |           |
+| scrollToIndex     | `number`                     |           |
+| scrollToBehaviour | `"auto" \| "smooth"`         |           |
 
 ### Grid
 
-| Property   | Type     | Required? |
-| :--------- | :------- | :-------: |
-| itemCount  | `number` |     ✓     |
-| itemHeight | `number` |     ✓     |
-| itemWidth  | `number` |     ✓     |
-| height     | `number` |     ✓     |
-| width      | `string` |           |
-| marginLeft | `number` |           |
-| marginTop  | `number` |           |
+| Property          | Type                 | Required? |
+| :---------------- | :------------------- | :-------: |
+| itemCount         | `number`             |     ✓     |
+| itemHeight        | `number`             |     ✓     |
+| itemWidth         | `number`             |     ✓     |
+| height            | `number`             |     ✓     |
+| width             | `string`             |           |
+| marginLeft        | `number`             |           |
+| marginTop         | `number`             |           |
+| scrollToIndex     | `number`             |           |
+| scrollToBehaviour | `"auto" \| "smooth"` |           |
 
 ## License
 

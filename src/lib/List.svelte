@@ -10,20 +10,29 @@
 	export let marginTop: number = 0;
 	export let layout: "vertical" | "horizontal" = "vertical";
 
-	let isVertical = layout === "vertical";
-	let innerSize: number;
-	let startIndex = 0;
-	let tempStartIndex = 0;
-	let endIndex = 0;
+	export let scrollToIndex: number | undefined = undefined;
+	export let scrollToBehaviour: "auto" | "smooth" = "auto";
 
-	let mounted = false;
-	let scroll = 0;
+	let isVertical: boolean = layout === "vertical";
+	let innerSize: number;
+	let startIndex: number = 0;
+	let tempStartIndex: number = 0;
+	let endIndex: number = 0;
+	let itemSizeInternal: string;
+
+	let list: HTMLElement;
+	let mounted: boolean = false;
+	let scroll: number = 0;
+	let headerHeight: number = 0;
 	let offsetHeight: number = 0;
+	let clientHeight: number = 0;
 	let offsetWidth: number = 0;
+	let clientWidth: number = 0;
 
 	let indexes: number[];
 
-	$: if (mounted) {
+	const getIndexes = () => {
+		const idxs = [];
 		const size = isVertical ? offsetHeight : offsetWidth;
 
 		innerSize = Math.max(itemCount * itemSize, size);
@@ -32,10 +41,54 @@
 
 		startIndex = tempStartIndex > 0 ? tempStartIndex - 1 : tempStartIndex;
 
-		endIndex = Math.min(itemCount - 1, Math.floor((scroll + size) / itemSize));
+		endIndex = Math.min(itemCount, Math.floor((scroll + size) / itemSize));
 
-		indexes = [];
-		for (let i = 0; i < endIndex - (startIndex - 1); i++) indexes.push(i + startIndex);
+		for (let i = 0; i < endIndex - startIndex; i++) idxs.push(i + startIndex);
+
+		indexes = idxs;
+	};
+
+	const getStyle = (index: number) =>
+		`position: absolute; transform: translate(${
+			isVertical
+				? `${marginLeft}px, ${index * itemSize + marginTop}px`
+				: `${index * itemSize + marginLeft}px, ${marginTop}px`
+		}); ${itemSizeInternal} will-change: transform, contents;`;
+
+	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
+		if (!scrollToIndex) {
+			if (isVertical) {
+				scroll = Math.max(0, currentTarget.scrollTop - headerHeight);
+			} else {
+				scroll = currentTarget.scrollLeft;
+			}
+		}
+	};
+
+	$: if (list && typeof scrollToIndex === "number") {
+		list.scrollTo({
+			[isVertical ? "top" : "left"]:
+				scrollToIndex * itemSize + headerHeight + (isVertical ? marginTop : marginLeft),
+			behavior: scrollToBehaviour,
+		});
+		scrollToIndex = undefined;
+	}
+
+	$: itemSizeInternal = isVertical
+		? `height: ${itemSize}px; width: ${
+				marginLeft > 0 ? `${clientWidth - marginLeft}px` : "100%"
+		  };`
+		: `height: ${
+				marginTop > 0 ? `${clientHeight - marginTop}px` : "100%"
+		  }; width: ${itemSize}px;`;
+
+	$: {
+		itemCount,
+			itemSize,
+			offsetHeight,
+			offsetWidth,
+			scroll;
+		getIndexes();
 	}
 
 	onMount(() => (mounted = true));
@@ -44,33 +97,29 @@
 {#if mounted}
 	<div
 		style="position: relative; overflow: auto; height: {height}px; width: {width}; will-change: scroll-position;"
-		on:scroll={(e) =>
-			(scroll = Math.max(0, e.currentTarget[isVertical ? "scrollTop" : "scrollLeft"]))}
+		on:scroll={onScroll}
+		bind:this={list}
 		bind:offsetHeight
+		bind:clientHeight
 		bind:offsetWidth
+		bind:clientWidth
 	>
+		{#if $$slots.header}
+			<div bind:offsetHeight={headerHeight}>
+				<slot name="header" />
+			</div>
+		{/if}
+
 		<div
 			style="height: {isVertical ? `${innerSize}px` : '100%'}; width: {!isVertical
 				? `${innerSize}px`
 				: '100%'}; will-change: contents;"
 		>
 			{#each indexes as index}
-				{@const style = `position: absolute; transform: translate(${
-					isVertical
-						? `${marginLeft}px, ${index * itemSize + marginTop}px`
-						: `${index * itemSize + marginLeft}px, ${marginTop}px`
-				}); ${
-					isVertical
-						? `height: ${itemSize}px; width: ${
-								marginLeft ? `${offsetWidth - marginLeft * 2}px` : "100%"
-						  };`
-						: `height: ${
-								marginTop ? `${offsetHeight - marginTop * 2}px` : "100%"
-						  }; width: ${itemSize}px;`
-				} will-change: transform, contents;`}
-
-				<slot name="item" {index} {style}>Missing template</slot>
+				<slot name="item" {index} style={getStyle(index)}>Missing template</slot>
 			{/each}
 		</div>
+
+		<slot name="footer" />
 	</div>
 {/if}
