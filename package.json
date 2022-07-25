@@ -39,7 +39,8 @@
 		"svelte",
 		"virtual",
 		"grid",
-		"list"
+		"list",
+		"scroll"
 	],
 	"type": "module"
 }
