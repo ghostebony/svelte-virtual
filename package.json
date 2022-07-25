@@ -1,6 +1,6 @@
 {
 	"name": "svelte-virtual",
-	"version": "0.4.1-alpha",
+	"version": "0.4.2-alpha",
 	"license": "MIT",
 	"author": "Pedro Américo",
 	"repository": "github:ghostebony/svelte-virtual",

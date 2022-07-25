@@ -18,10 +18,6 @@
 
 	let columnCount: number;
 	let innerHeight: number;
-	let startIndex: number = 0;
-	let tempStartIndex: number = 0;
-	let endIndex: number = 0;
-	let tempEndIndex: number = 0;
 
 	let grid: HTMLElement;
 	let mounted: boolean = false;
@@ -46,16 +42,17 @@
 			height
 		);
 
-		tempStartIndex = Math.floor(
+		const tempStartIndex = Math.floor(
 			roundTo((scrollPosition / itemHeight) * columnCount, columnCount)
 		);
-		startIndex = tempStartIndex > 0 ? tempStartIndex - columnCount * overscan : tempStartIndex;
+		const startIndex =
+			tempStartIndex > 0 ? tempStartIndex - columnCount * overscan : tempStartIndex;
 
-		tempEndIndex = Math.min(
+		const tempEndIndex = Math.min(
 			itemCount,
 			roundTo(((scrollPosition + height) / itemHeight) * columnCount, columnCount)
 		);
-		endIndex =
+		const endIndex =
 			tempEndIndex > 0 && tempEndIndex < itemCount
 				? tempEndIndex + columnCount * overscan
 				: tempEndIndex;
