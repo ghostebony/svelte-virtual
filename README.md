@@ -86,33 +86,35 @@ import Grid from "svelte-virtual/Grid.svelte";
 
 ### List
 
-| Property          | Type                         | Required? |
-| :---------------- | :--------------------------- | :-------: |
-| itemCount         | `number`                     |     ✓     |
-| itemSize          | `number`                     |     ✓     |
-| height            | `number`                     |     ✓     |
-| width             | `string`                     |           |
-| marginLeft        | `number`                     |           |
-| marginTop         | `number`                     |           |
-| layout            | `"vertical" \| "horizontal"` |           |
-| scrollToIndex     | `number`                     |           |
-| scrollToPosition  | `number`                     |           |
-| scrollToBehaviour | `"auto" \| "smooth"`         |           |
+| Property          | Type                         |   Default?   | Required? |
+| :---------------- | :--------------------------- | :----------: | :-------: |
+| itemCount         | `number`                     |              |     ✓     |
+| itemSize          | `number`                     |              |     ✓     |
+| height            | `number`                     |              |     ✓     |
+| width             | `string`                     |   `"100%"`   |           |
+| overscan          | `number`                     |     `1`      |           |
+| marginLeft        | `number`                     |     `0`      |           |
+| marginTop         | `number`                     |     `0`      |           |
+| layout            | `"vertical" \| "horizontal"` | `"vertical"` |           |
+| scrollToIndex     | `number \| undefined`        | `undefined`  |           |
+| scrollToPosition  | `number \| undefined`        | `undefined`  |           |
+| scrollToBehaviour | `"auto" \| "smooth"`         |   `"auto"`   |           |
 
 ### Grid
 
-| Property          | Type                 | Required? |
-| :---------------- | :------------------- | :-------: |
-| itemCount         | `number`             |     ✓     |
-| itemHeight        | `number`             |     ✓     |
-| itemWidth         | `number`             |     ✓     |
-| height            | `number`             |     ✓     |
-| width             | `string`             |           |
-| marginLeft        | `number`             |           |
-| marginTop         | `number`             |           |
-| scrollToIndex     | `number`             |           |
-| scrollToPosition  | `number`             |           |
-| scrollToBehaviour | `"auto" \| "smooth"` |           |
+| Property          | Type                  |  Default?   | Required? |
+| :---------------- | :-------------------- | :---------: | :-------: |
+| itemCount         | `number`              |             |     ✓     |
+| itemHeight        | `number`              |             |     ✓     |
+| itemWidth         | `number`              |             |     ✓     |
+| height            | `number`              |             |     ✓     |
+| width             | `string`              |  `"100%"`   |           |
+| overscan          | `number`              |     `1`     |           |
+| marginLeft        | `number`              |     `0`     |           |
+| marginTop         | `number`              |     `0`     |           |
+| scrollToIndex     | `number \| undefined` | `undefined` |           |
+| scrollToPosition  | `number \| undefined` | `undefined` |           |
+| scrollToBehaviour | `"auto" \| "smooth"`  |  `"auto"`   |           |
 
 ## Slots
 

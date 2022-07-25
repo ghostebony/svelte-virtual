@@ -7,6 +7,8 @@
 	export let height: number;
 	export let width: string = "100%";
 
+	export let overscan: number = 1;
+
 	export let marginLeft: number = 0;
 	export let marginTop: number = 0;
 
@@ -19,6 +21,7 @@
 	let startIndex: number = 0;
 	let tempStartIndex: number = 0;
 	let endIndex: number = 0;
+	let tempEndIndex: number = 0;
 
 	let grid: HTMLElement;
 	let mounted: boolean = false;
@@ -46,13 +49,16 @@
 		tempStartIndex = Math.floor(
 			roundTo((scrollPosition / itemHeight) * columnCount, columnCount)
 		);
+		startIndex = tempStartIndex > 0 ? tempStartIndex - columnCount * overscan : tempStartIndex;
 
-		endIndex = Math.min(
+		tempEndIndex = Math.min(
 			itemCount,
 			roundTo(((scrollPosition + height) / itemHeight) * columnCount, columnCount)
 		);
-
-		startIndex = tempStartIndex > 0 ? tempStartIndex - columnCount : tempStartIndex;
+		endIndex =
+			tempEndIndex > 0 && tempEndIndex < itemCount
+				? tempEndIndex + columnCount * overscan
+				: tempEndIndex;
 
 		for (let i = 0; i < endIndex - startIndex; i++) idxs.push(i + startIndex);
 
