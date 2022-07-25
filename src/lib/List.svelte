@@ -10,6 +10,7 @@
 	export let marginTop: number = 0;
 	export let layout: "vertical" | "horizontal" = "vertical";
 
+	export let scrollToPosition: number | undefined = undefined;
 	export let scrollToIndex: number | undefined = undefined;
 	export let scrollToBehaviour: "auto" | "smooth" = "auto";
 
@@ -22,7 +23,7 @@
 
 	let list: HTMLElement;
 	let mounted: boolean = false;
-	let scroll: number = 0;
+	let scrollPosition: number = 0;
 	let headerHeight: number = 0;
 	let offsetHeight: number = 0;
 	let clientHeight: number = 0;
@@ -37,18 +38,18 @@
 
 		innerSize = Math.max(itemCount * itemSize, size);
 
-		tempStartIndex = Math.floor(scroll / itemSize);
+		tempStartIndex = Math.floor(scrollPosition / itemSize);
 
 		startIndex = tempStartIndex > 0 ? tempStartIndex - 1 : tempStartIndex;
 
-		endIndex = Math.min(itemCount, Math.floor((scroll + size) / itemSize));
+		endIndex = Math.min(itemCount, Math.floor((scrollPosition + size) / itemSize));
 
 		for (let i = 0; i < endIndex - startIndex; i++) idxs.push(i + startIndex);
 
 		indexes = idxs;
 	};
 
-	const getStyle = (index: number) =>
+	const getItemStyle = (index: number) =>
 		`position: absolute; transform: translate(${
 			isVertical
 				? `${marginLeft}px, ${index * itemSize + marginTop}px`
@@ -56,22 +57,30 @@
 		}); ${itemSizeInternal} will-change: transform, contents;`;
 
 	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
-		if (!scrollToIndex) {
+		if (scrollToIndex === undefined && scrollToPosition === undefined) {
 			if (isVertical) {
-				scroll = Math.max(0, currentTarget.scrollTop - headerHeight);
+				scrollPosition = Math.max(0, currentTarget.scrollTop - headerHeight);
 			} else {
-				scroll = currentTarget.scrollLeft;
+				scrollPosition = currentTarget.scrollLeft;
 			}
 		}
 	};
 
-	$: if (list && typeof scrollToIndex === "number") {
+	$: if (list && scrollToIndex !== undefined) {
 		list.scrollTo({
 			[isVertical ? "top" : "left"]:
 				scrollToIndex * itemSize + headerHeight + (isVertical ? marginTop : marginLeft),
 			behavior: scrollToBehaviour,
 		});
 		scrollToIndex = undefined;
+	}
+
+	$: if (list && scrollToPosition !== undefined) {
+		list.scrollTo({
+			[isVertical ? "top" : "left"]: scrollToPosition + headerHeight,
+			behavior: scrollToBehaviour,
+		});
+		scrollToPosition = undefined;
 	}
 
 	$: itemSizeInternal = isVertical
@@ -87,7 +96,7 @@
 			itemSize,
 			offsetHeight,
 			offsetWidth,
-			scroll;
+			scrollPosition;
 		getIndexes();
 	}
 
@@ -116,7 +125,9 @@
 				: '100%'}; will-change: contents;"
 		>
 			{#each indexes as index}
-				<slot name="item" {index} style={getStyle(index)}>Missing template</slot>
+				<slot name="item" {index} {scrollPosition} style={getItemStyle(index)}>
+					Missing template
+				</slot>
 			{/each}
 		</div>
 

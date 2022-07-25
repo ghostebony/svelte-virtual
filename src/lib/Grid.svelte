@@ -10,6 +10,7 @@
 	export let marginLeft: number = 0;
 	export let marginTop: number = 0;
 
+	export let scrollToPosition: number | undefined = undefined;
 	export let scrollToIndex: number | undefined = undefined;
 	export let scrollToBehaviour: "auto" | "smooth" = "auto";
 
@@ -21,7 +22,7 @@
 
 	let grid: HTMLElement;
 	let mounted: boolean = false;
-	let scrollTop: number = 0;
+	let scrollPosition: number = 0;
 	let headerHeight: number = 0;
 	let offsetWidth: number = 0;
 	let clientWidth: number = 0;
@@ -42,11 +43,13 @@
 			height
 		);
 
-		tempStartIndex = Math.floor(roundTo((scrollTop / itemHeight) * columnCount, columnCount));
+		tempStartIndex = Math.floor(
+			roundTo((scrollPosition / itemHeight) * columnCount, columnCount)
+		);
 
 		endIndex = Math.min(
 			itemCount,
-			roundTo(((scrollTop + height) / itemHeight) * columnCount, columnCount)
+			roundTo(((scrollPosition + height) / itemHeight) * columnCount, columnCount)
 		);
 
 		startIndex = tempStartIndex > 0 ? tempStartIndex - columnCount : tempStartIndex;
@@ -56,7 +59,7 @@
 		indexes = idxs;
 	};
 
-	const getStyle = (index: number) =>
+	const getItemStyle = (index: number) =>
 		`position: absolute; transform: translate(${
 			(index % columnCount) * itemWidth + marginLeft
 		}px, ${
@@ -64,12 +67,12 @@
 		}px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform, contents;`;
 
 	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
-		if (!scrollToIndex) {
-			scrollTop = Math.max(0, currentTarget.scrollTop - headerHeight);
+		if (scrollToIndex === undefined && scrollToPosition === undefined) {
+			scrollPosition = Math.max(0, currentTarget.scrollTop - headerHeight);
 		}
 	};
 
-	$: if (grid && typeof scrollToIndex === "number") {
+	$: if (grid && scrollToIndex !== undefined) {
 		grid.scrollTo({
 			top:
 				(Math.ceil((scrollToIndex + 1) / columnCount) - 1) * itemHeight +
@@ -80,6 +83,14 @@
 		scrollToIndex = undefined;
 	}
 
+	$: if (grid && scrollToPosition !== undefined) {
+		grid.scrollTo({
+			top: scrollToPosition + headerHeight,
+			behavior: scrollToBehaviour,
+		});
+		scrollToPosition = undefined;
+	}
+
 	$: {
 		itemCount,
 			itemHeight,
@@ -87,7 +98,7 @@
 			height,
 			offsetWidth,
 			clientWidth,
-			scrollTop;
+			scrollPosition;
 		getIndexes();
 	}
 
@@ -110,7 +121,9 @@
 
 		<div style="height: {innerHeight}px; width: 100%; will-change: contents;">
 			{#each indexes as index}
-				<slot name="item" {index} style={getStyle(index)}>Missing template</slot>
+				<slot name="item" {index} {scrollPosition} style={getItemStyle(index)}>
+					Missing template
+				</slot>
 			{/each}
 		</div>
 
