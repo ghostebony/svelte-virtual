@@ -33,14 +33,6 @@
 	const getIndexes = () => {
 		const idxs = [];
 
-		columnCount = Math.max(
-			Math.floor((offsetWidth - marginLeft - (offsetWidth - clientWidth)) / itemWidth),
-			1
-		);
-		innerHeight = Math.max(
-			(roundTo(itemCount, columnCount) * itemHeight) / columnCount,
-			height
-		);
 
 		const tempStartIndex = Math.floor(
 			roundTo((scrollPosition / itemHeight) * columnCount, columnCount)
@@ -94,13 +86,19 @@
 		scrollToPosition = undefined;
 	}
 
+	$: columnCount = Math.max(
+		Math.floor((offsetWidth - marginLeft - (offsetWidth - clientWidth)) / itemWidth),
+		1
+	);
+
+	$: innerHeight = Math.max((roundTo(itemCount, columnCount) * itemHeight) / columnCount, height);
+
 	$: {
 		itemCount,
 			itemHeight,
-			itemWidth,
 			height,
-			offsetWidth,
-			clientWidth,
+			columnCount,
+			overscan,
 			scrollPosition;
 		getIndexes();
 	}

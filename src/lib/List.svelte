@@ -19,6 +19,7 @@
 	let isVertical: boolean = layout === "vertical";
 	let innerSize: number;
 	let itemSizeInternal: string;
+	let size: number = 0;
 
 	let list: HTMLElement;
 	let mounted: boolean = false;
@@ -33,9 +34,7 @@
 
 	const getIndexes = () => {
 		const idxs = [];
-		const size = isVertical ? offsetHeight : offsetWidth;
 
-		innerSize = Math.max(itemCount * itemSize, size);
 
 		const tempStartIndex = Math.floor(scrollPosition / itemSize);
 		const startIndex = tempStartIndex > 0 ? tempStartIndex - overscan : tempStartIndex;
@@ -83,6 +82,10 @@
 		scrollToPosition = undefined;
 	}
 
+	$: size = isVertical ? offsetHeight : offsetWidth;
+
+	$: innerSize = Math.max(itemCount * itemSize, size);
+
 	$: itemSizeInternal = isVertical
 		? `height: ${itemSize}px; width: ${
 				marginLeft > 0 ? `${clientWidth - marginLeft}px` : "100%"
@@ -94,8 +97,8 @@
 	$: {
 		itemCount,
 			itemSize,
-			offsetHeight,
-			offsetWidth,
+			size,
+			overscan,
 			scrollPosition;
 		getIndexes();
 	}
