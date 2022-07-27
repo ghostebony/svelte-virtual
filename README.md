@@ -26,14 +26,6 @@ pnpm add -D svelte-virtual
 
 ## Usage
 
-### In SvelteKit (SSR)
-
-```js
-import List from "svelte-virtual/List.svelte";
-
-import Grid from "svelte-virtual/Grid.svelte";
-```
-
 ### Vertical List [default] ([demo](https://svelte.dev/repl/70b159e914024f869180c28b8e7eb92d?version=3.49.0))
 
 ```svelte
