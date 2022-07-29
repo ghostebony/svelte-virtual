@@ -35,13 +35,13 @@
 	const getIndexes = () => {
 		const idxs = [];
 
+		const startIndexTemp = Math.floor(scrollPosition / itemSize);
+		const startIndexOverscan = startIndexTemp > overscan ? startIndexTemp - overscan : 0;
+		const startIndex = startIndexOverscan >= 0 ? startIndexOverscan : startIndexTemp;
 
-		const tempStartIndex = Math.floor(scrollPosition / itemSize);
-		const startIndex = tempStartIndex > 0 ? tempStartIndex - overscan : tempStartIndex;
-
-		const tempEndIndex = Math.min(itemCount, Math.floor((scrollPosition + size) / itemSize));
-		const endIndex =
-			tempEndIndex > 0 && tempEndIndex < itemCount ? tempEndIndex + overscan : tempEndIndex;
+		const endIndexTemp = Math.min(itemCount, Math.floor((scrollPosition + size) / itemSize));
+		const endIndexOverscan = endIndexTemp + overscan;
+		const endIndex = endIndexOverscan < itemCount ? endIndexOverscan : itemCount;
 
 		for (let i = 0; i < endIndex - startIndex; i++) idxs.push(i + startIndex);
 
@@ -82,8 +82,6 @@
 		scrollToPosition = undefined;
 	}
 
-	$: size = isVertical ? offsetHeight : offsetWidth;
-
 	$: innerSize = Math.max(itemCount * itemSize, size);
 
 	$: itemSizeInternal = isVertical
@@ -93,6 +91,8 @@
 		: `height: ${
 				marginTop > 0 ? `${clientHeight - marginTop}px` : "100%"
 		  }; width: ${itemSize}px;`;
+
+	$: size = isVertical ? offsetHeight : offsetWidth;
 
 	$: {
 		itemCount,

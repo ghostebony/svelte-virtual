@@ -18,6 +18,7 @@
 
 	let columnCount: number;
 	let innerHeight: number;
+	let overscanColumn: number;
 
 	let grid: HTMLElement;
 	let mounted: boolean = false;
@@ -33,21 +34,20 @@
 	const getIndexes = () => {
 		const idxs = [];
 
-
-		const tempStartIndex = Math.floor(
+		const startIndexTemp = Math.floor(
 			roundTo((scrollPosition / itemHeight) * columnCount, columnCount)
 		);
+		const startIndexOverscan =
+			startIndexTemp > overscanColumn ? startIndexTemp - overscanColumn : 0;
 		const startIndex =
-			tempStartIndex > 0 ? tempStartIndex - columnCount * overscan : tempStartIndex;
+			startIndexTemp > 0 && startIndexOverscan >= 0 ? startIndexOverscan : startIndexTemp;
 
-		const tempEndIndex = Math.min(
+		const endIndexTemp = Math.min(
 			itemCount,
 			roundTo(((scrollPosition + height) / itemHeight) * columnCount, columnCount)
 		);
-		const endIndex =
-			tempEndIndex > 0 && tempEndIndex < itemCount
-				? tempEndIndex + columnCount * overscan
-				: tempEndIndex;
+		const endIndexOverscan = endIndexTemp + overscanColumn;
+		const endIndex = endIndexOverscan < itemCount ? endIndexOverscan : itemCount;
 
 		for (let i = 0; i < endIndex - startIndex; i++) idxs.push(i + startIndex);
 
@@ -92,6 +92,9 @@
 	);
 
 	$: innerHeight = Math.max((roundTo(itemCount, columnCount) * itemHeight) / columnCount, height);
+
+	$: overscanColumn = columnCount * overscan;
+	$: console.log({ overscanColumn });
 
 	$: {
 		itemCount,
