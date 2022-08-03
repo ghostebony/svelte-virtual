@@ -94,7 +94,6 @@
 	$: innerHeight = Math.max((roundTo(itemCount, columnCount) * itemHeight) / columnCount, height);
 
 	$: overscanColumn = columnCount * overscan;
-	$: console.log({ overscanColumn });
 
 	$: {
 		itemCount,
