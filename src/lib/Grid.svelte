@@ -12,8 +12,8 @@
 	export let marginLeft: number = 0;
 	export let marginTop: number = 0;
 
-	export let scrollToPosition: number | undefined = undefined;
 	export let scrollToIndex: number | undefined = undefined;
+	export let scrollToPosition: number | undefined = undefined;
 	export let scrollToBehaviour: "auto" | "smooth" = "auto";
 
 	let columnCount: number;
@@ -28,6 +28,15 @@
 	let clientWidth: number = 0;
 
 	let indexes: number[];
+
+	export const scrollTo = {
+		index: (index: number) => {
+			scrollToIndex = index;
+		},
+		position: (position: number) => {
+			scrollToPosition = position;
+		},
+	};
 
 	const roundTo = (x: number, mutiple: number, type: "ceil" | "floor" = "ceil") =>
 		Math[type](x / mutiple) * mutiple;

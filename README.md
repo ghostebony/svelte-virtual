@@ -91,22 +91,26 @@ pnpm add -D svelte-virtual
 | scrollToIndex     | `number \| undefined`        | `undefined`  |           |
 | scrollToPosition  | `number \| undefined`        | `undefined`  |           |
 | scrollToBehaviour | `"auto" \| "smooth"`         | `"auto"`     |           |
+| scrollTo.index    | `(index: number) => void`    |              |           |
+| scrollTo.position | `(position: number) => void` |              |           |
 
 ### Grid
 
-| Property          | Type                  | Default     | Required? |
-| :---------------- | :-------------------- | :---------- | :-------: |
-| itemCount         | `number`              |             |     ✓     |
-| itemHeight        | `number`              |             |     ✓     |
-| itemWidth         | `number`              |             |     ✓     |
-| height            | `number`              |             |     ✓     |
-| width             | `string`              | `"100%"`    |           |
-| overscan          | `number`              | `1`         |           |
-| marginLeft        | `number`              | `0`         |           |
-| marginTop         | `number`              | `0`         |           |
-| scrollToIndex     | `number \| undefined` | `undefined` |           |
-| scrollToPosition  | `number \| undefined` | `undefined` |           |
-| scrollToBehaviour | `"auto" \| "smooth"`  | `"auto"`    |           |
+| Property          | Type                         | Default     | Required? |
+| :---------------- | :--------------------------- | :---------- | :-------: |
+| itemCount         | `number`                     |             |     ✓     |
+| itemHeight        | `number`                     |             |     ✓     |
+| itemWidth         | `number`                     |             |     ✓     |
+| height            | `number`                     |             |     ✓     |
+| width             | `string`                     | `"100%"`    |           |
+| overscan          | `number`                     | `1`         |           |
+| marginLeft        | `number`                     | `0`         |           |
+| marginTop         | `number`                     | `0`         |           |
+| scrollToIndex     | `number \| undefined`        | `undefined` |           |
+| scrollToPosition  | `number \| undefined`        | `undefined` |           |
+| scrollToBehaviour | `"auto" \| "smooth"`         | `"auto"`    |           |
+| scrollTo.index    | `(index: number) => void`    |             |           |
+| scrollTo.position | `(position: number) => void` |             |           |
 
 ## Slots
 
