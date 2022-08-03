@@ -29,13 +29,16 @@
 
 	let indexes: number[];
 
-	const roundTo = (x: number, mutiple: number) => Math.ceil(x / mutiple) * mutiple;
+	const roundTo = (x: number, mutiple: number, type: "ceil" | "floor" = "ceil") =>
+		Math[type](x / mutiple) * mutiple;
 
 	const getIndexes = () => {
 		const idxs = [];
 
-		const startIndexTemp = Math.floor(
-			roundTo((scrollPosition / itemHeight) * columnCount, columnCount)
+		const startIndexTemp = roundTo(
+			(scrollPosition / itemHeight) * columnCount,
+			columnCount,
+			"floor"
 		);
 		const startIndexOverscan =
 			startIndexTemp > overscanColumn ? startIndexTemp - overscanColumn : 0;
