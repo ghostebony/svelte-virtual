@@ -16,8 +16,6 @@
 	export let scrollToPosition: number | undefined = undefined;
 	export let scrollToBehaviour: "auto" | "smooth" = "auto";
 
-	let isVertical: boolean = layout === "vertical";
-
 	let list: HTMLElement;
 	let mounted: boolean = false;
 	let scrollPosition: number = 0;
@@ -87,6 +85,8 @@
 		});
 		scrollToPosition = undefined;
 	}
+
+	$: isVertical = layout === "vertical";
 
 	$: innerSize = Math.max(itemCount * itemSize, size);
 
