@@ -34,8 +34,12 @@
 		},
 	};
 
-	const roundTo = (x: number, mutiple: number, type: "ceil" | "floor" = "ceil") =>
-		Math[type](x / mutiple) * mutiple;
+	const roundTo = (x: number, mutiple: number, type: "ceil" | "floor" = "ceil") => {
+		if (type === "ceil") {
+			return Math.ceil(x / mutiple) * mutiple;
+		}
+		return ~~(x / mutiple) * mutiple;
+	};
 
 	const getIndexes = () => {
 		const idxs = [];
@@ -95,7 +99,7 @@
 	}
 
 	$: columnCount = Math.max(
-		Math.floor((offsetWidth - marginLeft - (offsetWidth - clientWidth)) / itemWidth),
+		~~((offsetWidth - marginLeft - (offsetWidth - clientWidth)) / itemWidth),
 		1
 	);
 

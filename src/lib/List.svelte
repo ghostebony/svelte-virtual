@@ -39,11 +39,11 @@
 	const getIndexes = () => {
 		const idxs = [];
 
-		const startIndexTemp = Math.floor(scrollPosition / itemSize);
+		const startIndexTemp = ~~(scrollPosition / itemSize);
 		const startIndexOverscan = startIndexTemp > overscan ? startIndexTemp - overscan : 0;
 		const startIndex = startIndexOverscan >= 0 ? startIndexOverscan : startIndexTemp;
 
-		const endIndexTemp = Math.min(itemCount, Math.floor((scrollPosition + size) / itemSize));
+		const endIndexTemp = Math.min(itemCount, ~~((scrollPosition + size) / itemSize));
 		const endIndexOverscan = endIndexTemp + overscan;
 		const endIndex = endIndexOverscan < itemCount ? endIndexOverscan : itemCount;
 
@@ -52,12 +52,15 @@
 		indexes = idxs;
 	};
 
-	const getItemStyle = (index: number) =>
-		`position: absolute; transform: translate(${
+	const getItemStyle = (index: number) => {
+		const ixis = index * itemSize;
+
+		return `position: absolute; transform: translate(${
 			isVertical
-				? `${marginLeft}px, ${index * itemSize + marginTop}px`
-				: `${index * itemSize + marginLeft}px, ${marginTop}px`
+				? `${marginLeft}px, ${ixis + marginTop}px`
+				: `${ixis + marginLeft}px, ${marginTop}px`
 		}); ${itemSizeInternal} will-change: transform, contents;`;
+	};
 
 	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
 		if (scrollToIndex === undefined && scrollToPosition === undefined) {
