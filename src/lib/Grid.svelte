@@ -16,10 +16,6 @@
 	export let scrollToPosition: number | undefined = undefined;
 	export let scrollToBehaviour: "auto" | "smooth" = "auto";
 
-	let columnCount: number;
-	let innerHeight: number;
-	let overscanColumn: number;
-
 	let grid: HTMLElement;
 	let mounted: boolean = false;
 	let scrollPosition: number = 0;

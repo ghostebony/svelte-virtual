@@ -17,9 +17,6 @@
 	export let scrollToBehaviour: "auto" | "smooth" = "auto";
 
 	let isVertical: boolean = layout === "vertical";
-	let innerSize: number;
-	let itemSizeInternal: string;
-	let size: number = 0;
 
 	let list: HTMLElement;
 	let mounted: boolean = false;
