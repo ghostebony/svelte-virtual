@@ -5,5 +5,7 @@
 	"tabWidth": 4,
 	"arrowParens": "always",
 	"bracketSpacing": true,
-	"bracketSameLine": false
+	"bracketSameLine": false,
+	"pluginSearchDirs": ["."],
+	"overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]
 }
