@@ -34,11 +34,11 @@
 		},
 	};
 
-	const roundTo = (x: number, mutiple: number, type: "ceil" | "floor" = "ceil") => {
+	const roundTo = (x: number, multiple: number, type: "ceil" | "floor" = "ceil") => {
 		if (type === "ceil") {
-			return Math.ceil(x / mutiple) * mutiple;
+			return Math.ceil(x / multiple) * multiple;
 		}
-		return ~~(x / mutiple) * mutiple;
+		return ~~(x / multiple) * multiple;
 	};
 
 	const getIndexes = () => {
