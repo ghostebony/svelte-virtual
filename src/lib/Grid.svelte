@@ -132,9 +132,9 @@
 
 		<div style="height: {innerHeight}px; width: 100%; will-change: contents;">
 			{#each indexes as index}
-				<slot name="item" {index} {scrollPosition} style={getItemStyle(index)}>
-					Missing template
-				</slot>
+				{@const style = getItemStyle(index)}
+
+				<slot name="item" {index} {scrollPosition} {style}>Missing template</slot>
 			{/each}
 		</div>
 
