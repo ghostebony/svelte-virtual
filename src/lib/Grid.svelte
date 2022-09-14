@@ -7,7 +7,7 @@
 	export let height: number;
 	export let width: string = "100%";
 
-	export let overscan: number = 1;
+	export let overScan: number = 1;
 
 	export let marginLeft: number = 0;
 	export let marginTop: number = 0;
@@ -49,17 +49,17 @@
 			columnCount,
 			"floor"
 		);
-		const startIndexOverscan =
-			startIndexTemp > overscanColumn ? startIndexTemp - overscanColumn : 0;
+		const startIndexOverScan =
+			startIndexTemp > overScanColumn ? startIndexTemp - overScanColumn : 0;
 		const startIndex =
-			startIndexTemp > 0 && startIndexOverscan >= 0 ? startIndexOverscan : startIndexTemp;
+			startIndexTemp > 0 && startIndexOverScan >= 0 ? startIndexOverScan : startIndexTemp;
 
 		const endIndexTemp = Math.min(
 			itemCount,
 			roundTo(((scrollPosition + height) / itemHeight) * columnCount, columnCount)
 		);
-		const endIndexOverscan = endIndexTemp + overscanColumn;
-		const endIndex = endIndexOverscan < itemCount ? endIndexOverscan : itemCount;
+		const endIndexOverScan = endIndexTemp + overScanColumn;
+		const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
 
 		for (let i = 0; i < endIndex - startIndex; i++) idxs.push(i + startIndex);
 
@@ -105,14 +105,14 @@
 
 	$: innerHeight = Math.max((roundTo(itemCount, columnCount) * itemHeight) / columnCount, height);
 
-	$: overscanColumn = columnCount * overscan;
+	$: overScanColumn = columnCount * overScan;
 
 	$: {
 		itemCount,
 			itemHeight,
 			height,
 			columnCount,
-			overscan,
+			overScan,
 			scrollPosition;
 		getIndexes();
 	}

@@ -84,7 +84,7 @@ pnpm add -D svelte-virtual
 | itemSize         | `number`                     |              |     ✓     |
 | height           | `number`                     |              |     ✓     |
 | width            | `string`                     | `"100%"`     |           |
-| overscan         | `number`                     | `1`          |           |
+| overScan         | `number`                     | `1`          |           |
 | marginLeft       | `number`                     | `0`          |           |
 | marginTop        | `number`                     | `0`          |           |
 | layout           | `"vertical" \| "horizontal"` | `"vertical"` |           |
@@ -101,7 +101,7 @@ pnpm add -D svelte-virtual
 | itemWidth        | `number`              |             |     ✓     |
 | height           | `number`              |             |     ✓     |
 | width            | `string`              | `"100%"`    |           |
-| overscan         | `number`              | `1`         |           |
+| overScan         | `number`              | `1`         |           |
 | marginLeft       | `number`              | `0`         |           |
 | marginTop        | `number`              | `0`         |           |
 | scrollToIndex    | `number \| undefined` | `undefined` |           |

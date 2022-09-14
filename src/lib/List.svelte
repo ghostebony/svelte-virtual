@@ -6,7 +6,7 @@
 	export let height: number;
 	export let width: string = "100%";
 
-	export let overscan: number = 1;
+	export let overScan: number = 1;
 
 	export let marginLeft: number = 0;
 	export let marginTop: number = 0;
@@ -40,12 +40,12 @@
 		const idxs = [];
 
 		const startIndexTemp = ~~(scrollPosition / itemSize);
-		const startIndexOverscan = startIndexTemp > overscan ? startIndexTemp - overscan : 0;
-		const startIndex = startIndexOverscan >= 0 ? startIndexOverscan : startIndexTemp;
+		const startIndexOverScan = startIndexTemp > overScan ? startIndexTemp - overScan : 0;
+		const startIndex = startIndexOverScan >= 0 ? startIndexOverScan : startIndexTemp;
 
 		const endIndexTemp = Math.min(itemCount, ~~((scrollPosition + size) / itemSize));
-		const endIndexOverscan = endIndexTemp + overscan;
-		const endIndex = endIndexOverscan < itemCount ? endIndexOverscan : itemCount;
+		const endIndexOverScan = endIndexTemp + overScan;
+		const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
 
 		for (let i = 0; i < endIndex - startIndex; i++) idxs.push(i + startIndex);
 
@@ -107,7 +107,7 @@
 		itemCount,
 			itemSize,
 			size,
-			overscan,
+			overScan,
 			scrollPosition;
 		getIndexes();
 	}
