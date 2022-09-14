@@ -14,7 +14,7 @@
 
 	export let scrollToIndex: number | undefined = undefined;
 	export let scrollToPosition: number | undefined = undefined;
-	export let scrollToBehaviour: "auto" | "smooth" = "auto";
+	export let scrollToBehavior: "auto" | "smooth" = "auto";
 
 	let grid: HTMLElement;
 	let mounted: boolean = false;
@@ -85,7 +85,7 @@
 				(Math.ceil((scrollToIndex + 1) / columnCount) - 1) * itemHeight +
 				headerHeight +
 				marginTop,
-			behavior: scrollToBehaviour,
+			behavior: scrollToBehavior,
 		});
 		scrollToIndex = undefined;
 	}
@@ -93,7 +93,7 @@
 	$: if (grid && scrollToPosition !== undefined) {
 		grid.scrollTo({
 			top: scrollToPosition + headerHeight,
-			behavior: scrollToBehaviour,
+			behavior: scrollToBehavior,
 		});
 		scrollToPosition = undefined;
 	}

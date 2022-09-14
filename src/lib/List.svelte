@@ -14,7 +14,7 @@
 
 	export let scrollToIndex: number | undefined = undefined;
 	export let scrollToPosition: number | undefined = undefined;
-	export let scrollToBehaviour: "auto" | "smooth" = "auto";
+	export let scrollToBehavior: "auto" | "smooth" = "auto";
 
 	let list: HTMLElement;
 	let mounted: boolean = false;
@@ -76,7 +76,7 @@
 		list.scrollTo({
 			[isVertical ? "top" : "left"]:
 				scrollToIndex * itemSize + headerHeight + (isVertical ? marginTop : marginLeft),
-			behavior: scrollToBehaviour,
+			behavior: scrollToBehavior,
 		});
 		scrollToIndex = undefined;
 	}
@@ -84,7 +84,7 @@
 	$: if (list && scrollToPosition !== undefined) {
 		list.scrollTo({
 			[isVertical ? "top" : "left"]: scrollToPosition + headerHeight,
-			behavior: scrollToBehaviour,
+			behavior: scrollToBehavior,
 		});
 		scrollToPosition = undefined;
 	}
