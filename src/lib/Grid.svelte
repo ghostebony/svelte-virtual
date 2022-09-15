@@ -23,7 +23,6 @@
 	let offsetWidth: number = 0;
 	let clientWidth: number = 0;
 
-	let indexes: number[];
 
 	export const scrollTo = {
 		index: (index: number) => {
@@ -41,8 +40,15 @@
 		return ~~(x / multiple) * multiple;
 	};
 
-	const getIndexes = () => {
-		const idxs = [];
+	const getIndexes = (
+		itemCount: number,
+		itemHeight: number,
+		height: number,
+		columnCount: number,
+		overScanColumn: number,
+		scrollPosition: number
+	) => {
+		const indexes: number[] = [];
 
 		const startIndexTemp = roundTo(
 			(scrollPosition / itemHeight) * columnCount,
@@ -61,9 +67,9 @@
 		const endIndexOverScan = endIndexTemp + overScanColumn;
 		const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
 
-		for (let i = 0; i < endIndex - startIndex; i++) idxs.push(i + startIndex);
+		for (let i = 0; i < endIndex - startIndex; i++) indexes.push(i + startIndex);
 
-		indexes = idxs;
+		return indexes;
 	};
 
 	const getItemStyle = (index: number) =>
@@ -107,15 +113,14 @@
 
 	$: overScanColumn = columnCount * overScan;
 
-	$: {
+	$: indexes = getIndexes(
 		itemCount,
-			itemHeight,
-			height,
-			columnCount,
-			overScan,
-			scrollPosition;
-		getIndexes();
-	}
+		itemHeight,
+		height,
+		columnCount,
+		overScanColumn,
+		scrollPosition
+	);
 
 	onMount(() => (mounted = true));
 </script>
