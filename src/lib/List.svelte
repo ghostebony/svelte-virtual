@@ -25,7 +25,6 @@
 	let offsetWidth: number = 0;
 	let clientWidth: number = 0;
 
-
 	export const scrollTo = {
 		index: (index: number) => {
 			scrollToIndex = index;
@@ -108,13 +107,7 @@
 
 	$: size = isVertical ? offsetHeight : offsetWidth;
 
-	$: indexes = getIndexes(
-		itemCount,
-		itemSize,
-		size,
-		overScan,
-		scrollPosition
-	);
+	$: indexes = getIndexes(itemCount, itemSize, size, overScan, scrollPosition);
 
 	onMount(() => (mounted = true));
 </script>

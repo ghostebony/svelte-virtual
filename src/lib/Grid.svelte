@@ -23,7 +23,6 @@
 	let offsetWidth: number = 0;
 	let clientWidth: number = 0;
 
-
 	export const scrollTo = {
 		index: (index: number) => {
 			scrollToIndex = index;
