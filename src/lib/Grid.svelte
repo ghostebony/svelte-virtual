@@ -77,7 +77,7 @@
 			(index % columnCount) * itemWidth + marginLeft
 		}px, ${
 			(Math.ceil((index + 1) / columnCount) - 1) * itemHeight + marginTop
-		}px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform, contents;`;
+		}px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform;`;
 
 	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
 		if (scrollToIndex === undefined && scrollToPosition === undefined) {
@@ -127,7 +127,7 @@
 
 {#if mounted}
 	<div
-		style="position: relative; overflow: auto; height: {height}px; width: {width}; will-change: scroll-position;"
+		style="position: relative; overflow: auto; height: {height}px; width: {width};"
 		on:scroll={onScroll}
 		bind:this={grid}
 		bind:offsetWidth
@@ -139,7 +139,7 @@
 			</div>
 		{/if}
 
-		<div style="height: {innerHeight}px; width: 100%; will-change: contents;">
+		<div style="height: {innerHeight}px; width: 100%;">
 			{#each indexes as index}
 				{@const style = getItemStyle(index)}
 

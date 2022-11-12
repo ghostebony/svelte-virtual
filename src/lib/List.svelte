@@ -64,7 +64,7 @@
 			isVertical
 				? `${marginLeft}px, ${ixis + marginTop}px`
 				: `${ixis + marginLeft}px, ${marginTop}px`
-		}); ${itemSizeInternal} will-change: transform, contents;`;
+		}); ${itemSizeInternal} will-change: transform;`;
 	};
 
 	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
@@ -121,7 +121,7 @@
 
 {#if mounted}
 	<div
-		style="position: relative; overflow: auto; height: {height}px; width: {width}; will-change: scroll-position;"
+		style="position: relative; overflow: auto; height: {height}px; width: {width};"
 		on:scroll={onScroll}
 		bind:this={list}
 		bind:offsetHeight
@@ -138,7 +138,7 @@
 		<div
 			style="height: {isVertical ? `${innerSize}px` : '100%'}; width: {!isVertical
 				? `${innerSize}px`
-				: '100%'}; will-change: contents;"
+				: '100%'};"
 		>
 			{#each indexes as index}
 				{@const style = getItemStyle(index)}
