@@ -72,11 +72,11 @@
 	};
 
 	const getItemStyle = (index: number) =>
-		`position: absolute; transform: translate(${
+		`position: absolute; transform: translate3d(${
 			(index % columnCount) * itemWidth + marginLeft
 		}px, ${
 			(Math.ceil((index + 1) / columnCount) - 1) * itemHeight + marginTop
-		}px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform;`;
+		}px, 0px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform;`;
 
 	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
 		if (scrollToIndex === undefined && scrollToPosition === undefined) {

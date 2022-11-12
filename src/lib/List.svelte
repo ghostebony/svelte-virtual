@@ -59,11 +59,11 @@
 	const getItemStyle = (index: number) => {
 		const ixis = index * itemSize;
 
-		return `position: absolute; transform: translate(${
+		return `position: absolute; transform: translate3d(${
 			isVertical
 				? `${marginLeft}px, ${ixis + marginTop}px`
 				: `${ixis + marginLeft}px, ${marginTop}px`
-		}); ${itemSizeInternal} will-change: transform;`;
+		}, 0px); ${itemSizeInternal} will-change: transform;`;
 	};
 
 	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
