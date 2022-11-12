@@ -4,12 +4,12 @@
 	export let itemCount: number;
 	export let itemSize: number;
 	export let height: number;
-	export let width: string = "100%";
+	export let width = "100%";
 
-	export let overScan: number = 1;
+	export let overScan = 1;
 
-	export let marginLeft: number = 0;
-	export let marginTop: number = 0;
+	export let marginLeft = 0;
+	export let marginTop = 0;
 	export let layout: "vertical" | "horizontal" = "vertical";
 
 	export let scrollToIndex: number | undefined = undefined;
@@ -17,13 +17,13 @@
 	export let scrollToBehavior: "auto" | "smooth" = "auto";
 
 	let list: HTMLElement;
-	let mounted: boolean = false;
-	let scrollPosition: number = 0;
-	let headerHeight: number = 0;
-	let offsetHeight: number = 0;
-	let clientHeight: number = 0;
-	let offsetWidth: number = 0;
-	let clientWidth: number = 0;
+	let mounted = false;
+	let scrollPosition = 0;
+	let headerHeight = 0;
+	let offsetHeight = 0;
+	let clientHeight = 0;
+	let offsetWidth = 0;
+	let clientWidth = 0;
 
 	export const scrollTo = {
 		index: (index: number) => {

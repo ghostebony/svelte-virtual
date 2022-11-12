@@ -5,23 +5,23 @@
 	export let itemHeight: number;
 	export let itemWidth: number;
 	export let height: number;
-	export let width: string = "100%";
+	export let width = "100%";
 
-	export let overScan: number = 1;
+	export let overScan = 1;
 
-	export let marginLeft: number = 0;
-	export let marginTop: number = 0;
+	export let marginLeft = 0;
+	export let marginTop = 0;
 
 	export let scrollToIndex: number | undefined = undefined;
 	export let scrollToPosition: number | undefined = undefined;
 	export let scrollToBehavior: "auto" | "smooth" = "auto";
 
 	let grid: HTMLElement;
-	let mounted: boolean = false;
-	let scrollPosition: number = 0;
-	let headerHeight: number = 0;
-	let offsetWidth: number = 0;
-	let clientWidth: number = 0;
+	let mounted = false;
+	let scrollPosition = 0;
+	let headerHeight = 0;
+	let offsetWidth = 0;
+	let clientWidth = 0;
 
 	export const scrollTo = {
 		index: (index: number) => {
