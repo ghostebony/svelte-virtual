@@ -6,12 +6,8 @@
 	"arrowParens": "always",
 	"bracketSpacing": true,
 	"bracketSameLine": false,
-	"plugins": [
-		"prettier-plugin-svelte"
-	],
-	"pluginSearchDirs": [
-		"."
-	],
+	"plugins": ["prettier-plugin-svelte"],
+	"pluginSearchDirs": ["."],
 	"overrides": [
 		{
 			"files": "*.svelte",
