@@ -21,6 +21,7 @@
 	let clientHeight = 0;
 	let offsetWidth = 0;
 	let clientWidth = 0;
+	let indexes: number[] = [];
 
 	export const scrollTo = {
 		index: (index: number) => {
@@ -104,8 +105,9 @@
 
 	$: size = isVertical ? offsetHeight : offsetWidth;
 
-	$: indexes = getIndexes(itemCount, itemSize, size, overScan, scrollPosition);
-
+	$: if (offsetHeight) {
+		indexes = getIndexes(itemCount, itemSize, size, overScan, scrollPosition);
+	}
 </script>
 
 <div

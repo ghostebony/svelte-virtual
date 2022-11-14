@@ -19,6 +19,7 @@
 	let headerHeight = 0;
 	let offsetWidth = 0;
 	let clientWidth = 0;
+	let indexes: number[] = [];
 
 	export const scrollTo = {
 		index: (index: number) => {
@@ -109,14 +110,16 @@
 
 	$: overScanColumn = columnCount * overScan;
 
-	$: indexes = getIndexes(
-		itemCount,
-		itemHeight,
-		height,
-		columnCount,
-		overScanColumn,
-		scrollPosition
-	);
+	$: if (offsetWidth) {
+		indexes = getIndexes(
+			itemCount,
+			itemHeight,
+			height,
+			columnCount,
+			overScanColumn,
+			scrollPosition
+		);
+	}
 
 </script>
 
