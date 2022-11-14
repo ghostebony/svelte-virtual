@@ -134,7 +134,7 @@
 	{/if}
 
 	<div style="height: {innerHeight}px; width: 100%;">
-		{#each indexes as index}
+		{#each indexes as index (index)}
 			{@const style = getItemStyle(index)}
 
 			<slot name="item" {index} {scrollPosition} {style}>Missing template</slot>
