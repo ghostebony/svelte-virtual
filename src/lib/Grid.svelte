@@ -120,7 +120,6 @@
 			scrollPosition
 		);
 	}
-
 </script>
 
 <div
