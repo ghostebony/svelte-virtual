@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { onMount } from "svelte";
-
 	export let itemCount: number;
 	export let itemHeight: number;
 	export let itemWidth: number;
@@ -17,7 +15,6 @@
 	export let scrollToBehavior: "auto" | "smooth" = "auto";
 
 	let grid: HTMLElement;
-	let mounted = false;
 	let scrollPosition = 0;
 	let headerHeight = 0;
 	let offsetWidth = 0;
@@ -121,31 +118,28 @@
 		scrollPosition
 	);
 
-	onMount(() => (mounted = true));
 </script>
 
-{#if mounted}
-	<div
-		style="position: relative; overflow: auto; height: {height}px; width: {width};"
-		on:scroll={onScroll}
-		bind:this={grid}
-		bind:offsetWidth
-		bind:clientWidth
-	>
-		{#if $$slots.header}
-			<div bind:offsetHeight={headerHeight}>
-				<slot name="header" />
-			</div>
-		{/if}
-
-		<div style="height: {innerHeight}px; width: 100%;">
-			{#each indexes as index}
-				{@const style = getItemStyle(index)}
-
-				<slot name="item" {index} {scrollPosition} {style}>Missing template</slot>
-			{/each}
+<div
+	style="position: relative; overflow: auto; height: {height}px; width: {width};"
+	on:scroll={onScroll}
+	bind:this={grid}
+	bind:offsetWidth
+	bind:clientWidth
+>
+	{#if $$slots.header}
+		<div bind:offsetHeight={headerHeight}>
+			<slot name="header" />
 		</div>
+	{/if}
 
-		<slot name="footer" />
+	<div style="height: {innerHeight}px; width: 100%;">
+		{#each indexes as index}
+			{@const style = getItemStyle(index)}
+
+			<slot name="item" {index} {scrollPosition} {style}>Missing template</slot>
+		{/each}
 	</div>
-{/if}
+
+	<slot name="footer" />
+</div>
