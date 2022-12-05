@@ -22,7 +22,7 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write ."
 	},
-	"packageManager": "pnpm@7.17.1",
+	"packageManager": "pnpm@7.18.0",
 	"engines": {
 		"pnpm": "^7.0.0"
 	},
