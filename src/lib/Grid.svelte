@@ -30,11 +30,9 @@
 		},
 	};
 
-	const roundTo = (x: number, multiple: number, type: "ceil" | "floor" = "ceil") => {
-		if (type === "ceil") {
-			return Math.ceil(x / multiple) * multiple;
-		}
-		return ~~(x / multiple) * multiple;
+	const round = {
+		ceil: (x: number, multiple: number) => Math.ceil(x / multiple) * multiple,
+		floor: (x: number, multiple: number) => ~~(x / multiple) * multiple,
 	};
 
 	const getIndexes = (
@@ -47,10 +45,9 @@
 	) => {
 		const indexes: number[] = [];
 
-		const startIndexTemp = roundTo(
+		const startIndexTemp = round.floor(
 			(scrollPosition / itemHeight) * columnCount,
-			columnCount,
-			"floor"
+			columnCount
 		);
 		const startIndexOverScan =
 			startIndexTemp > overScanColumn ? startIndexTemp - overScanColumn : 0;
@@ -59,7 +56,7 @@
 
 		const endIndexTemp = Math.min(
 			itemCount,
-			roundTo(((scrollPosition + height) / itemHeight) * columnCount, columnCount)
+			round.ceil(((scrollPosition + height) / itemHeight) * columnCount, columnCount)
 		);
 		const endIndexOverScan = endIndexTemp + overScanColumn;
 		const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
@@ -106,7 +103,10 @@
 		1
 	);
 
-	$: innerHeight = Math.max((roundTo(itemCount, columnCount) * itemHeight) / columnCount, height);
+	$: innerHeight = Math.max(
+		(round.ceil(itemCount, columnCount) * itemHeight) / columnCount,
+		height
+	);
 
 	$: overScanColumn = columnCount * overScan;
 
