@@ -9,19 +9,19 @@ Svelte components for efficiently rendering large lists. Instead of rendering al
 With npm:
 
 ```
-npm i -D svelte-virtual
+npm i -D svelte-virtual@next
 ```
 
 With yarn:
 
 ```
-yarn add -D svelte-virtual
+yarn add -D svelte-virtual@next
 ```
 
 With pnpm:
 
 ```
-pnpm add -D svelte-virtual
+pnpm add -D svelte-virtual@next
 ```
 
 ## Usage
