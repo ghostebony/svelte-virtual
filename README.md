@@ -78,42 +78,40 @@ pnpm add -D svelte-virtual
 
 ### List
 
-| Property         | Type                         | Default      | Required? |
-| :--------------- | :--------------------------- | :----------- | :-------: |
-| itemCount        | `number`                     |              |     ✓     |
-| itemSize         | `number`                     |              |     ✓     |
-| height           | `number`                     |              |     ✓     |
-| width            | `string`                     | `"100%"`     |           |
-| overScan         | `number`                     | `1`          |           |
-| marginLeft       | `number`                     | `0`          |           |
-| marginTop        | `number`                     | `0`          |           |
-| layout           | `"vertical" \| "horizontal"` | `"vertical"` |           |
-| scrollToIndex    | `number \| undefined`        | `undefined`  |           |
-| scrollToPosition | `number \| undefined`        | `undefined`  |           |
-| scrollToBehavior | `"auto" \| "smooth"`         | `"auto"`     |           |
+| Property       | Type                         | Default      | Required? |
+| :------------- | :--------------------------- | :----------- | :-------: |
+| itemCount      | `number`                     |              |     ✓     |
+| itemSize       | `number`                     |              |     ✓     |
+| height         | `number`                     |              |     ✓     |
+| width          | `string`                     | `"100%"`     |           |
+| overScan       | `number`                     | `1`          |           |
+| marginLeft     | `number`                     | `0`          |           |
+| marginTop      | `number`                     | `0`          |           |
+| layout         | `"vertical" \| "horizontal"` | `"vertical"` |           |
+| scrollPosition | `number`                     | `0`          |           |
+| scrollBehavior | `"auto" \| "smooth"`         | `"auto"`     |           |
 
 ### Grid
 
-| Property         | Type                  | Default     | Required? |
-| :--------------- | :-------------------- | :---------- | :-------: |
-| itemCount        | `number`              |             |     ✓     |
-| itemHeight       | `number`              |             |     ✓     |
-| itemWidth        | `number`              |             |     ✓     |
-| height           | `number`              |             |     ✓     |
-| width            | `string`              | `"100%"`    |           |
-| overScan         | `number`              | `1`         |           |
-| marginLeft       | `number`              | `0`         |           |
-| marginTop        | `number`              | `0`         |           |
-| scrollToIndex    | `number \| undefined` | `undefined` |           |
-| scrollToPosition | `number \| undefined` | `undefined` |           |
-| scrollToBehavior | `"auto" \| "smooth"`  | `"auto"`    |           |
+| Property       | Type                 | Default  | Required? |
+| :------------- | :------------------- | :------- | :-------: |
+| itemCount      | `number`             |          |     ✓     |
+| itemHeight     | `number`             |          |     ✓     |
+| itemWidth      | `number`             |          |     ✓     |
+| height         | `number`             |          |     ✓     |
+| width          | `string`             | `"100%"` |           |
+| overScan       | `number`             | `1`      |           |
+| marginLeft     | `number`             | `0`      |           |
+| marginTop      | `number`             | `0`      |           |
+| scrollPosition | `number`             | `0`      |           |
+| scrollBehavior | `"auto" \| "smooth"` | `"auto"` |           |
 
 ## Methods ([demo](https://svelte.dev/repl/8efc42f67dc5493aabe465c589af62e7?version=3.49.0))
 
-| Property          | Arguments          |
-| :---------------- | :----------------- |
-| scrollTo.index    | `index: number`    |
-| scrollTo.position | `position: number` |
+| Property          | Arguments                                        | Default          |
+| :---------------- | :----------------------------------------------- | :--------------- |
+| setScrollIndex    | `index: number, behavior: "auto" \| "smooth"`    | `scrollBehavior` |
+| setScrollPosition | `position: number, behavior: "auto" \| "smooth"` | `scrollBehavior` |
 
 ## Slots
 

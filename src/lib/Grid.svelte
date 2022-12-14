@@ -1,3 +1,9 @@
+<script context="module">
+	import { scrollStop as _scrollStop } from "./utils";
+
+	const scrollStop = _scrollStop();
+</script>
+
 <script lang="ts">
 	export let itemCount: number;
 	export let itemHeight: number;
@@ -10,24 +16,49 @@
 	export let marginLeft = 0;
 	export let marginTop = 0;
 
-	export let scrollToIndex: number | undefined = undefined;
-	export let scrollToPosition: number | undefined = undefined;
-	export let scrollToBehavior: "auto" | "smooth" = "auto";
+	export let scrollPosition = 0;
+	export let scrollBehavior: ScrollBehavior = "auto";
 
 	let grid: HTMLElement;
-	let scrollPosition = 0;
+	let _scrollPosition = scrollPosition;
 	let headerHeight = 0;
 	let offsetWidth = 0;
 	let clientWidth = 0;
 	let indexes: number[] = [];
 
-	export const scrollTo = {
-		index: (index: number) => {
-			scrollToIndex = index;
-		},
-		position: (position: number) => {
-			scrollToPosition = position;
-		},
+	let manualScroll = false;
+	let isScrolling = false;
+
+	export const setScrollIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
+		scrollTo((Math.ceil((index + 1) / columnCount) - 1) * itemHeight + marginTop, behavior);
+	};
+
+	export const setScrollPosition = (
+		position: number,
+		behavior: ScrollBehavior = scrollBehavior
+	) => {
+		scrollTo(position, behavior);
+	};
+
+	const scrollTo = (top: number, behavior: ScrollBehavior = scrollBehavior) => {
+		if (grid) {
+			manualScroll = true;
+
+			grid.scrollTo({ top: top + headerHeight, behavior });
+			scrollPosition = _scrollPosition;
+
+			manualScroll = false;
+		}
+	};
+
+	const scrollToManual = (scrollPosition: number) => {
+		if (!manualScroll && !isScrolling) {
+			manualScroll = true;
+
+			grid.scrollTo({ top: scrollPosition + headerHeight, behavior: scrollBehavior });
+
+			manualScroll = false;
+		}
 	};
 
 	const round = {
@@ -74,29 +105,17 @@
 		}px, 0px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform;`;
 
 	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
-		if (scrollToIndex === undefined && scrollToPosition === undefined) {
-			scrollPosition = Math.max(0, currentTarget.scrollTop - headerHeight);
+		isScrolling = true;
+
+		if (!manualScroll) {
+			_scrollPosition = Math.max(0, currentTarget.scrollTop - headerHeight);
+			scrollPosition = _scrollPosition;
 		}
+
+		scrollStop(() => {
+			isScrolling = false;
+		});
 	};
-
-	$: if (grid && scrollToIndex !== undefined) {
-		grid.scrollTo({
-			top:
-				(Math.ceil((scrollToIndex + 1) / columnCount) - 1) * itemHeight +
-				headerHeight +
-				marginTop,
-			behavior: scrollToBehavior,
-		});
-		scrollToIndex = undefined;
-	}
-
-	$: if (grid && scrollToPosition !== undefined) {
-		grid.scrollTo({
-			top: scrollToPosition + headerHeight,
-			behavior: scrollToBehavior,
-		});
-		scrollToPosition = undefined;
-	}
 
 	$: columnCount = Math.max(
 		~~((offsetWidth - marginLeft - (offsetWidth - clientWidth)) / itemWidth),
@@ -117,8 +136,12 @@
 			height,
 			columnCount,
 			overScanColumn,
-			scrollPosition
+			_scrollPosition
 		);
+	}
+
+	$: if (grid) {
+		scrollToManual(scrollPosition);
 	}
 </script>
 

@@ -1,3 +1,9 @@
+<script context="module">
+	import { scrollStop as _scrollStop } from "./utils";
+
+	const scrollStop = _scrollStop();
+</script>
+
 <script lang="ts">
 	export let itemCount: number;
 	export let itemSize: number;
@@ -10,12 +16,11 @@
 	export let marginTop = 0;
 	export let layout: "vertical" | "horizontal" = "vertical";
 
-	export let scrollToIndex: number | undefined = undefined;
-	export let scrollToPosition: number | undefined = undefined;
-	export let scrollToBehavior: "auto" | "smooth" = "auto";
+	export let scrollPosition = 0;
+	export let scrollBehavior: ScrollBehavior = "auto";
 
 	let list: HTMLElement;
-	let scrollPosition = 0;
+	let _scrollPosition = scrollPosition;
 	let headerHeight = 0;
 	let offsetHeight = 0;
 	let clientHeight = 0;
@@ -23,13 +28,39 @@
 	let clientWidth = 0;
 	let indexes: number[] = [];
 
-	export const scrollTo = {
-		index: (index: number) => {
-			scrollToIndex = index;
-		},
-		position: (position: number) => {
-			scrollToPosition = position;
-		},
+	let manualScroll = false;
+	let isScrolling = false;
+
+	export const setScrollIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
+		scrollTo(index * itemSize + (isVertical ? marginTop : marginLeft), behavior);
+	};
+
+	export const setScrollPosition = (
+		position: number,
+		behavior: ScrollBehavior = scrollBehavior
+	) => {
+		scrollTo(position, behavior);
+	};
+
+	const scrollTo = (direction: number, behavior: ScrollBehavior = scrollBehavior) => {
+		if (list) {
+			manualScroll = true;
+
+			list.scrollTo({ [isVertical ? "top" : "left"]: direction + headerHeight, behavior });
+			scrollPosition = _scrollPosition;
+
+			manualScroll = false;
+		}
+	};
+
+	const scrollToManual = (scrollPosition: number) => {
+		if (!manualScroll && !isScrolling) {
+			manualScroll = true;
+
+			list.scrollTo({ top: scrollPosition + headerHeight, behavior: scrollBehavior });
+
+			manualScroll = false;
+		}
 	};
 
 	const getIndexes = (
@@ -65,31 +96,20 @@
 	};
 
 	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
-		if (scrollToIndex === undefined && scrollToPosition === undefined) {
-			if (isVertical) {
-				scrollPosition = Math.max(0, currentTarget.scrollTop - headerHeight);
-			} else {
-				scrollPosition = currentTarget.scrollLeft;
-			}
+		isScrolling = true;
+
+		if (!manualScroll) {
+			_scrollPosition = Math.max(
+				0,
+				currentTarget[isVertical ? "scrollTop" : "scrollLeft"] - headerHeight
+			);
+			scrollPosition = _scrollPosition;
 		}
+
+		scrollStop(() => {
+			isScrolling = false;
+		});
 	};
-
-	$: if (list && scrollToIndex !== undefined) {
-		list.scrollTo({
-			[isVertical ? "top" : "left"]:
-				scrollToIndex * itemSize + headerHeight + (isVertical ? marginTop : marginLeft),
-			behavior: scrollToBehavior,
-		});
-		scrollToIndex = undefined;
-	}
-
-	$: if (list && scrollToPosition !== undefined) {
-		list.scrollTo({
-			[isVertical ? "top" : "left"]: scrollToPosition + headerHeight,
-			behavior: scrollToBehavior,
-		});
-		scrollToPosition = undefined;
-	}
 
 	$: isVertical = layout === "vertical";
 
@@ -106,7 +126,11 @@
 	$: size = isVertical ? offsetHeight : offsetWidth;
 
 	$: if (offsetHeight) {
-		indexes = getIndexes(itemCount, itemSize, size, overScan, scrollPosition);
+		indexes = getIndexes(itemCount, itemSize, size, overScan, _scrollPosition);
+	}
+
+	$: if (list) {
+		scrollToManual(scrollPosition);
 	}
 </script>
 
