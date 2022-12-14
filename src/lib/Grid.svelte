@@ -5,6 +5,8 @@
 </script>
 
 <script lang="ts">
+	import type { ScrollBehavior } from "./types";
+
 	export let itemCount: number;
 	export let itemHeight: number;
 	export let itemWidth: number;
