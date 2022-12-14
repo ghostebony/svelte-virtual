@@ -26,7 +26,7 @@ pnpm add -D svelte-virtual
 
 ## Usage
 
-### Vertical List [default] ([demo](https://svelte.dev/repl/70b159e914024f869180c28b8e7eb92d?version=3.49.0))
+### Vertical List [default] ([demo](https://svelte.dev/repl/70b159e914024f869180c28b8e7eb92d))
 
 ```svelte
 <script>
@@ -42,7 +42,7 @@ pnpm add -D svelte-virtual
 </List>
 ```
 
-### Horizontal List ([demo](https://svelte.dev/repl/160a5bf2e2a8484c8ffd03b219f5eb27?version=3.49.0))
+### Horizontal List ([demo](https://svelte.dev/repl/160a5bf2e2a8484c8ffd03b219f5eb27))
 
 ```svelte
 <script>
@@ -58,7 +58,7 @@ pnpm add -D svelte-virtual
 </List>
 ```
 
-### Grid ([demo](https://svelte.dev/repl/8e2b877da06c4532ae50482236abbcac?version=3.49.0))
+### Grid ([demo](https://svelte.dev/repl/8e2b877da06c4532ae50482236abbcac))
 
 ```svelte
 <script>
@@ -106,7 +106,7 @@ pnpm add -D svelte-virtual
 | scrollPosition | `number`             | `0`      |           |
 | scrollBehavior | `"auto" \| "smooth"` | `"auto"` |           |
 
-## Methods ([demo](https://svelte.dev/repl/8efc42f67dc5493aabe465c589af62e7?version=3.49.0))
+## Methods ([demo](https://svelte.dev/repl/8efc42f67dc5493aabe465c589af62e7))
 
 | Property          | Arguments                                        | Default          |
 | :---------------- | :----------------------------------------------- | :--------------- |
