@@ -120,7 +120,6 @@ pnpm add -D svelte-virtual
 -   `item` - Slot for each item
     -   Props:
         -   `index: number` - Item index
-        -   `scrollPosition: number` - Item scroll position in the list
         -   `style: string` - Item style, must be applied to the slot (look above for example)
 -   `header` - Slot for the elements that should appear at the top of the component
 -   `footer` - Slot for the elements that should appear at the bottom of the component

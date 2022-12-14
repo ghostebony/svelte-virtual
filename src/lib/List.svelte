@@ -133,7 +133,7 @@
 		{#each indexes as index (index)}
 			{@const style = getItemStyle(index)}
 
-			<slot name="item" {index} {scrollPosition} {style}>Missing template</slot>
+			<slot name="item" {index} {style}>Missing template</slot>
 		{/each}
 	</div>
 
