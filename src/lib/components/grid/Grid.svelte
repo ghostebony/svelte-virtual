@@ -38,7 +38,7 @@
 		scrollTo((Math.ceil((index + 1) / columnCount) - 1) * itemHeight + marginTop, behavior);
 	};
 
-	export const setScrollPosition = (
+	export const scrollToPosition = (
 		position: number,
 		behavior: ScrollBehavior = scrollBehavior
 	) => {

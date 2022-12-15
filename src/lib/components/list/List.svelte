@@ -40,7 +40,7 @@
 		scrollTo(index * itemSize + (isVertical ? marginTop : marginLeft), behavior);
 	};
 
-	export const setScrollPosition = (
+	export const scrollToPosition = (
 		position: number,
 		behavior: ScrollBehavior = scrollBehavior
 	) => {
