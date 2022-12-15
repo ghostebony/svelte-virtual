@@ -21,6 +21,8 @@
 	export let scrollPosition = 0;
 	export let scrollBehavior: ScrollBehavior = "auto";
 
+	export let getKey: ((index: number) => any) | undefined = undefined;
+
 	let grid: HTMLElement;
 	let _scrollPosition = scrollPosition;
 	let headerHeight = 0;
@@ -161,7 +163,7 @@
 	{/if}
 
 	<div style="height: {innerHeight}px; width: 100%;">
-		{#each indexes as index (index)}
+		{#each indexes as index (getKey ? getKey(index) : index)}
 			{@const style = getItemStyle(index)}
 
 			<slot name="item" {index} {style}>Missing template</slot>

@@ -90,21 +90,23 @@ pnpm add -D svelte-virtual@next
 | layout         | `"vertical" \| "horizontal"` | `"vertical"` |           |
 | scrollPosition | `number`                     | `0`          |           |
 | scrollBehavior | `"auto" \| "smooth"`         | `"auto"`     |           |
+| getKey         | `(index: number) => any`     | `undefined`  |           |
 
 ### Grid
 
-| Property       | Type                 | Default  | Required? |
-| :------------- | :------------------- | :------- | :-------: |
-| itemCount      | `number`             |          |     ✓     |
-| itemHeight     | `number`             |          |     ✓     |
-| itemWidth      | `number`             |          |     ✓     |
-| height         | `number`             |          |     ✓     |
-| width          | `string`             | `"100%"` |           |
-| overScan       | `number`             | `1`      |           |
-| marginLeft     | `number`             | `0`      |           |
-| marginTop      | `number`             | `0`      |           |
-| scrollPosition | `number`             | `0`      |           |
-| scrollBehavior | `"auto" \| "smooth"` | `"auto"` |           |
+| Property       | Type                     | Default     | Required? |
+| :------------- | :----------------------- | :---------- | :-------: |
+| itemCount      | `number`                 |             |     ✓     |
+| itemHeight     | `number`                 |             |     ✓     |
+| itemWidth      | `number`                 |             |     ✓     |
+| height         | `number`                 |             |     ✓     |
+| width          | `string`                 | `"100%"`    |           |
+| overScan       | `number`                 | `1`         |           |
+| marginLeft     | `number`                 | `0`         |           |
+| marginTop      | `number`                 | `0`         |           |
+| scrollPosition | `number`                 | `0`         |           |
+| scrollBehavior | `"auto" \| "smooth"`     | `"auto"`    |           |
+| getKey         | `(index: number) => any` | `undefined` |           |
 
 ## Methods ([demo](https://svelte.dev/repl/8efc42f67dc5493aabe465c589af62e7))
 
