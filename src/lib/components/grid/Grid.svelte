@@ -1,7 +1,8 @@
 <script context="module">
-	import { scrollStop as _scrollStop } from "$lib/components/utils";
+	import { scrollStop as _scrollStop, scrollSpeed as __scrollSpeed } from "$lib/components/utils";
 
 	const scrollStop = _scrollStop();
+	const _scrollSpeed = __scrollSpeed();
 </script>
 
 <script lang="ts">
@@ -33,6 +34,7 @@
 
 	let manualScroll = false;
 	let isScrolling = false;
+	let isScrollingFast = false;
 
 	export const scrollToIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
 		scrollTo((Math.ceil((index + 1) / columnCount) - 1) * itemHeight + marginTop, behavior);
@@ -115,6 +117,8 @@
 		if (!manualScroll) {
 			_scrollPosition = Math.max(0, currentTarget.scrollTop - headerHeight);
 			scrollPosition = _scrollPosition;
+
+			scrollSpeed(scrollPosition);
 		}
 
 		scrollStop(() => {
@@ -148,6 +152,15 @@
 	$: if (grid) {
 		scrollToManual(scrollPosition);
 	}
+
+	$: scrollSpeed = _scrollSpeed(height, {
+		fast: () => {
+			isScrollingFast = true;
+		},
+		slow: () => {
+			isScrollingFast = false;
+		},
+	});
 </script>
 
 <div
@@ -167,7 +180,11 @@
 		{#each indexes as index (getKey ? getKey(index) : index)}
 			{@const style = getItemStyle(index)}
 
-			<slot name="item" {index} {style}>Missing template</slot>
+			{#if !isScrollingFast || !$$slots.placeholder}
+				<slot name="item" {index} {style}>Missing template</slot>
+			{:else}
+				<slot name="placeholder" {index} {style}>Missing placeholder</slot>
+			{/if}
 		{/each}
 	</div>
 

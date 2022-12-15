@@ -1,7 +1,8 @@
 <script context="module">
-	import { scrollStop as _scrollStop } from "$lib/components/utils";
+	import { scrollStop as _scrollStop, scrollSpeed as __scrollSpeed } from "$lib/components/utils";
 
 	const scrollStop = _scrollStop();
+	const _scrollSpeed = __scrollSpeed();
 </script>
 
 <script lang="ts">
@@ -35,6 +36,7 @@
 
 	let manualScroll = false;
 	let isScrolling = false;
+	let isScrollingFast = false;
 
 	export const scrollToIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
 		scrollTo(index * itemSize + (isVertical ? marginTop : marginLeft), behavior);
@@ -109,6 +111,8 @@
 				currentTarget[isVertical ? "scrollTop" : "scrollLeft"] - headerHeight
 			);
 			scrollPosition = _scrollPosition;
+
+			scrollSpeed(scrollPosition);
 		}
 
 		scrollStop(() => {
@@ -137,6 +141,15 @@
 	$: if (list) {
 		scrollToManual(scrollPosition);
 	}
+
+	$: scrollSpeed = _scrollSpeed(size, {
+		fast: () => {
+			isScrollingFast = true;
+		},
+		slow: () => {
+			isScrollingFast = false;
+		},
+	});
 </script>
 
 <div
@@ -162,7 +175,11 @@
 		{#each indexes as index (getKey ? getKey(index) : index)}
 			{@const style = getItemStyle(index)}
 
-			<slot name="item" {index} {style}>Missing template</slot>
+			{#if !isScrollingFast || !$$slots.placeholder}
+				<slot name="item" {index} {style}>Missing template</slot>
+			{:else}
+				<slot name="placeholder" {index} {style}>Missing placeholder</slot>
+			{/if}
 		{/each}
 	</div>
 
