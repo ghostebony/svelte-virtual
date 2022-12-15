@@ -1,11 +1,11 @@
 <script context="module">
-	import { scrollStop as _scrollStop } from "./utils";
+	import { scrollStop as _scrollStop } from "$lib/utils";
 
 	const scrollStop = _scrollStop();
 </script>
 
 <script lang="ts">
-	import type { ScrollBehavior } from "./types";
+	import type { ScrollBehavior } from "$lib/types";
 
 	export let itemCount: number;
 	export let itemSize: number;
