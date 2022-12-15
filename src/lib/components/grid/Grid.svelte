@@ -34,7 +34,7 @@
 	let manualScroll = false;
 	let isScrolling = false;
 
-	export const setScrollIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
+	export const scrollToIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
 		scrollTo((Math.ceil((index + 1) / columnCount) - 1) * itemHeight + marginTop, behavior);
 	};
 

@@ -36,7 +36,7 @@
 	let manualScroll = false;
 	let isScrolling = false;
 
-	export const setScrollIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
+	export const scrollToIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
 		scrollTo(index * itemSize + (isVertical ? marginTop : marginLeft), behavior);
 	};
 
