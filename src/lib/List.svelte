@@ -21,6 +21,7 @@
 	export let scrollPosition = 0;
 	export let scrollBehavior: ScrollBehavior = "auto";
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	export let getKey: ((index: number) => any) | undefined = undefined;
 
 	let list: HTMLElement;
