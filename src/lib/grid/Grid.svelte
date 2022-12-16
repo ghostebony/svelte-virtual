@@ -164,7 +164,10 @@
 </script>
 
 <div
-	style="position: relative; overflow: auto; height: {height}px; width: {width};"
+	style:position="relative"
+	style:overflow="auto"
+	style:height="{height}px"
+	style:width
 	on:scroll={onScroll}
 	bind:this={grid}
 	bind:offsetWidth
@@ -176,7 +179,7 @@
 		</div>
 	{/if}
 
-	<div style="height: {innerHeight}px; width: 100%;">
+	<div style:height="{innerHeight}px" style:width="100%">
 		{#each indexes as index (getKey ? getKey(index) : index)}
 			{@const style = getItemStyle(index)}
 

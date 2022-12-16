@@ -153,7 +153,10 @@
 </script>
 
 <div
-	style="position: relative; overflow: auto; height: {height}px; width: {width};"
+	style:position="relative"
+	style:overflow="auto"
+	style:height="{height}px"
+	style:width
 	on:scroll={onScroll}
 	bind:this={list}
 	bind:offsetHeight
@@ -168,9 +171,8 @@
 	{/if}
 
 	<div
-		style="height: {isVertical ? `${innerSize}px` : '100%'}; width: {!isVertical
-			? `${innerSize}px`
-			: '100%'};"
+		style:height={isVertical ? `${innerSize}px` : "100%"}
+		style:width={!isVertical ? `${innerSize}px` : "100%"}
 	>
 		{#each indexes as index (getKey ? getKey(index) : index)}
 			{@const style = getItemStyle(index)}
