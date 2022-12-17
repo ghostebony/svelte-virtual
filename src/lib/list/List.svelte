@@ -1,5 +1,5 @@
 <script context="module">
-	import { scrollStop as _scrollStop, scrollSpeed as __scrollSpeed } from "$lib/utils";
+	import { scrollSpeed as __scrollSpeed, scrollStop as _scrollStop } from "$lib/utils";
 
 	const scrollStop = _scrollStop();
 	const _scrollSpeed = __scrollSpeed();
