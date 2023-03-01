@@ -16,7 +16,10 @@
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
 		"dev": "vite dev",
-		"build": "svelte-kit sync && svelte-package",
+		"build": "vite build && pnpm package",
+		"preview": "vite preview",
+		"package": "svelte-kit sync && svelte-package && publint",
+		"prepublishOnly": "pnpm package",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
@@ -25,6 +28,9 @@
 	"packageManager": "pnpm@7.28.0",
 	"engines": {
 		"pnpm": "^7.0.0"
+	},
+	"peerDependencies": {
+		"svelte": "^3.54.0"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
@@ -37,10 +43,47 @@
 		"eslint-plugin-svelte3": "^4.0.0",
 		"prettier": "^2.8.4",
 		"prettier-plugin-svelte": "^2.9.0",
+		"publint": "^0.1.9",
 		"svelte": "^3.55.1",
 		"svelte-check": "^3.0.4",
 		"tslib": "^2.5.0",
 		"typescript": "^4.9.5",
 		"vite": "^4.1.4"
-	}
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js",
+			"default": "./dist/index.js"
+		},
+		"./grid": {
+			"types": "./dist/grid/index.d.ts",
+			"svelte": "./dist/grid/index.js",
+			"default": "./dist/grid/index.js"
+		},
+		"./grid/Grid.svelte": {
+			"types": "./dist/grid/Grid.svelte.d.ts",
+			"svelte": "./dist/grid/Grid.svelte",
+			"default": "./dist/grid/Grid.svelte"
+		},
+		"./list": {
+			"types": "./dist/list/index.d.ts",
+			"svelte": "./dist/list/index.js",
+			"default": "./dist/list/index.js"
+		},
+		"./list/List.svelte": {
+			"types": "./dist/list/List.svelte.d.ts",
+			"svelte": "./dist/list/List.svelte",
+			"default": "./dist/list/List.svelte"
+		},
+		"./types": {
+			"types": "./dist/types.d.ts",
+			"default": "./dist/types.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts"
 }

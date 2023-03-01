@@ -28,10 +28,7 @@ jobs:
       - name: Lint code
         run: pnpm lint
 
-      - name: Build package
-        run: pnpm build
-
       - name: Publish package
-        run: pnpm publish package/ --tag next --no-git-checks
+        run: pnpm publish --tag next --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
