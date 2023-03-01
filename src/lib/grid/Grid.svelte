@@ -25,6 +25,8 @@
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	export let getKey: ((index: number) => any) | undefined = undefined;
 
+	export let columnCount: number | undefined = undefined;
+
 	let grid: HTMLElement;
 	let _scrollPosition = scrollPosition;
 	let headerHeight = 0;
@@ -37,7 +39,7 @@
 	let isScrollingFast = false;
 
 	export const scrollToIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
-		scrollTo((Math.ceil((index + 1) / columnCount) - 1) * itemHeight + marginTop, behavior);
+		scrollTo((Math.ceil((index + 1) / _columnCount) - 1) * itemHeight + marginTop, behavior);
 	};
 
 	export const scrollToPosition = (
@@ -106,9 +108,9 @@
 
 	const getItemStyle = (index: number) =>
 		`position: absolute; transform: translate3d(${
-			(index % columnCount) * itemWidth + marginLeft
+			(index % _columnCount) * itemWidth + marginLeft
 		}px, ${
-			(Math.ceil((index + 1) / columnCount) - 1) * itemHeight + marginTop
+			(Math.ceil((index + 1) / _columnCount) - 1) * itemHeight + marginTop
 		}px, 0px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform;`;
 
 	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
@@ -126,24 +128,23 @@
 		});
 	};
 
-	$: columnCount = Math.max(
-		~~((offsetWidth - marginLeft - (offsetWidth - clientWidth)) / itemWidth),
-		1
-	);
+	$: _columnCount = !columnCount
+		? Math.max(~~((offsetWidth - marginLeft - (offsetWidth - clientWidth)) / itemWidth), 1)
+		: columnCount;
 
 	$: innerHeight = Math.max(
-		(round.ceil(itemCount, columnCount) * itemHeight) / columnCount,
+		(round.ceil(itemCount, _columnCount) * itemHeight) / _columnCount,
 		height
 	);
 
-	$: overScanColumn = columnCount * overScan;
+	$: overScanColumn = _columnCount * overScan;
 
 	$: if (offsetWidth) {
 		indexes = getIndexes(
 			itemCount,
 			itemHeight,
 			height,
-			columnCount,
+			_columnCount,
 			overScanColumn,
 			_scrollPosition
 		);
