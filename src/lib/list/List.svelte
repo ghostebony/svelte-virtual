@@ -1,8 +1,30 @@
-<script context="module">
+<script context="module" lang="ts">
 	import { scrollSpeed as __scrollSpeed, scrollStop as _scrollStop } from "$lib/utils";
 
 	const scrollStop = _scrollStop();
 	const _scrollSpeed = __scrollSpeed();
+
+	const getIndexes = (
+		itemCount: number,
+		itemSize: number,
+		size: number,
+		overScan: number,
+		scrollPosition: number
+	) => {
+		const indexes: number[] = [];
+
+		const startIndexTemp = ~~(scrollPosition / itemSize);
+		const startIndexOverScan = startIndexTemp > overScan ? startIndexTemp - overScan : 0;
+		const startIndex = startIndexOverScan >= 0 ? startIndexOverScan : startIndexTemp;
+
+		const endIndexTemp = Math.min(itemCount, ~~((scrollPosition + size) / itemSize));
+		const endIndexOverScan = endIndexTemp + overScan;
+		const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
+
+		for (let i = 0; i < endIndex - startIndex; i++) indexes.push(i + startIndex);
+
+		return indexes;
+	};
 </script>
 
 <script lang="ts">
@@ -67,28 +89,6 @@
 
 			manualScroll = false;
 		}
-	};
-
-	const getIndexes = (
-		itemCount: number,
-		itemSize: number,
-		size: number,
-		overScan: number,
-		scrollPosition: number
-	) => {
-		const indexes: number[] = [];
-
-		const startIndexTemp = ~~(scrollPosition / itemSize);
-		const startIndexOverScan = startIndexTemp > overScan ? startIndexTemp - overScan : 0;
-		const startIndex = startIndexOverScan >= 0 ? startIndexOverScan : startIndexTemp;
-
-		const endIndexTemp = Math.min(itemCount, ~~((scrollPosition + size) / itemSize));
-		const endIndexOverScan = endIndexTemp + overScan;
-		const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
-
-		for (let i = 0; i < endIndex - startIndex; i++) indexes.push(i + startIndex);
-
-		return indexes;
 	};
 
 	const getItemStyle = (index: number) => {
