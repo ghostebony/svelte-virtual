@@ -74,6 +74,27 @@ pnpm add -D svelte-virtual@next
 </Grid>
 ```
 
+### Grid [using rows and columns] ([demo](https://svelte.dev/repl/1b2b8cdcb6674f2c8a9e434009f6df3b))
+
+```svelte
+<script>
+	import { Grid } from "svelte-virtual@next";
+
+	let itemCount = 100000;
+	let columnCount = 5;
+
+	let items = Array.from({ length: itemCount }, (_, l) =>
+		Array.from({ length: columnCount }, (_, c) => `${l}-${c}`)
+	);
+</script>
+
+<Grid itemCount={itemCount * columnCount} itemHeight={50} itemWidth={65} height={500} {columnCount}>
+	<div slot="item" let:rowIndex let:columnIndex let:style {style}>
+		{items[rowIndex][columnIndex]}
+	</div>
+</Grid>
+```
+
 ## Props
 
 ### List
@@ -123,7 +144,7 @@ pnpm add -D svelte-virtual@next
         -   Shared:
             -   `index: number` - Item index
             -   `style: string` - Item style, must be applied to the slot (look above for example)
-        -   Only for `<Grid/>`:
+        -   Only for `<Grid/>` ([demo](#grid-using-rows-and-columns-demo)):
             -   `rowIndex: number` - Item row index
             -   `columnIndex: number` - Item column index
 -   `placeholder` (optional) - Slot for each item (when scrolling fast, replaces `item` slot. if not present, `item` slot is used)
@@ -131,7 +152,7 @@ pnpm add -D svelte-virtual@next
         -   Shared:
             -   `index: number` - Item index
             -   `style: string` - Item style, must be applied to the slot (look above for example)
-        -   Only for `<Grid/>`:
+        -   Only for `<Grid/>` ([demo](#grid-using-rows-and-columns-demo)):
             -   `rowIndex: number` - Item row index
             -   `columnIndex: number` - Item column index
 -   `header` (optional) - Slot for the elements that should appear at the top of the component
