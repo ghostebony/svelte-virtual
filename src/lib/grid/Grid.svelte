@@ -38,7 +38,7 @@
 	let isScrollingFast = false;
 
 	export const scrollToIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
-		scrollTo((Math.ceil((index + 1) / _columnCount) - 1) * itemHeight + marginTop, behavior);
+		scrollTo(~~(index / _columnCount) * itemHeight + marginTop, behavior);
 	};
 
 	export const scrollToPosition = (
@@ -109,7 +109,7 @@
 		`position: absolute; transform: translate3d(${
 			(index % _columnCount) * itemWidth + marginLeft
 		}px, ${
-			(Math.ceil((index + 1) / _columnCount) - 1) * itemHeight + marginTop
+			~~(index / _columnCount) * itemHeight + marginTop
 		}px, 0px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform;`;
 
 	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
