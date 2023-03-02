@@ -120,15 +120,17 @@ pnpm add -D svelte-virtual@next
 
 -   `item` - Slot for each item
     -   Props:
-        -   `index: number` - Item index
-        -   `style: string` - Item style, must be applied to the slot (look above for example)
+        -   Shared:
+            -   `index: number` - Item index
+            -   `style: string` - Item style, must be applied to the slot (look above for example)
         -   Only for `<Grid/>`:
             -   `rowIndex: number` - Item row index
             -   `columnIndex: number` - Item column index
 -   `placeholder` (optional) - Slot for each item (when scrolling fast, replaces `item` slot. if not present, `item` slot is used)
     -   Props:
-        -   `index: number` - Item index
-        -   `style: string` - Item style, must be applied to the slot (look above for example)
+        -   Shared:
+            -   `index: number` - Item index
+            -   `style: string` - Item style, must be applied to the slot (look above for example)
         -   Only for `<Grid/>`:
             -   `rowIndex: number` - Item row index
             -   `columnIndex: number` - Item column index
