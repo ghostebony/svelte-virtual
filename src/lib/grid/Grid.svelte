@@ -112,6 +112,8 @@
 		const columnIndex = index % _columnCount;
 
 		return {
+			rowIndex,
+			columnIndex,
 			style: `position: absolute; transform: translate3d(${
 				columnIndex * itemWidth + marginLeft
 			}px, ${
@@ -189,12 +191,14 @@
 
 	<div style:height="{innerHeight}px" style:width="100%">
 		{#each indexes as index (getKey(index))}
-			{@const { style } = getItemProps(index)}
+			{@const { rowIndex, columnIndex, style } = getItemProps(index)}
 
 			{#if !isScrollingFast || !$$slots.placeholder}
-				<slot name="item" {index} {style}>Missing template</slot>
+				<slot name="item" {index} {rowIndex} {columnIndex} {style}>Missing template</slot>
 			{:else}
-				<slot name="placeholder" {index} {style}>Missing placeholder</slot>
+				<slot name="placeholder" {index} {rowIndex} {columnIndex} {style}>
+					Missing placeholder
+				</slot>
 			{/if}
 		{/each}
 	</div>
