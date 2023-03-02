@@ -107,12 +107,18 @@
 		}
 	};
 
-	const getItemStyle = (index: number) =>
-		`position: absolute; transform: translate3d(${
-			(index % _columnCount) * itemWidth + marginLeft
-		}px, ${
-			getRowIndex(index, _columnCount) * itemHeight + marginTop
-		}px, 0px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform;`;
+	const getItemProps = (index: number) => {
+		const rowIndex = getRowIndex(index, _columnCount);
+		const columnIndex = index % _columnCount;
+
+		return {
+			style: `position: absolute; transform: translate3d(${
+				columnIndex * itemWidth + marginLeft
+			}px, ${
+				rowIndex * itemHeight + marginTop
+			}px, 0px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform;`,
+		};
+	};
 
 	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
 		isScrolling = true;
@@ -183,7 +189,7 @@
 
 	<div style:height="{innerHeight}px" style:width="100%">
 		{#each indexes as index (getKey(index))}
-			{@const style = getItemStyle(index)}
+			{@const { style } = getItemProps(index)}
 
 			{#if !isScrollingFast || !$$slots.placeholder}
 				<slot name="item" {index} {style}>Missing template</slot>
