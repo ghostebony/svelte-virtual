@@ -39,6 +39,8 @@
 
 		return indexes;
 	};
+
+	const getRowIndex = (index: number, columnCount: number) => ~~(index / columnCount);
 </script>
 
 <script lang="ts">
@@ -74,7 +76,7 @@
 	let isScrollingFast = false;
 
 	export const scrollToIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
-		scrollTo(~~(index / _columnCount) * itemHeight + marginTop, behavior);
+		scrollTo(getRowIndex(index, _columnCount) * itemHeight + marginTop, behavior);
 	};
 
 	export const scrollToPosition = (
@@ -109,7 +111,7 @@
 		`position: absolute; transform: translate3d(${
 			(index % _columnCount) * itemWidth + marginLeft
 		}px, ${
-			~~(index / _columnCount) * itemHeight + marginTop
+			getRowIndex(index, _columnCount) * itemHeight + marginTop
 		}px, 0px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform;`;
 
 	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
