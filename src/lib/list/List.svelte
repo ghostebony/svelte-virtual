@@ -44,7 +44,7 @@
 	export let scrollPosition = 0;
 	export let scrollBehavior: ScrollBehavior = "auto";
 
-	export let getKey: ((index: number) => unknown) | undefined = undefined;
+	export let getKey: (index: number) => unknown = (index: number) => index;
 
 	let list: HTMLElement;
 	let _scrollPosition = scrollPosition;
@@ -173,7 +173,7 @@
 		style:height={isVertical ? `${innerSize}px` : "100%"}
 		style:width={!isVertical ? `${innerSize}px` : "100%"}
 	>
-		{#each indexes as index (getKey ? getKey(index) : index)}
+		{#each indexes as index (getKey(index))}
 			{@const style = getItemStyle(index)}
 
 			{#if !isScrollingFast || !$$slots.placeholder}

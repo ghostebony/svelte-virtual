@@ -58,7 +58,7 @@
 	export let scrollPosition = 0;
 	export let scrollBehavior: ScrollBehavior = "auto";
 
-	export let getKey: ((index: number) => unknown) | undefined = undefined;
+	export let getKey: (index: number) => unknown = (index: number) => index;
 
 	export let columnCount: number | undefined = undefined;
 
@@ -180,7 +180,7 @@
 	{/if}
 
 	<div style:height="{innerHeight}px" style:width="100%">
-		{#each indexes as index (getKey ? getKey(index) : index)}
+		{#each indexes as index (getKey(index))}
 			{@const style = getItemStyle(index)}
 
 			{#if !isScrollingFast || !$$slots.placeholder}
