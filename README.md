@@ -107,6 +107,7 @@ pnpm add -D svelte-virtual@next
 | scrollPosition | `number`                     | `0`                        |           |
 | scrollBehavior | `"auto" \| "smooth"`         | `"auto"`                   |           |
 | getKey         | `(index: number) => unknown` | `(index: number) => index` |           |
+| columnCount    | `number`                     | `undefined`                |           |
 
 ## Methods ([demo](https://svelte.dev/repl/8efc42f67dc5493aabe465c589af62e7))
 
