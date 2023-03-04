@@ -133,7 +133,7 @@
 
 	$: size = isVertical ? offsetHeight : offsetWidth;
 
-	$: if (offsetHeight) {
+	$: if (size) {
 		indexes = getIndexes(itemCount, itemSize, size, overScan, _scrollPosition);
 	}
 
