@@ -148,7 +148,7 @@
 
 	$: overScanColumn = _columnCount * overScan;
 
-	$: if (offsetWidth) {
+	$: if (offsetWidth || _columnCount) {
 		indexes = getIndexes(
 			itemCount,
 			itemHeight,
