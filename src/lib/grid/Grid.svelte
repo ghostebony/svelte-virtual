@@ -141,10 +141,7 @@
 		? Math.max(~~((offsetWidth - marginLeft - (offsetWidth - clientWidth)) / itemWidth), 1)
 		: columnCount;
 
-	$: innerHeight = Math.max(
-		(round.ceil(itemCount, _columnCount) * itemHeight) / _columnCount,
-		height
-	);
+	$: innerHeight = (round.ceil(itemCount, _columnCount) * itemHeight) / _columnCount;
 
 	$: overScanColumn = _columnCount * overScan;
 

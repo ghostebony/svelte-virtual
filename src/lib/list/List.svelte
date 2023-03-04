@@ -121,7 +121,7 @@
 
 	$: isVertical = layout === "vertical";
 
-	$: innerSize = Math.max(itemCount * itemSize, size);
+	$: innerSize = itemCount * itemSize;
 
 	$: itemSizeInternal = isVertical
 		? `height: ${itemSize}px; width: ${
