@@ -29,3 +29,9 @@ jobs:
 
       - name: Lint code
         run: pnpm lint
+
+      - name: svelte-kit sync
+        run: pnpm svelte-kit sync
+
+      - name: Check code
+        run: pnpm check
