@@ -135,7 +135,7 @@ pnpm add -D svelte-virtual@next
 <table>
 	<thead>
 		<tr>
-			<th align="left">Property</th>
+			<th align="left">Method</th>
 			<th align="left">Argument</th>
 			<th align="left">Type</th>
 			<th align="left">Default</th>
