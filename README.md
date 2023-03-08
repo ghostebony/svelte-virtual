@@ -135,11 +135,11 @@ pnpm add -D svelte-virtual@next
 <table>
 	<thead>
 		<tr>
-			<th style="text-align:left">Property</th>
-			<th style="text-align:left">Argument</th>
-			<th style="text-align:left">Type</th>
-			<th style="text-align:left">Default</th>
-			<th>Required?</th>
+			<th align="left">Property</th>
+			<th align="left">Argument</th>
+			<th align="left">Type</th>
+			<th align="left">Default</th>
+			<th align="center">Required?</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -150,13 +150,13 @@ pnpm add -D svelte-virtual@next
 			<td>index</td>
 			<td><code>number</code></td>
 			<td></td>
-			<td style="text-align:center">✓</td>
+			<td align="center">✓</td>
 		</tr>
 		<tr>
 			<td>behavior</td>
 			<td><code>"auto" | "smooth"</code></td>
 			<td><code>scrollBehavior</code></td>
-			<td style="text-align:center"></td>
+			<td align="center"></td>
 		</tr>
 		<tr>
 			<td rowspan="3">scrollToPosition</td>
@@ -165,13 +165,13 @@ pnpm add -D svelte-virtual@next
 			<td>position</td>
 			<td><code>number</code></td>
 			<td></td>
-			<td style="text-align:center">✓</td>
+			<td align="center">✓</td>
 		</tr>
 		<tr>
 			<td>behavior</td>
 			<td><code>"auto" | "smooth"</code></td>
 			<td><code>scrollBehavior</code></td>
-			<td style="text-align:center"></td>
+			<td align="center"></td>
 		</tr>
 	</tbody>
 </table>
