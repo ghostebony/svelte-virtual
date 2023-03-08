@@ -132,10 +132,49 @@ pnpm add -D svelte-virtual@next
 
 ## Methods ([demo](https://svelte.dev/repl/8efc42f67dc5493aabe465c589af62e7))
 
-| Property          | Arguments                                        | Default          |
-| :---------------- | :----------------------------------------------- | :--------------- |
-| setScrollIndex    | `index: number, behavior: "auto" \| "smooth"`    | `scrollBehavior` |
-| setScrollPosition | `position: number, behavior: "auto" \| "smooth"` | `scrollBehavior` |
+<table>
+	<thead>
+		<tr>
+			<th style="text-align:left">Property</th>
+			<th style="text-align:left">Argument</th>
+			<th style="text-align:left">Type</th>
+			<th style="text-align:left">Default</th>
+			<th>Required?</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td rowspan="3">scrollToIndex</td>
+		</tr>
+		<tr>
+			<td>index</td>
+			<td><code>number</code></td>
+			<td></td>
+			<td style="text-align:center">✓</td>
+		</tr>
+		<tr>
+			<td>behavior</td>
+			<td><code>"auto" | "smooth"</code></td>
+			<td><code>scrollBehavior</code></td>
+			<td style="text-align:center"></td>
+		</tr>
+		<tr>
+			<td rowspan="3">scrollToPosition</td>
+		</tr>
+		<tr>
+			<td>position</td>
+			<td><code>number</code></td>
+			<td></td>
+			<td style="text-align:center">✓</td>
+		</tr>
+		<tr>
+			<td>behavior</td>
+			<td><code>"auto" | "smooth"</code></td>
+			<td><code>scrollBehavior</code></td>
+			<td style="text-align:center"></td>
+		</tr>
+	</tbody>
+</table>
 
 ## Slots
 
