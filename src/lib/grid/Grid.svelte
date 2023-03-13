@@ -35,7 +35,7 @@
 		const endIndexOverScan = endIndexTemp + overScanColumn;
 		const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
 
-		for (let i = 0; i < endIndex - startIndex; i++) indexes.push(i + startIndex);
+		for (let i = startIndex; i < endIndex; i++) indexes.push(i);
 
 		return indexes;
 	};
