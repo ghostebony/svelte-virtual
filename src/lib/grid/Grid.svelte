@@ -93,8 +93,7 @@
 		if (grid) {
 			manualScroll = true;
 
-			grid.scrollTo({ top: top + headerHeight, behavior });
-			scrollPosition = _scrollPosition;
+			grid.scrollTo({ top, behavior });
 
 			manualScroll = false;
 		}
@@ -104,7 +103,7 @@
 		if (!manualScroll && !isScrolling) {
 			manualScroll = true;
 
-			grid.scrollTo({ top: scrollPosition + headerHeight, behavior: scrollBehavior });
+			grid.scrollTo({ top: scrollPosition, behavior: scrollBehavior });
 
 			manualScroll = false;
 		}
@@ -130,9 +129,9 @@
 
 		if (!manualScroll) {
 			_scrollPosition = Math.max(0, currentTarget.scrollTop - headerHeight);
-			scrollPosition = _scrollPosition;
+			scrollPosition = currentTarget.scrollTop;
 
-			scrollSpeed(scrollPosition);
+			scrollSpeed(_scrollPosition);
 		}
 
 		scrollStop(() => {

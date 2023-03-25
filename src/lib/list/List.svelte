@@ -74,8 +74,7 @@
 		if (list) {
 			manualScroll = true;
 
-			list.scrollTo({ [isVertical ? "top" : "left"]: direction + headerHeight, behavior });
-			scrollPosition = _scrollPosition;
+			list.scrollTo({ [isVertical ? "top" : "left"]: direction, behavior });
 
 			manualScroll = false;
 		}
@@ -85,7 +84,7 @@
 		if (!manualScroll && !isScrolling) {
 			manualScroll = true;
 
-			list.scrollTo({ top: scrollPosition + headerHeight, behavior: scrollBehavior });
+			list.scrollTo({ top: scrollPosition, behavior: scrollBehavior });
 
 			manualScroll = false;
 		}
@@ -105,13 +104,12 @@
 		isScrolling = true;
 
 		if (!manualScroll) {
-			_scrollPosition = Math.max(
-				0,
-				currentTarget[isVertical ? "scrollTop" : "scrollLeft"] - headerHeight
-			);
-			scrollPosition = _scrollPosition;
+			const direction = currentTarget[isVertical ? "scrollTop" : "scrollLeft"];
 
-			scrollSpeed(scrollPosition);
+			_scrollPosition = Math.max(0, direction - headerHeight);
+			scrollPosition = direction;
+
+			scrollSpeed(_scrollPosition);
 		}
 
 		scrollStop(() => {
