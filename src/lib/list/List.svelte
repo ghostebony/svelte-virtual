@@ -60,7 +60,7 @@
 	let isScrollingFast = false;
 
 	export const scrollToIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
-		scrollTo(index * itemSize + (isVertical ? marginTop : marginLeft), behavior);
+		scrollTo(index * itemSize + (isVertical ? marginTop : marginLeft) + headerHeight, behavior);
 	};
 
 	export const scrollToPosition = (

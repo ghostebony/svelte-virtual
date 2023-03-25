@@ -76,7 +76,10 @@
 	let isScrollingFast = false;
 
 	export const scrollToIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
-		scrollTo(getRowIndex(index, _columnCount) * itemHeight + marginTop, behavior);
+		scrollTo(
+			getRowIndex(index, _columnCount) * itemHeight + marginTop + headerHeight,
+			behavior
+		);
 	};
 
 	export const scrollToPosition = (
