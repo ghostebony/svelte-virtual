@@ -32,8 +32,10 @@
 
 	export let itemCount: number;
 	export let itemSize: number;
-	export let height: number;
+	export let height: number | string = "100%";
 	export let width = "100%";
+
+    export let stickyIndexes: number[] = [];
 
 	export let overScan = 1;
 
@@ -152,7 +154,7 @@
 <div
 	style:position="relative"
 	style:overflow="auto"
-	style:height="{height}px"
+    style:height={typeof height === 'number' ? `${height}px` : height}
 	style:width
 	on:scroll={onScroll}
 	bind:this={list}
@@ -171,6 +173,22 @@
 		style:height={isVertical ? `${innerSize}px` : "100%"}
 		style:width={!isVertical ? `${innerSize}px` : "100%"}
 	>
+        {#if stickyIndexes.length}
+            {@const stickyIndex = Math.max(
+                ...stickyIndexes.filter((i) => i < (indexes?.[0] ?? 0))
+            )}
+            {#if stickyIndex >= 0}
+                <div
+                style:position="sticky"
+                style:top={isVertical ? `${marginTop}px` : '0px'}
+                style:left={isVertical ? '0px' : `${marginLeft}px`}
+                style:z-index="1"
+                >
+                <slot name="item" index={stickyIndex} />
+                </div>
+            {/if}
+        {/if}
+
 		{#each indexes as index (getKey(index))}
 			{@const style = getItemStyle(index)}
 
