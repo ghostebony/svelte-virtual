@@ -35,7 +35,7 @@
 	export let height: number | string = "100%";
 	export let width = "100%";
 
-    export let stickyIndexes: number[] = [];
+    export let stickyIndicies: number[] = [];
 
 	export let overScan = 1;
 
@@ -173,9 +173,9 @@
 		style:height={isVertical ? `${innerSize}px` : "100%"}
 		style:width={!isVertical ? `${innerSize}px` : "100%"}
 	>
-        {#if stickyIndexes.length}
+        {#if stickyIndicies.length}
             {@const stickyIndex = Math.max(
-                ...stickyIndexes.filter((i) => i < (indexes?.[0] ?? 0))
+                ...stickyIndicies.filter((i) => i < (indexes?.[0] ?? 0))
             )}
             {#if stickyIndex >= 0}
                 <div
