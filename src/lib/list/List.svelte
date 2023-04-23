@@ -175,6 +175,7 @@
 	>
 		{#if stickyIndices.length && indexes.length}
 			{@const stickyIndex = Math.max(...stickyIndices.filter((i) => i < indexes[0]))}
+
 			{#if stickyIndex >= 0}
 				<div
 					style:position="sticky"
