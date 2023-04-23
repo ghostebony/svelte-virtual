@@ -103,8 +103,9 @@ pnpm add -D svelte-virtual@next
 | :------------- | :--------------------------- | :------------------------- | :-------: |
 | itemCount      | `number`                     |                            |     ✓     |
 | itemSize       | `number`                     |                            |     ✓     |
-| height         | `number`                     |                            |     ✓     |
+| height         | `number \| string`           | `"100%"`                   |           |
 | width          | `string`                     | `"100%"`                   |           |
+| stickyIndices  | `number[]`                   | `[]`                       |           |
 | overScan       | `number`                     | `1`                        |           |
 | marginLeft     | `number`                     | `0`                        |           |
 | marginTop      | `number`                     | `0`                        |           |
