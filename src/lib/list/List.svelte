@@ -1,30 +1,12 @@
 <script context="module" lang="ts">
-	import { scrollSpeed as __scrollSpeed, scrollStop as _scrollStop } from "$lib/utils";
+	import {
+		scrollSpeed as __scrollSpeed,
+		scrollStop as _scrollStop,
+		getListIndexes,
+	} from "$lib/utils";
 
 	const scrollStop = _scrollStop();
 	const _scrollSpeed = __scrollSpeed();
-
-	const getIndexes = (
-		itemCount: number,
-		itemSize: number,
-		size: number,
-		overScan: number,
-		scrollPosition: number
-	) => {
-		const indexes: number[] = [];
-
-		const startIndexTemp = ~~(scrollPosition / itemSize);
-		const startIndexOverScan = startIndexTemp > overScan ? startIndexTemp - overScan : 0;
-		const startIndex = startIndexOverScan >= 0 ? startIndexOverScan : startIndexTemp;
-
-		const endIndexTemp = Math.min(itemCount, ~~((scrollPosition + size) / itemSize));
-		const endIndexOverScan = endIndexTemp + overScan;
-		const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
-
-		for (let i = startIndex; i < endIndex; i++) indexes.push(i);
-
-		return indexes;
-	};
 </script>
 
 <script lang="ts">
@@ -137,7 +119,7 @@
 	$: size = isVertical ? offsetHeight : offsetWidth;
 
 	$: if (size) {
-		indexes = getIndexes(itemCount, itemSize, size, overScan, _scrollPosition);
+		indexes = getListIndexes(itemCount, itemSize, size, overScan, _scrollPosition);
 	}
 
 	$: if (list) {

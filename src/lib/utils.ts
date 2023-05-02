@@ -47,3 +47,60 @@ export function scrollSpeed(refresh = 200) {
 			}
 		};
 }
+
+export const round = {
+	ceil: (x: number, multiple: number) => Math.ceil(x / multiple) * multiple,
+	floor: (x: number, multiple: number) => ~~(x / multiple) * multiple,
+};
+
+export const getGridIndexes = (
+	itemCount: number,
+	itemHeight: number,
+	height: number,
+	columnCount: number,
+	overScanColumn: number,
+	scrollPosition: number
+) => {
+	const indexes: number[] = [];
+
+	const startIndexTemp = round.floor((scrollPosition / itemHeight) * columnCount, columnCount);
+	const startIndexOverScan =
+		startIndexTemp > overScanColumn ? startIndexTemp - overScanColumn : 0;
+	const startIndex =
+		startIndexTemp > 0 && startIndexOverScan >= 0 ? startIndexOverScan : startIndexTemp;
+
+	const endIndexTemp = Math.min(
+		itemCount,
+		round.ceil(((scrollPosition + height) / itemHeight) * columnCount, columnCount)
+	);
+	const endIndexOverScan = endIndexTemp + overScanColumn;
+	const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
+
+	for (let i = startIndex; i < endIndex; i++) indexes.push(i);
+
+	return indexes;
+};
+
+export const getListIndexes = (
+	itemCount: number,
+	itemSize: number,
+	size: number,
+	overScan: number,
+	scrollPosition: number
+) => {
+	const indexes: number[] = [];
+
+	const startIndexTemp = ~~(scrollPosition / itemSize);
+	const startIndexOverScan = startIndexTemp > overScan ? startIndexTemp - overScan : 0;
+	const startIndex = startIndexOverScan >= 0 ? startIndexOverScan : startIndexTemp;
+
+	const endIndexTemp = Math.min(itemCount, ~~((scrollPosition + size) / itemSize));
+	const endIndexOverScan = endIndexTemp + overScan;
+	const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
+
+	for (let i = startIndex; i < endIndex; i++) indexes.push(i);
+
+	return indexes;
+};
+
+export const getRowIndex = (index: number, columnCount: number) => ~~(index / columnCount);

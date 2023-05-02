@@ -1,46 +1,14 @@
 <script context="module" lang="ts">
-	import { scrollSpeed as __scrollSpeed, scrollStop as _scrollStop } from "$lib/utils";
+	import {
+		scrollSpeed as __scrollSpeed,
+		scrollStop as _scrollStop,
+		getGridIndexes,
+		getRowIndex,
+		round,
+	} from "$lib/utils";
 
 	const scrollStop = _scrollStop();
 	const _scrollSpeed = __scrollSpeed();
-
-	const round = {
-		ceil: (x: number, multiple: number) => Math.ceil(x / multiple) * multiple,
-		floor: (x: number, multiple: number) => ~~(x / multiple) * multiple,
-	};
-
-	const getIndexes = (
-		itemCount: number,
-		itemHeight: number,
-		height: number,
-		columnCount: number,
-		overScanColumn: number,
-		scrollPosition: number
-	) => {
-		const indexes: number[] = [];
-
-		const startIndexTemp = round.floor(
-			(scrollPosition / itemHeight) * columnCount,
-			columnCount
-		);
-		const startIndexOverScan =
-			startIndexTemp > overScanColumn ? startIndexTemp - overScanColumn : 0;
-		const startIndex =
-			startIndexTemp > 0 && startIndexOverScan >= 0 ? startIndexOverScan : startIndexTemp;
-
-		const endIndexTemp = Math.min(
-			itemCount,
-			round.ceil(((scrollPosition + height) / itemHeight) * columnCount, columnCount)
-		);
-		const endIndexOverScan = endIndexTemp + overScanColumn;
-		const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
-
-		for (let i = startIndex; i < endIndex; i++) indexes.push(i);
-
-		return indexes;
-	};
-
-	const getRowIndex = (index: number, columnCount: number) => ~~(index / columnCount);
 </script>
 
 <script lang="ts">
@@ -151,7 +119,7 @@
 	$: overScanColumn = _columnCount * overScan;
 
 	$: if (offsetWidth || _columnCount) {
-		indexes = getIndexes(
+		indexes = getGridIndexes(
 			itemCount,
 			itemHeight,
 			height,
