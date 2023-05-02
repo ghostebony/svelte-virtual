@@ -2,7 +2,7 @@
 	import {
 		scrollSpeed as __scrollSpeed,
 		scrollStop as _scrollStop,
-		getGridIndexes,
+		getGridIndices,
 		getRowIndex,
 		round,
 	} from "$lib/utils";
@@ -37,7 +37,7 @@
 	let headerHeight = 0;
 	let offsetWidth = 0;
 	let clientWidth = 0;
-	let indexes: number[] = [];
+	let indices: number[] = [];
 
 	let manualScroll = false;
 	let isScrolling = false;
@@ -119,7 +119,7 @@
 	$: overScanColumn = _columnCount * overScan;
 
 	$: if (offsetWidth || _columnCount) {
-		indexes = getGridIndexes(
+		indices = getGridIndices(
 			itemCount,
 			itemHeight,
 			height,
@@ -160,7 +160,7 @@
 	{/if}
 
 	<div style:height="{innerHeight}px" style:width="100%">
-		{#each indexes as index (getKey(index))}
+		{#each indices as index (getKey(index))}
 			{@const { rowIndex, columnIndex, style } = getItemProps(index)}
 
 			{#if !isScrollingFast || !$$slots.placeholder}

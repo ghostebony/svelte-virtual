@@ -53,7 +53,7 @@ export const round = {
 	floor: (x: number, multiple: number) => ~~(x / multiple) * multiple,
 };
 
-export const getGridIndexes = (
+export const getGridIndices = (
 	itemCount: number,
 	itemHeight: number,
 	height: number,
@@ -61,7 +61,7 @@ export const getGridIndexes = (
 	overScanColumn: number,
 	scrollPosition: number
 ) => {
-	const indexes: number[] = [];
+	const indices: number[] = [];
 
 	const startIndexTemp = round.floor((scrollPosition / itemHeight) * columnCount, columnCount);
 	const startIndexOverScan =
@@ -76,19 +76,19 @@ export const getGridIndexes = (
 	const endIndexOverScan = endIndexTemp + overScanColumn;
 	const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
 
-	for (let i = startIndex; i < endIndex; i++) indexes.push(i);
+	for (let i = startIndex; i < endIndex; i++) indices.push(i);
 
-	return indexes;
+	return indices;
 };
 
-export const getListIndexes = (
+export const getListIndices = (
 	itemCount: number,
 	itemSize: number,
 	size: number,
 	overScan: number,
 	scrollPosition: number
 ) => {
-	const indexes: number[] = [];
+	const indices: number[] = [];
 
 	const startIndexTemp = ~~(scrollPosition / itemSize);
 	const startIndexOverScan = startIndexTemp > overScan ? startIndexTemp - overScan : 0;
@@ -98,9 +98,9 @@ export const getListIndexes = (
 	const endIndexOverScan = endIndexTemp + overScan;
 	const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
 
-	for (let i = startIndex; i < endIndex; i++) indexes.push(i);
+	for (let i = startIndex; i < endIndex; i++) indices.push(i);
 
-	return indexes;
+	return indices;
 };
 
 export const getRowIndex = (index: number, columnCount: number) => ~~(index / columnCount);

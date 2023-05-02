@@ -2,7 +2,7 @@
 	import {
 		scrollSpeed as __scrollSpeed,
 		scrollStop as _scrollStop,
-		getListIndexes,
+		getListIndices,
 	} from "$lib/utils";
 
 	const scrollStop = _scrollStop();
@@ -37,7 +37,7 @@
 	let clientHeight = 0;
 	let offsetWidth = 0;
 	let clientWidth = 0;
-	let indexes: number[] = [];
+	let indices: number[] = [];
 
 	let manualScroll = false;
 	let isScrolling = false;
@@ -119,7 +119,7 @@
 	$: size = isVertical ? offsetHeight : offsetWidth;
 
 	$: if (size) {
-		indexes = getListIndexes(itemCount, itemSize, size, overScan, _scrollPosition);
+		indices = getListIndices(itemCount, itemSize, size, overScan, _scrollPosition);
 	}
 
 	$: if (list) {
@@ -158,8 +158,8 @@
 		style:height={isVertical ? `${innerSize}px` : "100%"}
 		style:width={!isVertical ? `${innerSize}px` : "100%"}
 	>
-		{#if stickyIndices.length && indexes.length}
-			{@const stickyIndex = Math.max(...stickyIndices.filter((i) => i < indexes[0]))}
+		{#if stickyIndices.length && indices.length}
+			{@const stickyIndex = Math.max(...stickyIndices.filter((i) => i < indices[0]))}
 
 			{#if stickyIndex >= 0}
 				<div
@@ -173,7 +173,7 @@
 			{/if}
 		{/if}
 
-		{#each indexes as index (getKey(index))}
+		{#each indices as index (getKey(index))}
 			{@const style = getItemStyle(index)}
 
 			{#if !isScrollingFast || !$$slots.placeholder}
