@@ -44,7 +44,7 @@
 </script>
 
 <script lang="ts">
-	import type { ScrollBehavior } from "$lib/types";
+	import type { GetKey, ScrollBehavior, ScrollToIndex, ScrollToPosition } from "$lib/types";
 
 	export let itemCount: number;
 	export let itemHeight: number;
@@ -60,7 +60,7 @@
 	export let scrollPosition = 0;
 	export let scrollBehavior: ScrollBehavior = "auto";
 
-	export let getKey: (index: number) => unknown = (index: number) => index;
+	export let getKey: GetKey = (index: number) => index;
 
 	export let columnCount: number | undefined = undefined;
 
@@ -75,14 +75,17 @@
 	let isScrolling = false;
 	let isScrollingFast = false;
 
-	export const scrollToIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
+	export const scrollToIndex: ScrollToIndex = (
+		index: number,
+		behavior: ScrollBehavior = scrollBehavior
+	) => {
 		scrollTo(
 			getRowIndex(index, _columnCount) * itemHeight + marginTop + headerHeight,
 			behavior
 		);
 	};
 
-	export const scrollToPosition = (
+	export const scrollToPosition: ScrollToPosition = (
 		position: number,
 		behavior: ScrollBehavior = scrollBehavior
 	) => {

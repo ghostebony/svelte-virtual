@@ -28,7 +28,7 @@
 </script>
 
 <script lang="ts">
-	import type { ScrollBehavior } from "$lib/types";
+	import type { GetKey, ScrollBehavior, ScrollToIndex, ScrollToPosition } from "$lib/types";
 
 	export let itemCount: number;
 	export let itemSize: number;
@@ -46,7 +46,7 @@
 	export let scrollPosition = 0;
 	export let scrollBehavior: ScrollBehavior = "auto";
 
-	export let getKey: (index: number) => unknown = (index: number) => index;
+	export let getKey: GetKey = (index: number) => index;
 
 	let list: HTMLElement;
 	let _scrollPosition = scrollPosition;
@@ -61,11 +61,14 @@
 	let isScrolling = false;
 	let isScrollingFast = false;
 
-	export const scrollToIndex = (index: number, behavior: ScrollBehavior = scrollBehavior) => {
+	export const scrollToIndex: ScrollToIndex = (
+		index: number,
+		behavior: ScrollBehavior = scrollBehavior
+	) => {
 		scrollTo(index * itemSize + (isVertical ? marginTop : marginLeft) + headerHeight, behavior);
 	};
 
-	export const scrollToPosition = (
+	export const scrollToPosition: ScrollToPosition = (
 		position: number,
 		behavior: ScrollBehavior = scrollBehavior
 	) => {
