@@ -1,2 +1,2 @@
-export { default as Grid } from "./grid";
-export { default as List } from "./list";
+export { default as Grid } from "./grid/Grid.svelte";
+export { default as List } from "./list/List.svelte";
