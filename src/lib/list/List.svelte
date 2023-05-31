@@ -33,6 +33,7 @@
 	let list: HTMLElement;
 	let _scrollPosition = scrollPosition;
 	let headerHeight = 0;
+	let headerWidth = 0;
 	let offsetHeight = 0;
 	let clientHeight = 0;
 	let offsetWidth = 0;
@@ -47,7 +48,10 @@
 		index: number,
 		behavior: ScrollBehavior = scrollBehavior
 	) => {
-		scrollTo(index * itemSize + (isVertical ? marginTop : marginLeft) + headerHeight, behavior);
+		scrollTo(
+			index * itemSize + (isVertical ? marginTop + headerHeight : marginLeft + headerWidth),
+			behavior
+		);
 	};
 
 	export const scrollToPosition: ScrollToPosition = (
@@ -83,7 +87,7 @@
 		return `position: absolute; transform: translate3d(${
 			isVertical
 				? `${marginLeft}px, ${ixis + marginTop}px`
-				: `${ixis + marginLeft}px, ${marginTop}px`
+				: `${headerWidth + ixis + marginLeft}px, ${marginTop}px`
 		}, 0px); ${itemSizeInternal} will-change: transform;`;
 	};
 
@@ -91,10 +95,13 @@
 		isScrolling = true;
 
 		if (!manualScroll) {
-			const direction = currentTarget[isVertical ? "scrollTop" : "scrollLeft"];
-
-			_scrollPosition = Math.max(0, direction - headerHeight);
-			scrollPosition = direction;
+			if (isVertical) {
+				_scrollPosition = Math.max(0, currentTarget["scrollTop"] - headerHeight);
+				scrollPosition = currentTarget["scrollTop"];
+			} else {
+				_scrollPosition = Math.max(0, currentTarget["scrollLeft"] - headerWidth);
+				scrollPosition = currentTarget["scrollLeft"];
+			}
 
 			scrollSpeed(_scrollPosition);
 		}
@@ -149,9 +156,15 @@
 	bind:clientWidth
 >
 	{#if $$slots.header}
-		<div bind:offsetHeight={headerHeight}>
-			<slot name="header" />
-		</div>
+		{#if isVertical}
+			<div bind:offsetHeight={headerHeight}>
+				<slot name="header" />
+			</div>
+		{:else}
+			<div bind:offsetWidth={headerWidth} style:position="absolute">
+				<slot name="header" />
+			</div>
+		{/if}
 	{/if}
 
 	<div
@@ -184,5 +197,19 @@
 		{/each}
 	</div>
 
-	<slot name="footer" />
+	{#if $$slots.footer}
+		{#if isVertical}
+			<div>
+				<slot name="footer" />
+			</div>
+		{:else}
+			<div
+				style:position="absolute"
+				style:top="0"
+				style:left="{headerWidth + itemCount * itemSize + marginLeft}px"
+			>
+				<slot name="footer" />
+			</div>
+		{/if}
+	{/if}
 </div>
