@@ -30,55 +30,49 @@
 		"pnpm": ">=7"
 	},
 	"peerDependencies": {
-		"svelte": "^3.54.0"
+		"svelte": "^3.54.0 || ^4.0.0"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.0.1",
-		"@sveltejs/kit": "^1.15.10",
-		"@sveltejs/package": "^2.0.2",
-		"@typescript-eslint/eslint-plugin": "^5.59.2",
-		"@typescript-eslint/parser": "^5.59.2",
-		"eslint": "^8.39.0",
+		"@sveltejs/adapter-auto": "^2.1.0",
+		"@sveltejs/kit": "^1.20.5",
+		"@sveltejs/package": "^2.1.0",
+		"@typescript-eslint/eslint-plugin": "^5.60.0",
+		"@typescript-eslint/parser": "^5.60.0",
+		"eslint": "^8.43.0",
 		"eslint-config-prettier": "^8.8.0",
-		"eslint-plugin-svelte": "^2.27.2",
+		"eslint-plugin-svelte": "^2.31.0",
 		"prettier": "^2.8.8",
-		"prettier-plugin-svelte": "^2.10.0",
-		"publint": "^0.1.11",
-		"svelte": "^3.58.0",
-		"svelte-check": "^3.2.0",
-		"tslib": "^2.5.0",
-		"typescript": "^5.0.4",
-		"vite": "^4.3.4"
+		"prettier-plugin-svelte": "^2.10.1",
+		"publint": "^0.1.12",
+		"svelte": "^4.0.0",
+		"svelte-check": "^3.4.4",
+		"tslib": "^2.5.3",
+		"typescript": "^5.1.3",
+		"vite": "^4.3.9"
 	},
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
-			"svelte": "./dist/index.js",
-			"default": "./dist/index.js"
+			"svelte": "./dist/index.js"
 		},
 		"./grid": {
 			"types": "./dist/grid/Grid.svelte.d.ts",
-			"svelte": "./dist/grid/Grid.svelte",
-			"default": "./dist/grid/Grid.svelte"
+			"svelte": "./dist/grid/Grid.svelte"
 		},
 		"./grid/Grid.svelte": {
 			"types": "./dist/grid/Grid.svelte.d.ts",
-			"svelte": "./dist/grid/Grid.svelte",
-			"default": "./dist/grid/Grid.svelte"
+			"svelte": "./dist/grid/Grid.svelte"
 		},
 		"./list": {
 			"types": "./dist/list/List.svelte.d.ts",
-			"svelte": "./dist/list/List.svelte",
-			"default": "./dist/list/List.svelte"
+			"svelte": "./dist/list/List.svelte"
 		},
 		"./list/List.svelte": {
 			"types": "./dist/list/List.svelte.d.ts",
-			"svelte": "./dist/list/List.svelte",
-			"default": "./dist/list/List.svelte"
+			"svelte": "./dist/list/List.svelte"
 		},
 		"./types": {
-			"types": "./dist/types.d.ts",
-			"default": "./dist/types.js"
+			"types": "./dist/types.d.ts"
 		}
 	},
 	"files": [
