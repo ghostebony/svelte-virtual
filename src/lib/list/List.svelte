@@ -211,7 +211,7 @@
 		{:else}
 			<div
 				style:position="absolute"
-				style:top="0"
+				style:top="0px"
 				style:left="{headerWidth + itemCount * itemSize + marginLeft}px"
 			>
 				<slot name="footer" />
