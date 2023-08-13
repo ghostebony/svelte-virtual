@@ -155,6 +155,7 @@
 	style:height={typeof height === "number" ? `${height}px` : height}
 	style:width
 	on:scroll={onScroll}
+	on:scroll
 	bind:this={list}
 	bind:offsetHeight
 	bind:clientHeight

@@ -155,6 +155,7 @@
 	style:height="{height}px"
 	style:width
 	on:scroll={onScroll}
+	on:scroll
 	bind:this={grid}
 	bind:offsetWidth
 	bind:clientWidth
