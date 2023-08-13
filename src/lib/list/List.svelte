@@ -102,11 +102,11 @@
 
 		if (!manualScroll) {
 			if (isVertical) {
-				_scrollPosition = Math.max(0, currentTarget["scrollTop"] - headerHeight);
-				scrollPosition = currentTarget["scrollTop"];
+				_scrollPosition = Math.max(0, event.currentTarget["scrollTop"] - headerHeight);
+				scrollPosition = event.currentTarget["scrollTop"];
 			} else {
-				_scrollPosition = Math.max(0, currentTarget["scrollLeft"] - headerWidth);
-				scrollPosition = currentTarget["scrollLeft"];
+				_scrollPosition = Math.max(0, event.currentTarget["scrollLeft"] - headerWidth);
+				scrollPosition = event.currentTarget["scrollLeft"];
 			}
 
 			scrollSpeed(_scrollPosition);

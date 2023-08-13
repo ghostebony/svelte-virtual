@@ -105,8 +105,8 @@
 		isScrolling = true;
 
 		if (!manualScroll) {
-			_scrollPosition = Math.max(0, currentTarget.scrollTop - headerHeight);
-			scrollPosition = currentTarget.scrollTop;
+			_scrollPosition = Math.max(0, event.currentTarget.scrollTop - headerHeight);
+			scrollPosition = event.currentTarget.scrollTop;
 
 			scrollSpeed(_scrollPosition);
 		}
