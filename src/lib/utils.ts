@@ -13,17 +13,17 @@ export function scrollSpeed(refresh = 200) {
 	let isScrollingFast: ReturnType<typeof setTimeout> | undefined;
 
 	return (
-			size: number,
+			speed: number,
 			callback: {
 				fast: () => void;
 				slow: () => void;
-			}
+			},
 		) =>
 		(scrollPosition: number) => {
 			if (!lastScrollPosition) {
 				lastScrollPosition = scrollPosition;
 			} else {
-				if (Math.abs(scrollPosition - lastScrollPosition) > size) {
+				if (Math.abs(scrollPosition - lastScrollPosition) > speed) {
 					callback.fast();
 
 					if (isScrollingFast !== undefined) {
@@ -59,7 +59,7 @@ export const getGridIndices = (
 	height: number,
 	columnCount: number,
 	overScanColumn: number,
-	scrollPosition: number
+	scrollPosition: number,
 ) => {
 	const indices: number[] = [];
 
@@ -71,7 +71,7 @@ export const getGridIndices = (
 
 	const endIndexTemp = Math.min(
 		itemCount,
-		round.ceil(((scrollPosition + height) / itemHeight) * columnCount, columnCount)
+		round.ceil(((scrollPosition + height) / itemHeight) * columnCount, columnCount),
 	);
 	const endIndexOverScan = endIndexTemp + overScanColumn;
 	const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
@@ -86,7 +86,7 @@ export const getListIndices = (
 	itemSize: number,
 	size: number,
 	overScan: number,
-	scrollPosition: number
+	scrollPosition: number,
 ) => {
 	const indices: number[] = [];
 
