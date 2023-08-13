@@ -52,17 +52,17 @@
 
 	export const scrollToIndex: ScrollToIndex = (
 		index: number,
-		behavior: ScrollBehavior = scrollBehavior
+		behavior: ScrollBehavior = scrollBehavior,
 	) => {
 		scrollTo(
 			index * itemSize + (isVertical ? marginTop + headerHeight : marginLeft + headerWidth),
-			behavior
+			behavior,
 		);
 	};
 
 	export const scrollToPosition: ScrollToPosition = (
 		position: number,
-		behavior: ScrollBehavior = scrollBehavior
+		behavior: ScrollBehavior = scrollBehavior,
 	) => {
 		scrollTo(position, behavior);
 	};

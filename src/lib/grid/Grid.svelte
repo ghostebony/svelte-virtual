@@ -51,17 +51,17 @@
 
 	export const scrollToIndex: ScrollToIndex = (
 		index: number,
-		behavior: ScrollBehavior = scrollBehavior
+		behavior: ScrollBehavior = scrollBehavior,
 	) => {
 		scrollTo(
 			getRowIndex(index, _columnCount) * itemHeight + marginTop + headerHeight,
-			behavior
+			behavior,
 		);
 	};
 
 	export const scrollToPosition: ScrollToPosition = (
 		position: number,
-		behavior: ScrollBehavior = scrollBehavior
+		behavior: ScrollBehavior = scrollBehavior,
 	) => {
 		scrollTo(position, behavior);
 	};
@@ -131,7 +131,7 @@
 			height,
 			_columnCount,
 			overScanColumn,
-			_scrollPosition
+			_scrollPosition,
 		);
 	}
 

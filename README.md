@@ -84,7 +84,7 @@ pnpm add -D svelte-virtual@next
 	let columnCount = 5;
 
 	let items = Array.from({ length: itemCount }, (_, l) =>
-		Array.from({ length: columnCount }, (_, c) => `${l}-${c}`)
+		Array.from({ length: columnCount }, (_, c) => `${l}-${c}`),
 	);
 </script>
 
