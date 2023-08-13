@@ -12,7 +12,13 @@
 </script>
 
 <script lang="ts">
-	import type { GetKey, ScrollBehavior, ScrollToIndex, ScrollToPosition } from "$lib/types";
+	import type {
+		GetKey,
+		ScrollBehavior,
+		ScrollEvent,
+		ScrollToIndex,
+		ScrollToPosition,
+	} from "$lib/types";
 
 	export let itemCount: number;
 	export let itemHeight: number;
@@ -95,7 +101,7 @@
 		};
 	};
 
-	const onScroll = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
+	const onScroll = (event: ScrollEvent) => {
 		isScrolling = true;
 
 		if (!manualScroll) {
