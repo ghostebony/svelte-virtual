@@ -13,4 +13,3 @@ package-lock.json
 yarn.lock
 
 /.github
-renovate.json
