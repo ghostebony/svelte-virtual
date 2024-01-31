@@ -124,10 +124,10 @@
 	$: itemSizeInternal = isVertical
 		? `height: ${itemSize}px; width: ${
 				marginLeft > 0 ? `${clientWidth - marginLeft}px` : "100%"
-		  };`
+			};`
 		: `height: ${
 				marginTop > 0 ? `${clientHeight - marginTop}px` : "100%"
-		  }; width: ${itemSize}px;`;
+			}; width: ${itemSize}px;`;
 
 	$: size = isVertical ? offsetHeight : offsetWidth;
 
