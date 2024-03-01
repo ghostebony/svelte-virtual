@@ -25,6 +25,8 @@
 	export let itemWidth: number;
 	export let height: number;
 	export let width = "100%";
+	export let spacing = 0;
+	export let center = false;
 
 	export let overScan = 1;
 
@@ -54,7 +56,7 @@
 		behavior: ScrollBehavior = scrollBehavior,
 	) => {
 		scrollTo(
-			getRowIndex(index, _columnCount) * itemHeight + marginTop + headerHeight,
+			getRowIndex(index, _columnCount) * (itemHeight + spacing) + marginTop + headerHeight,
 			behavior,
 		);
 	};
@@ -94,9 +96,9 @@
 			rowIndex,
 			columnIndex,
 			style: `position: absolute; transform: translate3d(${
-				columnIndex * itemWidth + marginLeft
+				columnIndex * itemWidth + marginLeft + spacing * columnIndex
 			}px, ${
-				rowIndex * itemHeight + marginTop
+				rowIndex * itemHeight + marginTop + spacing * rowIndex
 			}px, 0px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform;`,
 		};
 	};
@@ -117,10 +119,14 @@
 	};
 
 	$: _columnCount = !columnCount
-		? Math.max(~~((offsetWidth - marginLeft - (offsetWidth - clientWidth)) / itemWidth), 1)
+		? Math.max(Math.floor((offsetWidth - (spacing * (Math.floor(offsetWidth / itemWidth) - 1) + spacing)) / itemWidth), 1)
 		: columnCount;
 
-	$: innerHeight = (round.ceil(itemCount, _columnCount) * itemHeight) / _columnCount;
+	$: rowCount = Math.ceil(itemCount / _columnCount);
+	
+	$: usedWidth = (itemCount < _columnCount ? itemCount : _columnCount) * (spacing + itemWidth);
+
+	$: innerHeight = (round.ceil(itemCount, _columnCount) * (itemHeight + (rowCount > 1 ? spacing : 0))) / _columnCount;
 
 	$: overScanColumn = _columnCount * overScan;
 
@@ -128,6 +134,7 @@
 		indices = getGridIndices(
 			itemCount,
 			itemHeight,
+			spacing,
 			height,
 			_columnCount,
 			overScanColumn,
@@ -160,25 +167,30 @@
 	bind:offsetWidth
 	bind:clientWidth
 >
-	{#if $$slots.header}
-		<div bind:offsetHeight={headerHeight}>
-			<slot name="header" />
+	<div
+		style:width="{usedWidth}px"
+		style:margin={center ? "auto" : 0}
+	>
+		{#if $$slots.header}
+			<div bind:offsetHeight={headerHeight}>
+				<slot name="header" />
+			</div>
+		{/if}
+
+		<div style:height="{innerHeight}px" style:width="100%">
+			{#each indices as index (getKey(index))}
+				{@const { rowIndex, columnIndex, style } = getItemProps(index)}
+
+				{#if !isScrollingFast || !$$slots.placeholder}
+					<slot name="item" {index} {rowIndex} {columnIndex} {style}>Missing template</slot>
+				{:else}
+					<slot name="placeholder" {index} {rowIndex} {columnIndex} {style}>
+						Missing placeholder
+					</slot>
+				{/if}
+			{/each}
 		</div>
-	{/if}
 
-	<div style:height="{innerHeight}px" style:width="100%">
-		{#each indices as index (getKey(index))}
-			{@const { rowIndex, columnIndex, style } = getItemProps(index)}
-
-			{#if !isScrollingFast || !$$slots.placeholder}
-				<slot name="item" {index} {rowIndex} {columnIndex} {style}>Missing template</slot>
-			{:else}
-				<slot name="placeholder" {index} {rowIndex} {columnIndex} {style}>
-					Missing placeholder
-				</slot>
-			{/if}
-		{/each}
+		<slot name="footer" />
 	</div>
-
-	<slot name="footer" />
 </div>
