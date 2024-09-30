@@ -30,7 +30,7 @@ pnpm add -D svelte-virtual@next
 
 ```svelte
 <script>
-	import { List } from "svelte-virtual@next";
+	import { List } from "svelte-virtual";
 
 	let items = [...Array(100000).keys()];
 </script>
@@ -46,7 +46,7 @@ pnpm add -D svelte-virtual@next
 
 ```svelte
 <script>
-	import { List } from "svelte-virtual@next";
+	import { List } from "svelte-virtual";
 
 	let items = [...Array(100000).keys()];
 </script>
@@ -62,7 +62,7 @@ pnpm add -D svelte-virtual@next
 
 ```svelte
 <script>
-	import { Grid } from "svelte-virtual@next";
+	import { Grid } from "svelte-virtual";
 
 	let items = [...Array(100000).keys()];
 </script>
@@ -78,7 +78,7 @@ pnpm add -D svelte-virtual@next
 
 ```svelte
 <script>
-	import { Grid } from "svelte-virtual@next";
+	import { Grid } from "svelte-virtual";
 
 	let itemCount = 100000;
 	let columnCount = 5;
