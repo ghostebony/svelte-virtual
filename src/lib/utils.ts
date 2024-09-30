@@ -56,6 +56,7 @@ export const round = {
 export const getGridIndices = (
 	itemCount: number,
 	itemHeight: number,
+	spacing: number,
 	height: number,
 	columnCount: number,
 	overScanColumn: number,
@@ -63,7 +64,7 @@ export const getGridIndices = (
 ) => {
 	const indices: number[] = [];
 
-	const startIndexTemp = round.floor((scrollPosition / itemHeight) * columnCount, columnCount);
+	const startIndexTemp = round.floor((scrollPosition / (itemHeight + spacing)) * columnCount, columnCount);
 	const startIndexOverScan =
 		startIndexTemp > overScanColumn ? startIndexTemp - overScanColumn : 0;
 	const startIndex =
@@ -71,7 +72,7 @@ export const getGridIndices = (
 
 	const endIndexTemp = Math.min(
 		itemCount,
-		round.ceil(((scrollPosition + height) / itemHeight) * columnCount, columnCount),
+		round.ceil(((scrollPosition + height) / (itemHeight + spacing)) * columnCount, columnCount),
 	);
 	const endIndexOverScan = endIndexTemp + overScanColumn;
 	const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;

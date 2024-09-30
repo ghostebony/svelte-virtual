@@ -123,9 +123,11 @@ pnpm add -D svelte-virtual@next
 | itemWidth      | `number`                     |                            |     ✓     |
 | height         | `number`                     |                            |     ✓     |
 | width          | `string`                     | `"100%"`                   |           |
+| spacing        | `number`                     | `0`                        |           |
 | overScan       | `number`                     | `1`                        |           |
 | marginLeft     | `number`                     | `0`                        |           |
 | marginTop      | `number`                     | `0`                        |           |
+| center         | `boolean`                    | `false`                    |           |
 | scrollPosition | `number`                     | `0`                        |           |
 | scrollBehavior | `"auto" \| "smooth"`         | `"auto"`                   |           |
 | getKey         | `(index: number) => unknown` | `(index: number) => index` |           |
