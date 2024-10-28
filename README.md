@@ -36,9 +36,11 @@ pnpm add -D svelte-virtual@next
 </script>
 
 <List itemCount={items.length} itemSize={20} height={500}>
-	<div slot="item" let:index let:style {style}>
-		{items[index]}
-	</div>
+	{#snippet item({ index, style })}
+		<div {style}>
+			{items[index]}
+		</div>
+	{/snippet}
 </List>
 ```
 
@@ -52,9 +54,11 @@ pnpm add -D svelte-virtual@next
 </script>
 
 <List itemCount={items.length} itemSize={60} height={40} layout="horizontal">
-	<div slot="item" let:index let:style {style}>
-		{items[index]}
-	</div>
+	{#snippet item({ index, style })}
+		<div {style}>
+			{items[index]}
+		</div>
+	{/snippet}
 </List>
 ```
 
@@ -68,9 +72,11 @@ pnpm add -D svelte-virtual@next
 </script>
 
 <Grid itemCount={items.length} itemHeight={50} itemWidth={60} height={500}>
-	<div slot="item" let:index let:style {style}>
-		{items[index]}
-	</div>
+	{#snippet item({ index, style })}
+		<div {style}>
+			{items[index]}
+		</div>
+	{/snippet}
 </Grid>
 ```
 
@@ -89,9 +95,11 @@ pnpm add -D svelte-virtual@next
 </script>
 
 <Grid itemCount={itemCount * columnCount} itemHeight={50} itemWidth={65} height={500} {columnCount}>
-	<div slot="item" let:rowIndex let:columnIndex let:style {style}>
-		{items[rowIndex][columnIndex]}
-	</div>
+	{#snippet item({ rowIndex, columnIndex, style })}
+		<div {style}>
+			{items[rowIndex][columnIndex]}
+		</div>
+	{/snippet}
 </Grid>
 ```
 
@@ -104,7 +112,7 @@ pnpm add -D svelte-virtual@next
 | itemCount      | `number`                     |                            |     ✓     |
 | itemSize       | `number`                     |                            |     ✓     |
 | height         | `number \| string`           | `"100%"`                   |           |
-| width          | `string`                     | `"100%"`                   |           |
+| width          | `number \| string`           | `"100%"`                   |           |
 | stickyIndices  | `number[]`                   | `[]`                       |           |
 | overScan       | `number`                     | `1`                        |           |
 | marginLeft     | `number`                     | `0`                        |           |
@@ -177,26 +185,26 @@ pnpm add -D svelte-virtual@next
 	</tbody>
 </table>
 
-## Slots
+## Snippets
 
--   `item` - Slot for each item
+-   `item` - Snippet for each item
     -   Props:
         -   Shared:
             -   `index: number` - Item index
-            -   `style: string` - Item style, must be applied to the slot (look above for example)
+            -   `style: string` - Item style must be applied to the first child element of the snippet (look above for example)
         -   Only for `<Grid/>` ([demo](#grid-using-rows-and-columns-demo)):
             -   `rowIndex: number` - Item row index
             -   `columnIndex: number` - Item column index
--   `placeholder` (optional) - Slot for each item (when scrolling fast, replaces `item` slot. if not present, `item` slot is used)
+-   `placeholder` (optional) - Snippet for each item (when scrolling fast, replaces `item` snippet. if not present, `item` snippet is used)
     -   Props:
         -   Shared:
             -   `index: number` - Item index
-            -   `style: string` - Item style, must be applied to the slot (look above for example)
+            -   `style: string` - Item style must be applied to the first child element of the snippet (look above for example)
         -   Only for `<Grid/>` ([demo](#grid-using-rows-and-columns-demo)):
             -   `rowIndex: number` - Item row index
             -   `columnIndex: number` - Item column index
--   `header` (optional) - Slot for the elements that should appear at the top of the component
--   `footer` (optional) - Slot for the elements that should appear at the bottom of the component
+-   `header` (optional) - Snippet for the elements that should appear at the top of the component
+-   `footer` (optional) - Snippet for the elements that should appear at the bottom of the component
 
 ## License
 
