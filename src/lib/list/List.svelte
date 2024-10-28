@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script lang="ts" module>
 	import {
 		scrollSpeed as __scrollSpeed,
 		scrollStop as _scrollStop,
@@ -7,48 +7,85 @@
 
 	const scrollStop = _scrollStop();
 	const _scrollSpeed = __scrollSpeed();
+
+	export type Item = { index: number; style: string };
 </script>
 
 <script lang="ts">
 	import type {
 		GetKey,
+		OnScroll,
 		ScrollBehavior,
 		ScrollEvent,
 		ScrollToIndex,
 		ScrollToPosition,
 	} from "$lib/types";
+	import type { Snippet } from "svelte";
 
-	export let itemCount: number;
-	export let itemSize: number;
-	export let height: number | string = "100%";
-	export let width = "100%";
+	interface Props {
+		itemCount: number;
+		itemSize: number;
+		height?: number | string;
+		width?: number | string;
+		stickyIndices?: number[];
+		overScan?: number;
+		marginLeft?: number;
+		marginTop?: number;
+		layout?: "vertical" | "horizontal";
+		scrollPosition?: number;
+		scrollBehavior?: ScrollBehavior;
+		getKey?: GetKey;
+		onscroll?: OnScroll;
+		header?: Snippet;
+		item: Snippet<[Item]>;
+		placeholder?: Snippet<[Item]>;
+		footer?: Snippet;
+	}
 
-	export let stickyIndices: number[] = [];
+	let {
+		itemCount,
+		itemSize,
+		height = "100%",
+		width = "100%",
+		stickyIndices = [],
+		overScan = 1,
+		marginLeft = 0,
+		marginTop = 0,
+		layout = "vertical",
+		scrollPosition = $bindable(0),
+		scrollBehavior = "auto",
+		getKey = (index: number) => index,
+		onscroll,
+		header,
+		item,
+		placeholder,
+		footer,
+	}: Props = $props();
 
-	export let overScan = 1;
+	let list: HTMLElement | undefined = $state();
 
-	export let marginLeft = 0;
-	export let marginTop = 0;
-	export let layout: "vertical" | "horizontal" = "vertical";
+	let _scrollPosition = $state(scrollPosition);
 
-	export let scrollPosition = 0;
-	export let scrollBehavior: ScrollBehavior = "auto";
+	let headerHeight = $state(0);
 
-	export let getKey: GetKey = (index: number) => index;
+	let headerWidth = $state(0);
 
-	let list: HTMLElement;
-	let _scrollPosition = scrollPosition;
-	let headerHeight = 0;
-	let headerWidth = 0;
-	let offsetHeight = 0;
-	let clientHeight = 0;
-	let offsetWidth = 0;
-	let clientWidth = 0;
-	let indices: number[] = [];
+
+	let offsetHeight = $state(0);
+
+	let clientHeight = $state(0);
+
+	let offsetWidth = $state(0);
+
+	let clientWidth = $state(0);
+
+	let indices: number[] = $state([]);
 
 	let manualScroll = false;
+
 	let isScrolling = false;
-	let isScrollingFast = false;
+
+	let isScrollingFast = $state(false);
 
 	export const scrollToIndex: ScrollToIndex = (
 		index: number,
@@ -78,7 +115,7 @@
 	};
 
 	const scrollToManual = (scrollPosition: number) => {
-		if (!manualScroll && !isScrolling) {
+		if (list && !manualScroll && !isScrolling) {
 			manualScroll = true;
 
 			list.scrollTo({ top: scrollPosition, behavior: scrollBehavior });
@@ -117,59 +154,70 @@
 		});
 	};
 
-	$: isVertical = layout === "vertical";
+	let isVertical = $derived(layout === "vertical");
 
-	$: innerSize = itemCount * itemSize;
+	let innerSize = $derived(itemCount * itemSize);
 
-	$: itemSizeInternal = isVertical
-		? `height: ${itemSize}px; width: ${
-				marginLeft > 0 ? `${clientWidth - marginLeft}px` : "100%"
-			};`
-		: `height: ${
-				marginTop > 0 ? `${clientHeight - marginTop}px` : "100%"
-			}; width: ${itemSize}px;`;
+	let itemSizeInternal = $derived(
+		isVertical
+			? `height: ${itemSize}px; width: ${
+					marginLeft > 0 ? `${clientWidth - marginLeft}px` : "100%"
+				};`
+			: `height: ${
+					marginTop > 0 ? `${clientHeight - marginTop}px` : "100%"
+				}; width: ${itemSize}px;`,
+	);
 
-	$: size = isVertical ? offsetHeight : offsetWidth;
+	let size = $derived(isVertical ? offsetHeight : offsetWidth);
 
-	$: if (size) {
-		indices = getListIndices(itemCount, itemSize, size, overScan, _scrollPosition);
-	}
-
-	$: if (list) {
-		scrollToManual(scrollPosition);
-	}
-
-	$: scrollSpeed = _scrollSpeed(size, {
-		fast: () => {
-			isScrollingFast = true;
-		},
-		slow: () => {
-			isScrollingFast = false;
-		},
+	$effect(() => {
+		if (size) {
+			indices = getListIndices(itemCount, itemSize, size, overScan, _scrollPosition);
+		}
 	});
+
+	$effect(() => {
+		if (list) {
+			scrollToManual(scrollPosition);
+		}
+	});
+
+	let scrollSpeed = $derived(
+		_scrollSpeed(size, {
+			fast: () => {
+				isScrollingFast = true;
+			},
+			slow: () => {
+				isScrollingFast = false;
+			},
+		}),
+	);
 </script>
 
 <div
 	style:position="relative"
 	style:overflow="auto"
 	style:height={typeof height === "number" ? `${height}px` : height}
-	style:width
-	on:scroll={onScroll}
-	on:scroll
+	style:width={typeof width !== "number" ? width : `${width}px`}
+	onscroll={(e) => {
+		onScroll(e);
+
+		onscroll?.(e);
+	}}
 	bind:this={list}
 	bind:offsetHeight
 	bind:clientHeight
 	bind:offsetWidth
 	bind:clientWidth
 >
-	{#if $$slots.header}
+	{#if header}
 		{#if isVertical}
 			<div bind:offsetHeight={headerHeight}>
-				<slot name="header" />
+				{@render header()}
 			</div>
 		{:else}
 			<div bind:offsetWidth={headerWidth} style:position="absolute">
-				<slot name="header" />
+				{@render header()}
 			</div>
 		{/if}
 	{/if}
@@ -188,7 +236,7 @@
 					style:left={isVertical ? "0px" : `${marginLeft}px`}
 					style:z-index="1"
 				>
-					<slot name="item" index={stickyIndex}>Missing template</slot>
+					{@render item({ index: stickyIndex, style: "" })}
 				</div>
 			{/if}
 		{/if}
@@ -196,18 +244,18 @@
 		{#each indices as index (getKey(index))}
 			{@const style = getItemStyle(index)}
 
-			{#if !isScrollingFast || !$$slots.placeholder}
-				<slot name="item" {index} {style}>Missing template</slot>
+			{#if !isScrollingFast || !placeholder}
+				{@render item({ index, style })}
 			{:else}
-				<slot name="placeholder" {index} {style}>Missing placeholder</slot>
+				{@render placeholder({ index, style })}
 			{/if}
 		{/each}
 	</div>
 
-	{#if $$slots.footer}
+	{#if footer}
 		{#if isVertical}
 			<div>
-				<slot name="footer" />
+				{@render footer()}
 			</div>
 		{:else}
 			<div
@@ -215,7 +263,7 @@
 				style:top="0px"
 				style:left="{headerWidth + itemCount * itemSize + marginLeft}px"
 			>
-				<slot name="footer" />
+				{@render footer()}
 			</div>
 		{/if}
 	{/if}

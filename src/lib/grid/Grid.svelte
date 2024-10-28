@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script lang="ts" module>
 	import {
 		scrollSpeed as __scrollSpeed,
 		scrollStop as _scrollStop,
@@ -9,45 +9,80 @@
 
 	const scrollStop = _scrollStop();
 	const _scrollSpeed = __scrollSpeed();
+
+	export type Item = { index: number; rowIndex: number; columnIndex: number; style: string };
 </script>
 
 <script lang="ts">
 	import type {
 		GetKey,
+		OnScroll,
 		ScrollBehavior,
 		ScrollEvent,
 		ScrollToIndex,
 		ScrollToPosition,
 	} from "$lib/types";
+	import type { Snippet } from "svelte";
 
-	export let itemCount: number;
-	export let itemHeight: number;
-	export let itemWidth: number;
-	export let height: number;
-	export let width = "100%";
+	interface Props {
+		itemCount: number;
+		itemHeight: number;
+		itemWidth: number;
+		height: number;
+		width?: string;
+		overScan?: number;
+		marginLeft?: number;
+		marginTop?: number;
+		scrollPosition?: number;
+		scrollBehavior?: ScrollBehavior;
+		getKey?: GetKey;
+		columnCount?: number;
+		onscroll?: OnScroll;
+		header?: Snippet;
+		item: Snippet<[Item]>;
+		placeholder?: Snippet<[Item]>;
+		footer?: Snippet;
+	}
 
-	export let overScan = 1;
+	let {
+		itemCount,
+		itemHeight,
+		itemWidth,
+		height,
+		width = "100%",
+		overScan = 1,
+		marginLeft = 0,
+		marginTop = 0,
+		scrollPosition = $bindable(0),
+		scrollBehavior = "auto",
+		getKey = (index: number) => index,
+		columnCount,
+		onscroll,
+		header,
+		item,
+		placeholder,
+		footer,
+		...rest
+	}: Props = $props();
 
-	export let marginLeft = 0;
-	export let marginTop = 0;
+	let grid: HTMLElement | undefined = $state();
 
-	export let scrollPosition = 0;
-	export let scrollBehavior: ScrollBehavior = "auto";
+	let _scrollPosition = $state(scrollPosition);
 
-	export let getKey: GetKey = (index: number) => index;
+	let headerHeight = $state(0);
 
-	export let columnCount: number | undefined = undefined;
 
-	let grid: HTMLElement;
-	let _scrollPosition = scrollPosition;
-	let headerHeight = 0;
-	let offsetWidth = 0;
-	let clientWidth = 0;
-	let indices: number[] = [];
+	let offsetWidth = $state(0);
+
+	let clientWidth = $state(0);
+
+	let indices: number[] = $state([]);
 
 	let manualScroll = false;
+
 	let isScrolling = false;
-	let isScrollingFast = false;
+
+	let isScrollingFast = $state(false);
 
 	export const scrollToIndex: ScrollToIndex = (
 		index: number,
@@ -77,7 +112,7 @@
 	};
 
 	const scrollToManual = (scrollPosition: number) => {
-		if (!manualScroll && !isScrolling) {
+		if (grid && !manualScroll && !isScrolling) {
 			manualScroll = true;
 
 			grid.scrollTo({ top: scrollPosition, behavior: scrollBehavior });
@@ -116,37 +151,45 @@
 		});
 	};
 
-	$: _columnCount = !columnCount
-		? Math.max(~~((offsetWidth - marginLeft - (offsetWidth - clientWidth)) / itemWidth), 1)
-		: columnCount;
+	let _columnCount = $derived(
+		!columnCount
+			? Math.max(~~((offsetWidth - marginLeft - (offsetWidth - clientWidth)) / itemWidth), 1)
+			: columnCount,
+	);
 
-	$: innerHeight = (round.ceil(itemCount, _columnCount) * itemHeight) / _columnCount;
+	let innerHeight = $derived((round.ceil(itemCount, _columnCount) * itemHeight) / _columnCount);
 
-	$: overScanColumn = _columnCount * overScan;
+	let overScanColumn = $derived(_columnCount * overScan);
 
-	$: if (offsetWidth || _columnCount) {
-		indices = getGridIndices(
-			itemCount,
-			itemHeight,
-			height,
-			_columnCount,
-			overScanColumn,
-			_scrollPosition,
-		);
-	}
-
-	$: if (grid) {
-		scrollToManual(scrollPosition);
-	}
-
-	$: scrollSpeed = _scrollSpeed(height, {
-		fast: () => {
-			isScrollingFast = true;
-		},
-		slow: () => {
-			isScrollingFast = false;
-		},
+	$effect(() => {
+		if (offsetWidth || _columnCount) {
+			indices = getGridIndices(
+				itemCount,
+				itemHeight,
+				height,
+				_columnCount,
+				overScanColumn,
+				_scrollPosition,
+			);
+		}
 	});
+
+	$effect(() => {
+		if (grid) {
+			scrollToManual(scrollPosition);
+		}
+	});
+
+	let scrollSpeed = $derived(
+		_scrollSpeed(height, {
+			fast: () => {
+				isScrollingFast = true;
+			},
+			slow: () => {
+				isScrollingFast = false;
+			},
+		}),
+	);
 </script>
 
 <div
@@ -154,15 +197,19 @@
 	style:overflow="auto"
 	style:height="{height}px"
 	style:width
-	on:scroll={onScroll}
-	on:scroll
+	onscroll={(e) => {
+		onScroll(e);
+
+		onscroll?.(e);
+	}}
 	bind:this={grid}
 	bind:offsetWidth
 	bind:clientWidth
+	{...rest}
 >
-	{#if $$slots.header}
+	{#if header}
 		<div bind:offsetHeight={headerHeight}>
-			<slot name="header" />
+			{@render header()}
 		</div>
 	{/if}
 
@@ -170,15 +217,13 @@
 		{#each indices as index (getKey(index))}
 			{@const { rowIndex, columnIndex, style } = getItemProps(index)}
 
-			{#if !isScrollingFast || !$$slots.placeholder}
-				<slot name="item" {index} {rowIndex} {columnIndex} {style}>Missing template</slot>
+			{#if !isScrollingFast || !placeholder}
+				{@render item({ index, rowIndex, columnIndex, style })}
 			{:else}
-				<slot name="placeholder" {index} {rowIndex} {columnIndex} {style}>
-					Missing placeholder
-				</slot>
+				{@render placeholder({ index, rowIndex, columnIndex, style })}
 			{/if}
 		{/each}
 	</div>
 
-	<slot name="footer" />
+	{@render footer?.()}
 </div>

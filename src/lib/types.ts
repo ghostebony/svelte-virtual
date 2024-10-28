@@ -7,3 +7,5 @@ export declare type ScrollToIndex = (index: number, behavior?: ScrollBehavior) =
 export declare type ScrollToPosition = (position: number, behavior?: ScrollBehavior) => void;
 
 export declare type ScrollEvent = UIEvent & { currentTarget: EventTarget & HTMLDivElement };
+
+export declare type OnScroll = (event: ScrollEvent) => void;

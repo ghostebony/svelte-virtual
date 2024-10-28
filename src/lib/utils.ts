@@ -60,7 +60,7 @@ export const getGridIndices = (
 	columnCount: number,
 	overScanColumn: number,
 	scrollPosition: number,
-) => {
+): number[] => {
 	const indices: number[] = [];
 
 	const startIndexTemp = round.floor((scrollPosition / itemHeight) * columnCount, columnCount);
@@ -87,7 +87,7 @@ export const getListIndices = (
 	size: number,
 	overScan: number,
 	scrollPosition: number,
-) => {
+): number[] => {
 	const indices: number[] = [];
 
 	const startIndexTemp = ~~(scrollPosition / itemSize);
