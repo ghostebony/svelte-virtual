@@ -70,7 +70,6 @@
 
 	let headerWidth = $state(0);
 
-
 	let offsetHeight = $state(0);
 
 	let clientHeight = $state(0);
