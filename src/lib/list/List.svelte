@@ -26,15 +26,45 @@
 	interface Props {
 		itemCount: number;
 		itemSize: number;
+		/**
+		 * @default "100%"
+		 */
 		height?: number | string;
+		/**
+		 * @default "100%"
+		 */
 		width?: number | string;
 		stickyIndices?: number[];
+		/**
+		 * @default 1
+		 */
 		overScan?: number;
+		/**
+		 * @default 0
+		 */
 		marginLeft?: number;
+		/**
+		 * @default 0
+		 */
 		marginTop?: number;
+		/**
+		 * @default "vertical"
+		 */
 		layout?: "vertical" | "horizontal";
+		/**
+		 * @default 0
+		 */
 		scrollPosition?: number;
+		/**
+		 * @default "auto"
+		 */
 		scrollBehavior?: ScrollBehavior;
+		/**
+		 * @default
+		 * ```ts
+		 * (index: number) => index
+		 * ```
+		 */
 		getKey?: GetKey;
 		onscroll?: OnScroll;
 		header?: Snippet;
@@ -195,6 +225,27 @@
 	);
 </script>
 
+<!--
+@component
+
+- Usage:
+
+```svelte
+	<script>
+		import { List } from "svelte-virtual";
+
+		let items = [...];
+	</script>
+
+	<List itemCount={items.length} itemSize={20} height={500}>
+		{#snippet item({ index, style })}
+			<div {style}>
+				{items[index]}
+			</div>
+		{/snippet}
+	</List>
+```
+-->
 <div
 	style:position="relative"
 	style:overflow="auto"

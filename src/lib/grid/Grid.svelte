@@ -30,12 +30,36 @@
 		itemHeight: number;
 		itemWidth: number;
 		height: number;
+		/**
+		 * @default "100%"
+		 */
 		width?: string;
+		/**
+		 * @default 1
+		 */
 		overScan?: number;
+		/**
+		 * @default 0
+		 */
 		marginLeft?: number;
+		/**
+		 * @default 0
+		 */
 		marginTop?: number;
+		/**
+		 * @default 0
+		 */
 		scrollPosition?: number;
+		/**
+		 * @default "auto"
+		 */
 		scrollBehavior?: ScrollBehavior;
+		/**
+		 * @default
+		 * ```ts
+		 * (index: number) => index
+		 * ```
+		 */
 		getKey?: GetKey;
 		columnCount?: number;
 		onscroll?: OnScroll;
@@ -192,6 +216,27 @@
 	);
 </script>
 
+<!--
+@component
+
+- Usage:
+
+```svelte
+	<script>
+		import { Grid } from "svelte-virtual";
+
+		let items = [...];
+	</script>
+
+	<Grid itemCount={items.length} itemHeight={50} itemWidth={60} height={500}>
+		{#snippet item({ index, style })}
+			<div {style}>
+				{items[index]}
+			</div>
+		{/snippet}
+	</Grid>
+```
+-->
 <div
 	style:position="relative"
 	style:overflow="auto"
