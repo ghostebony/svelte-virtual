@@ -62,7 +62,7 @@
 		placeholder,
 		footer,
 		...rest
-	}: Props & SvelteHTMLElements["div"] = $props();
+	}: Props & Omit<SvelteHTMLElements["div"], "placeholder"> = $props();
 
 	let list: HTMLElement | undefined = $state();
 
