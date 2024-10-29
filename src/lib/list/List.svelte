@@ -21,6 +21,7 @@
 		ScrollToPosition,
 	} from "$lib/types";
 	import type { Snippet } from "svelte";
+	import type { SvelteHTMLElements } from "svelte/elements";
 
 	interface Props {
 		itemCount: number;
@@ -60,7 +61,8 @@
 		item,
 		placeholder,
 		footer,
-	}: Props = $props();
+		...rest
+	}: Props & SvelteHTMLElements["div"] = $props();
 
 	let list: HTMLElement | undefined = $state();
 
@@ -208,6 +210,7 @@
 	bind:clientHeight
 	bind:offsetWidth
 	bind:clientWidth
+	{...rest}
 >
 	{#if header}
 		{#if isVertical}

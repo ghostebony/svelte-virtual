@@ -23,6 +23,7 @@
 		ScrollToPosition,
 	} from "$lib/types";
 	import type { Snippet } from "svelte";
+	import type { SvelteHTMLElements } from "svelte/elements";
 
 	interface Props {
 		itemCount: number;
@@ -63,7 +64,7 @@
 		placeholder,
 		footer,
 		...rest
-	}: Props = $props();
+	}: Props & SvelteHTMLElements["div"] = $props();
 
 	let grid: HTMLElement | undefined = $state();
 
