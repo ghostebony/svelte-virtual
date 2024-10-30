@@ -12,14 +12,7 @@
 </script>
 
 <script lang="ts">
-	import type {
-		GetKey,
-		OnScroll,
-		ScrollBehavior,
-		ScrollEvent,
-		ScrollToIndex,
-		ScrollToPosition,
-	} from "$lib/types";
+	import type { GetKey, OnScroll, ScrollBehavior, ScrollEvent } from "$lib/types";
 	import type { Snippet } from "svelte";
 	import type { SvelteHTMLElements } from "svelte/elements";
 
@@ -118,22 +111,16 @@
 
 	let isScrollingFast = $state(false);
 
-	export const scrollToIndex: ScrollToIndex = (
-		index: number,
-		behavior: ScrollBehavior = scrollBehavior,
-	) => {
+	export function scrollToIndex(index: number, behavior: ScrollBehavior = scrollBehavior) {
 		scrollTo(
 			index * itemSize + (isVertical ? marginTop + headerHeight : marginLeft + headerWidth),
 			behavior,
 		);
-	};
+	}
 
-	export const scrollToPosition: ScrollToPosition = (
-		position: number,
-		behavior: ScrollBehavior = scrollBehavior,
-	) => {
+	export function scrollToPosition(position: number, behavior: ScrollBehavior = scrollBehavior) {
 		scrollTo(position, behavior);
-	};
+	}
 
 	const scrollTo = (direction: number, behavior: ScrollBehavior = scrollBehavior) => {
 		if (list) {
