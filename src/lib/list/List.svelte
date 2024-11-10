@@ -12,7 +12,13 @@
 </script>
 
 <script lang="ts">
-	import type { GetKey, OnScroll, ScrollBehavior, ScrollEvent } from "$lib/types";
+	import type {
+		GetKey,
+		OnScroll,
+		ScrollAlignment,
+		ScrollBehavior,
+		ScrollEvent,
+	} from "$lib/types";
 	import type { Snippet } from "svelte";
 	import type { SvelteHTMLElements } from "svelte/elements";
 
@@ -51,6 +57,10 @@
 		/**
 		 * @default "auto"
 		 */
+		scrollAlignment?: ScrollAlignment;
+		/**
+		 * @default "auto"
+		 */
 		scrollBehavior?: ScrollBehavior;
 		/**
 		 * @default
@@ -77,6 +87,7 @@
 		marginTop = 0,
 		layout = "vertical",
 		scrollPosition = $bindable(0),
+		scrollAlignment = "auto",
 		scrollBehavior = "auto",
 		getKey = (index: number) => index,
 		onscroll,
@@ -111,16 +122,44 @@
 
 	let isScrollingFast = $state(false);
 
-	export function scrollToIndex(index: number, behavior: ScrollBehavior = scrollBehavior) {
-		scrollTo(
-			index * itemSize + (isVertical ? marginTop + headerHeight : marginLeft + headerWidth),
-			behavior,
-		);
+	export function scrollToIndex(
+		index: number,
+		alignment: ScrollAlignment = scrollAlignment,
+		behavior: ScrollBehavior = scrollBehavior,
+	) {
+		scrollTo(getScrollToPosition(index, alignment), behavior);
 	}
 
 	export function scrollToPosition(position: number, behavior: ScrollBehavior = scrollBehavior) {
 		scrollTo(position, behavior);
 	}
+
+	const getScrollToPosition = (index: number, alignment: ScrollAlignment) => {
+		const extra = isVertical ? marginTop + headerHeight : marginLeft + headerWidth;
+
+		const maxOffset = index * itemSize + extra;
+
+		const minOffset = maxOffset - size + itemSize + extra;
+
+		let offset: number;
+
+		switch (alignment) {
+			case "start":
+				offset = maxOffset;
+				break;
+			case "center":
+				offset = maxOffset - (size - itemSize) / 2;
+				break;
+			case "end":
+				offset = minOffset;
+				break;
+			default:
+				offset = Math.max(minOffset, Math.min(maxOffset, scrollPosition));
+				break;
+		}
+
+		return Math.max(0, Math.min(innerSize - size, offset));
+	};
 
 	const scrollTo = (direction: number, behavior: ScrollBehavior = scrollBehavior) => {
 		if (list) {

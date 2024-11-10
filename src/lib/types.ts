@@ -1,3 +1,5 @@
+export declare type ScrollAlignment = "auto" | "start" | "center" | "end";
+
 export declare type ScrollBehavior = "auto" | "smooth";
 
 export declare type GetKey = (index: number) => unknown;
