@@ -107,20 +107,21 @@ pnpm add -D svelte-virtual@next
 
 ### List
 
-| Property       | Type                         | Default                    | Required? |
-| :------------- | :--------------------------- | :------------------------- | :-------: |
-| itemCount      | `number`                     |                            |     ✓     |
-| itemSize       | `number`                     |                            |     ✓     |
-| height         | `number \| string`           | `"100%"`                   |           |
-| width          | `number \| string`           | `"100%"`                   |           |
-| stickyIndices  | `number[]`                   | `[]`                       |           |
-| overScan       | `number`                     | `1`                        |           |
-| marginLeft     | `number`                     | `0`                        |           |
-| marginTop      | `number`                     | `0`                        |           |
-| layout         | `"vertical" \| "horizontal"` | `"vertical"`               |           |
-| scrollPosition | `number`                     | `0`                        |           |
-| scrollBehavior | `"auto" \| "smooth"`         | `"auto"`                   |           |
-| getKey         | `(index: number) => unknown` | `(index: number) => index` |           |
+| Property        | Type                                     | Default                    | Required? |
+| :-------------- | :--------------------------------------- | :------------------------- | :-------: |
+| itemCount       | `number`                                 |                            |     ✓     |
+| itemSize        | `number`                                 |                            |     ✓     |
+| height          | `number \| string`                       | `"100%"`                   |           |
+| width           | `number \| string`                       | `"100%"`                   |           |
+| stickyIndices   | `number[]`                               | `[]`                       |           |
+| overScan        | `number`                                 | `1`                        |           |
+| marginLeft      | `number`                                 | `0`                        |           |
+| marginTop       | `number`                                 | `0`                        |           |
+| layout          | `"vertical" \| "horizontal"`             | `"vertical"`               |           |
+| scrollPosition  | `number`                                 | `0`                        |           |
+| scrollAlignment | `"auto" \| "start" \| "center" \| "end"` | `"auto"`                   |           |
+| scrollBehavior  | `"auto" \| "smooth"`                     | `"auto"`                   |           |
+| getKey          | `(index: number) => unknown`             | `(index: number) => index` |           |
 
 ### Grid
 
@@ -153,13 +154,19 @@ pnpm add -D svelte-virtual@next
 	</thead>
 	<tbody>
 		<tr>
-			<td rowspan="3">scrollToIndex</td>
+			<td rowspan="4">scrollToIndex</td>
 		</tr>
 		<tr>
 			<td>index</td>
 			<td><code>number</code></td>
 			<td></td>
 			<td align="center">✓</td>
+		</tr>
+		<tr>
+			<td>alignment</td>
+			<td><code>"auto" | "start" | "center" | "end"</code></td>
+			<td><code>scrollAlignment</code></td>
+			<td align="center"></td>
 		</tr>
 		<tr>
 			<td>behavior</td>
