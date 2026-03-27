@@ -175,7 +175,10 @@
 		if (list && !manualScroll && !isScrolling) {
 			manualScroll = true;
 
-			list.scrollTo({ top: scrollPosition, behavior: scrollBehavior });
+			list.scrollTo({
+				[isVertical ? "top" : "left"]: scrollPosition,
+				behavior: scrollBehavior
+			});
 
 			manualScroll = false;
 		}
