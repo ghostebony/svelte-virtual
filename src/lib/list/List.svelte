@@ -4,6 +4,7 @@
 		scrollStop as _scrollStop,
 		getListIndices,
 	} from "$lib/utils";
+	import type { ClassValue } from 'svelte/elements';
 
 	const scrollStop = _scrollStop();
 	const _scrollSpeed = __scrollSpeed();
@@ -62,6 +63,7 @@
 		 * @default "auto"
 		 */
 		scrollBehavior?: ScrollBehavior;
+		class?: ClassValue;
 		/**
 		 * @default
 		 * ```ts
@@ -89,6 +91,7 @@
 		scrollPosition = $bindable(0),
 		scrollAlignment = "auto",
 		scrollBehavior = "auto",
+		class: classValue,
 		getKey = (index: number) => index,
 		onscroll,
 		header,

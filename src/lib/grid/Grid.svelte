@@ -6,6 +6,7 @@
 		getRowIndex,
 		round,
 	} from "$lib/utils";
+	import type { ClassValue } from 'svelte/elements';
 
 	const scrollStop = _scrollStop();
 	const _scrollSpeed = __scrollSpeed();
@@ -47,6 +48,7 @@
 		 * @default "auto"
 		 */
 		scrollBehavior?: ScrollBehavior;
+		class?: ClassValue;
 		/**
 		 * @default
 		 * ```ts
@@ -73,6 +75,7 @@
 		marginTop = 0,
 		scrollPosition = $bindable(0),
 		scrollBehavior = "auto",
+		class: classValue,
 		getKey = (index: number) => index,
 		columnCount,
 		onscroll,
