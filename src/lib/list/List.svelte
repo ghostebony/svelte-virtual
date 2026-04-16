@@ -276,10 +276,9 @@
 ```
 -->
 <div
-	style:position="relative"
-	style:overflow="auto"
 	style:height={typeof height === "number" ? `${height}px` : height}
 	style:width={typeof width !== "number" ? width : `${width}px`}
+	class={['virtual-list', layout, classValue]}
 	onscroll={(e) => {
 		onScroll(e);
 
@@ -294,11 +293,11 @@
 >
 	{#if header}
 		{#if isVertical}
-			<div bind:offsetHeight={headerHeight}>
+			<div class="header" bind:offsetHeight={headerHeight}>
 				{@render header()}
 			</div>
 		{:else}
-			<div bind:offsetWidth={headerWidth} style:position="absolute">
+			<div class="header" bind:offsetWidth={headerWidth}>
 				{@render header()}
 			</div>
 		{/if}
@@ -350,3 +349,21 @@
 		{/if}
 	{/if}
 </div>
+
+<style>
+	div.virtual-list {
+		position: relative;
+
+		&.vertical {
+			overflow: hidden auto;
+		}
+
+		&.horizontal {
+			overflow: auto hidden;
+
+			> div.header {
+				position: absolute;
+			}
+		}
+	}
+</style>

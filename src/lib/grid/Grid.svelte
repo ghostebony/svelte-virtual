@@ -225,8 +225,7 @@
 ```
 -->
 <div
-	style:position="relative"
-	style:overflow="auto"
+	class={['virtual-grid', classValue]}
 	style:height="{height}px"
 	style:width
 	onscroll={(e) => {
@@ -259,3 +258,10 @@
 
 	{@render footer?.()}
 </div>
+
+<style>
+	div.virtual-grid {
+		position: relative;
+		overflow: auto;
+	}
+</style>
