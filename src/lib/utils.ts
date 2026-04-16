@@ -63,18 +63,15 @@ export const getGridIndices = (
 ): number[] => {
 	const indices: number[] = [];
 
-	const startIndexTemp = round.floor((scrollPosition / itemHeight) * columnCount, columnCount);
-	const startIndexOverScan =
-		startIndexTemp > overScanColumn ? startIndexTemp - overScanColumn : 0;
-	const startIndex =
-		startIndexTemp > 0 && startIndexOverScan >= 0 ? startIndexOverScan : startIndexTemp;
-
-	const endIndexTemp = Math.min(
-		itemCount,
-		round.ceil(((scrollPosition + height) / itemHeight) * columnCount, columnCount),
+	const startIndex = Math.max(
+		0,
+		round.floor((scrollPosition / itemHeight) * columnCount, columnCount) - overScanColumn
 	);
-	const endIndexOverScan = endIndexTemp + overScanColumn;
-	const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
+
+	const endIndex = Math.min(
+		itemCount,
+		round.ceil(((scrollPosition + height) / itemHeight) * columnCount, columnCount) + overScanColumn
+	);
 
 	for (let i = startIndex; i < endIndex; i++) indices.push(i);
 
@@ -90,13 +87,9 @@ export const getListIndices = (
 ): number[] => {
 	const indices: number[] = [];
 
-	const startIndexTemp = ~~(scrollPosition / itemSize);
-	const startIndexOverScan = startIndexTemp > overScan ? startIndexTemp - overScan : 0;
-	const startIndex = startIndexOverScan >= 0 ? startIndexOverScan : startIndexTemp;
+	const startIndex = Math.max(0, ~~(scrollPosition / itemSize) - overScan);
 
-	const endIndexTemp = Math.min(itemCount, ~~((scrollPosition + size) / itemSize));
-	const endIndexOverScan = endIndexTemp + overScan;
-	const endIndex = endIndexOverScan < itemCount ? endIndexOverScan : itemCount;
+	const endIndex = Math.min(itemCount, ~~((scrollPosition + size) / itemSize) + overScan);
 
 	for (let i = startIndex; i < endIndex; i++) indices.push(i);
 
