@@ -1,7 +1,6 @@
 {
 	"name": "svelte-virtual",
 	"version": "1.0.0-next.22",
-	"type": "module",
 	"author": "Pedro Américo",
 	"license": "MIT",
 	"repository": "github:ghostebony/svelte-virtual",
@@ -54,6 +53,17 @@
 		"typescript-eslint": "^8.12.0",
 		"vite": "^5.4.10"
 	},
+	"files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"sideEffects": [
+		"**/*.css"
+	],
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"type": "module",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
@@ -79,11 +89,6 @@
 			"types": "./dist/types.d.ts"
 		}
 	},
-	"files": [
-		"dist"
-	],
-	"svelte": "./dist/index.js",
-	"types": "./dist/index.d.ts",
 	"typesVersions": {
 		">4.0": {
 			"grid": [
@@ -102,5 +107,9 @@
 				"./dist/types.d.ts"
 			]
 		}
+	},
+	"imports": {
+		"#lib": "./src/lib/index.js",
+		"#lib/*": "./src/lib/*"
 	}
 }
