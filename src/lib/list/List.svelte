@@ -2,8 +2,8 @@
 	import {
 		scrollSpeed as __scrollSpeed,
 		scrollStop as _scrollStop,
-		getListIndices,
-	} from "$lib/utils";
+		getListIndices
+	} from '$lib/utils';
 	import type { ClassValue } from 'svelte/elements';
 
 	const scrollStop = _scrollStop();
@@ -13,55 +13,31 @@
 </script>
 
 <script lang="ts">
-	import type {
-		GetKey,
-		OnScroll,
-		ScrollAlignment,
-		ScrollBehavior,
-		ScrollEvent,
-	} from "$lib/types";
-	import type { Snippet } from "svelte";
-	import type { SvelteHTMLElements } from "svelte/elements";
+	import type { GetKey, OnScroll, ScrollAlignment, ScrollBehavior, ScrollEvent } from '$lib/types';
+	import type { Snippet } from 'svelte';
+	import type { SvelteHTMLElements } from 'svelte/elements';
 
 	interface Props {
 		itemCount: number;
 		itemSize: number;
-		/**
-		 * @default "100%"
-		 */
+		/** @default '100%' */
 		height?: number | string;
-		/**
-		 * @default "100%"
-		 */
+		/** @default '100%' */
 		width?: number | string;
 		stickyIndices?: number[];
-		/**
-		 * @default 1
-		 */
+		/** @default 1 */
 		overScan?: number;
-		/**
-		 * @default 0
-		 */
+		/** @default 0 */
 		marginLeft?: number;
-		/**
-		 * @default 0
-		 */
+		/** @default 0 */
 		marginTop?: number;
-		/**
-		 * @default "vertical"
-		 */
-		layout?: "vertical" | "horizontal";
-		/**
-		 * @default 0
-		 */
+		/** @default 'vertical' */
+		layout?: 'vertical' | 'horizontal';
+		/** @default 0 */
 		scrollPosition?: number;
-		/**
-		 * @default "auto"
-		 */
+		/** @default 'auto' */
 		scrollAlignment?: ScrollAlignment;
-		/**
-		 * @default "auto"
-		 */
+		/** @default 'auto' */
 		scrollBehavior?: ScrollBehavior;
 		class?: ClassValue;
 		/**
@@ -81,16 +57,16 @@
 	let {
 		itemCount,
 		itemSize,
-		height = "100%",
-		width = "100%",
+		height = '100%',
+		width = '100%',
 		stickyIndices = [],
 		overScan = 1,
 		marginLeft = 0,
 		marginTop = 0,
-		layout = "vertical",
+		layout = 'vertical',
 		scrollPosition = $bindable(0),
-		scrollAlignment = "auto",
-		scrollBehavior = "auto",
+		scrollAlignment = 'auto',
+		scrollBehavior = 'auto',
 		class: classValue,
 		getKey = (index: number) => index,
 		onscroll,
@@ -99,7 +75,7 @@
 		placeholder,
 		footer,
 		...rest
-	}: Props & Omit<SvelteHTMLElements["div"], "placeholder"> = $props();
+	}: Props & Omit<SvelteHTMLElements['div'], 'placeholder'> = $props();
 
 	let list: HTMLElement | undefined = $state();
 
@@ -128,7 +104,7 @@
 	export function scrollToIndex(
 		index: number,
 		alignment: ScrollAlignment = scrollAlignment,
-		behavior: ScrollBehavior = scrollBehavior,
+		behavior: ScrollBehavior = scrollBehavior
 	) {
 		scrollTo(getScrollToPosition(index, alignment), behavior);
 	}
@@ -147,13 +123,13 @@
 		let offset: number;
 
 		switch (alignment) {
-			case "start":
+			case 'start':
 				offset = maxOffset;
 				break;
-			case "center":
+			case 'center':
 				offset = maxOffset - (size - itemSize) / 2;
 				break;
-			case "end":
+			case 'end':
 				offset = minOffset;
 				break;
 			default:
@@ -168,7 +144,7 @@
 		if (list) {
 			manualScroll = true;
 
-			list.scrollTo({ [isVertical ? "top" : "left"]: direction, behavior });
+			list.scrollTo({ [isVertical ? 'top' : 'left']: direction, behavior });
 
 			manualScroll = false;
 		}
@@ -179,7 +155,7 @@
 			manualScroll = true;
 
 			list.scrollTo({
-				[isVertical ? "top" : "left"]: scrollPosition,
+				[isVertical ? 'top' : 'left']: scrollPosition,
 				behavior: scrollBehavior
 			});
 
@@ -202,11 +178,11 @@
 
 		if (!manualScroll) {
 			if (isVertical) {
-				_scrollPosition = Math.max(0, event.currentTarget["scrollTop"] - headerHeight);
-				scrollPosition = event.currentTarget["scrollTop"];
+				_scrollPosition = Math.max(0, event.currentTarget['scrollTop'] - headerHeight);
+				scrollPosition = event.currentTarget['scrollTop'];
 			} else {
-				_scrollPosition = Math.max(0, event.currentTarget["scrollLeft"] - headerWidth);
-				scrollPosition = event.currentTarget["scrollLeft"];
+				_scrollPosition = Math.max(0, event.currentTarget['scrollLeft'] - headerWidth);
+				scrollPosition = event.currentTarget['scrollLeft'];
 			}
 
 			scrollSpeed(_scrollPosition);
@@ -217,18 +193,16 @@
 		});
 	};
 
-	let isVertical = $derived(layout === "vertical");
+	let isVertical = $derived(layout === 'vertical');
 
 	let innerSize = $derived(itemCount * itemSize);
 
 	let itemSizeInternal = $derived(
 		isVertical
 			? `height: ${itemSize}px; width: ${
-					marginLeft > 0 ? `${clientWidth - marginLeft}px` : "100%"
+					marginLeft > 0 ? `${clientWidth - marginLeft}px` : '100%'
 				};`
-			: `height: ${
-					marginTop > 0 ? `${clientHeight - marginTop}px` : "100%"
-				}; width: ${itemSize}px;`,
+			: `height: ${marginTop > 0 ? `${clientHeight - marginTop}px` : '100%'}; width: ${itemSize}px;`
 	);
 
 	let size = $derived(isVertical ? offsetHeight : offsetWidth);
@@ -252,8 +226,8 @@
 			},
 			slow: () => {
 				isScrollingFast = false;
-			},
-		}),
+			}
+		})
 	);
 </script>
 
@@ -279,8 +253,8 @@
 ```
 -->
 <div
-	style:height={typeof height === "number" ? `${height}px` : height}
-	style:width={typeof width !== "number" ? width : `${width}px`}
+	style:height={typeof height === 'number' ? `${height}px` : height}
+	style:width={typeof width !== 'number' ? width : `${width}px`}
 	class={['virtual-list', layout, classValue]}
 	onscroll={(e) => {
 		onScroll(e);
@@ -307,8 +281,8 @@
 	{/if}
 
 	<div
-		style:height={isVertical ? `${innerSize}px` : "100%"}
-		style:width={!isVertical ? `${innerSize}px` : "100%"}
+		style:height={isVertical ? `${innerSize}px` : '100%'}
+		style:width={!isVertical ? `${innerSize}px` : '100%'}
 	>
 		{#if stickyIndices.length && indices.length}
 			{@const stickyIndex = Math.max(...stickyIndices.filter((i) => i < indices[0]))}
@@ -316,11 +290,11 @@
 			{#if stickyIndex >= 0}
 				<div
 					style:position="sticky"
-					style:top={isVertical ? `${marginTop}px` : "0px"}
-					style:left={isVertical ? "0px" : `${marginLeft}px`}
+					style:top={isVertical ? `${marginTop}px` : '0px'}
+					style:left={isVertical ? '0px' : `${marginLeft}px`}
 					style:z-index="1"
 				>
-					{@render item({ index: stickyIndex, style: "" })}
+					{@render item({ index: stickyIndex, style: '' })}
 				</div>
 			{/if}
 		{/if}

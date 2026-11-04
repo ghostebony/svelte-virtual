@@ -1,12 +1,20 @@
-/** @type {import("prettier").Options} */
-export default {
+/** @type {import('prettier').Config} */
+const config = {
 	useTabs: true,
-	singleQuote: false,
+	singleQuote: true,
+	trailingComma: 'none',
 	printWidth: 100,
-	tabWidth: 4,
-	arrowParens: "always",
-	bracketSpacing: true,
-	bracketSameLine: false,
-	plugins: ["prettier-plugin-svelte"],
-	overrides: [{ files: "*.svelte", options: { parser: "svelte" } }],
+	plugins: ['prettier-plugin-jsdoc', 'prettier-plugin-svelte'],
+	overrides: [
+		{ files: '*.svelte', options: { parser: 'svelte' } },
+		{
+			files: ['README.md'],
+			options: {
+				useTabs: false,
+				tabWidth: 4
+			}
+		}
+	]
 };
+
+export default config;

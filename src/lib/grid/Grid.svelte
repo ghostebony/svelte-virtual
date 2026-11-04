@@ -4,8 +4,8 @@
 		scrollStop as _scrollStop,
 		getGridIndices,
 		getRowIndex,
-		round,
-	} from "$lib/utils";
+		round
+	} from '$lib/utils';
 	import type { ClassValue } from 'svelte/elements';
 
 	const scrollStop = _scrollStop();
@@ -15,38 +15,26 @@
 </script>
 
 <script lang="ts">
-	import type { GetKey, OnScroll, ScrollBehavior, ScrollEvent } from "$lib/types";
-	import type { Snippet } from "svelte";
-	import type { SvelteHTMLElements } from "svelte/elements";
+	import type { GetKey, OnScroll, ScrollBehavior, ScrollEvent } from '$lib/types';
+	import type { Snippet } from 'svelte';
+	import type { SvelteHTMLElements } from 'svelte/elements';
 
 	interface Props {
 		itemCount: number;
 		itemHeight: number;
 		itemWidth: number;
 		height: number;
-		/**
-		 * @default "100%"
-		 */
+		/** @default '100%' */
 		width?: string;
-		/**
-		 * @default 1
-		 */
+		/** @default 1 */
 		overScan?: number;
-		/**
-		 * @default 0
-		 */
+		/** @default 0 */
 		marginLeft?: number;
-		/**
-		 * @default 0
-		 */
+		/** @default 0 */
 		marginTop?: number;
-		/**
-		 * @default 0
-		 */
+		/** @default 0 */
 		scrollPosition?: number;
-		/**
-		 * @default "auto"
-		 */
+		/** @default 'auto' */
 		scrollBehavior?: ScrollBehavior;
 		class?: ClassValue;
 		/**
@@ -69,12 +57,12 @@
 		itemHeight,
 		itemWidth,
 		height,
-		width = "100%",
+		width = '100%',
 		overScan = 1,
 		marginLeft = 0,
 		marginTop = 0,
 		scrollPosition = $bindable(0),
-		scrollBehavior = "auto",
+		scrollBehavior = 'auto',
 		class: classValue,
 		getKey = (index: number) => index,
 		columnCount,
@@ -84,7 +72,7 @@
 		placeholder,
 		footer,
 		...rest
-	}: Props & Omit<SvelteHTMLElements["div"], "placeholder"> = $props();
+	}: Props & Omit<SvelteHTMLElements['div'], 'placeholder'> = $props();
 
 	let grid: HTMLElement | undefined = $state();
 
@@ -105,10 +93,7 @@
 	let isScrollingFast = $state(false);
 
 	export function scrollToIndex(index: number, behavior: ScrollBehavior = scrollBehavior) {
-		scrollTo(
-			getRowIndex(index, _columnCount) * itemHeight + marginTop + headerHeight,
-			behavior,
-		);
+		scrollTo(getRowIndex(index, _columnCount) * itemHeight + marginTop + headerHeight, behavior);
 	}
 
 	export function scrollToPosition(position: number, behavior: ScrollBehavior = scrollBehavior) {
@@ -146,7 +131,7 @@
 				columnIndex * itemWidth + marginLeft
 			}px, ${
 				rowIndex * itemHeight + marginTop
-			}px, 0px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform;`,
+			}px, 0px); height: ${itemHeight}px; width: ${itemWidth}px; will-change: transform;`
 		};
 	};
 
@@ -168,7 +153,7 @@
 	let _columnCount = $derived(
 		!columnCount
 			? Math.max(~~((offsetWidth - marginLeft - (offsetWidth - clientWidth)) / itemWidth), 1)
-			: columnCount,
+			: columnCount
 	);
 
 	let innerHeight = $derived((round.ceil(itemCount, _columnCount) * itemHeight) / _columnCount);
@@ -183,7 +168,7 @@
 				height,
 				_columnCount,
 				overScanColumn,
-				_scrollPosition,
+				_scrollPosition
 			);
 		}
 	});
@@ -201,8 +186,8 @@
 			},
 			slow: () => {
 				isScrollingFast = false;
-			},
-		}),
+			}
+		})
 	);
 </script>
 

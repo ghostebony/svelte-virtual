@@ -17,7 +17,7 @@ export function scrollSpeed(refresh = 200) {
 			callback: {
 				fast: () => void;
 				slow: () => void;
-			},
+			}
 		) =>
 		(scrollPosition: number) => {
 			if (!lastScrollPosition) {
@@ -50,7 +50,7 @@ export function scrollSpeed(refresh = 200) {
 
 export const round = {
 	ceil: (x: number, multiple: number) => Math.ceil(x / multiple) * multiple,
-	floor: (x: number, multiple: number) => ~~(x / multiple) * multiple,
+	floor: (x: number, multiple: number) => ~~(x / multiple) * multiple
 };
 
 export const getGridIndices = (
@@ -59,7 +59,7 @@ export const getGridIndices = (
 	height: number,
 	columnCount: number,
 	overScanColumn: number,
-	scrollPosition: number,
+	scrollPosition: number
 ): number[] => {
 	const indices: number[] = [];
 
@@ -83,7 +83,7 @@ export const getListIndices = (
 	itemSize: number,
 	size: number,
 	overScan: number,
-	scrollPosition: number,
+	scrollPosition: number
 ): number[] => {
 	const indices: number[] = [];
 
