@@ -5,7 +5,7 @@
 		getGridIndices,
 		getRowIndex,
 		round
-	} from '$lib/utils';
+	} from '#lib/utils.js';
 	import type { ClassValue } from 'svelte/elements';
 
 	const scrollStop = _scrollStop();
@@ -15,7 +15,7 @@
 </script>
 
 <script lang="ts">
-	import type { GetKey, OnScroll, ScrollBehavior, ScrollEvent } from '$lib/types';
+	import type { GetKey, OnScroll, ScrollBehavior, ScrollEvent } from '#lib/types.js';
 	import type { Snippet } from 'svelte';
 	import type { SvelteHTMLElements } from 'svelte/elements';
 

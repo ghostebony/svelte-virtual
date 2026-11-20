@@ -3,7 +3,7 @@
 		scrollSpeed as __scrollSpeed,
 		scrollStop as _scrollStop,
 		getListIndices
-	} from '$lib/utils';
+	} from '#lib/utils.js';
 	import type { ClassValue } from 'svelte/elements';
 
 	const scrollStop = _scrollStop();
@@ -13,7 +13,13 @@
 </script>
 
 <script lang="ts">
-	import type { GetKey, OnScroll, ScrollAlignment, ScrollBehavior, ScrollEvent } from '$lib/types';
+	import type {
+		GetKey,
+		OnScroll,
+		ScrollAlignment,
+		ScrollBehavior,
+		ScrollEvent
+	} from '#lib/types.js';
 	import type { Snippet } from 'svelte';
 	import type { SvelteHTMLElements } from 'svelte/elements';
 
