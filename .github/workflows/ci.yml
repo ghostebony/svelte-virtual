@@ -2,55 +2,60 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
-    tags-ignore:
-      - 'v*'
+    branches: [main]
+    tags-ignore: ['v*']
   pull_request:
 
+env:
+  NODE_VERSION: 26
+  PNPM_VERSION: 12
+
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v6
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v5
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: latest
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Lint code
-        run: pnpm lint
-
   check:
-    needs: lint
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v6
+      - &checkout
+        name: Checkout Repository
+        uses: actions/checkout@v7
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v5
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
+      - &setup_pnpm
+        name: Setup pnpm
+        uses: pnpm/action-setup@v6
         with:
-          node-version: latest
+          version: ${{ env.PNPM_VERSION }}
+
+      - &setup_node
+        name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
 
-      - name: Install dependencies
+      - &install
+        name: Install dependencies
         run: pnpm install --frozen-lockfile
-
-      - name: svelte-kit sync
-        run: pnpm svelte-kit sync
 
       - name: Check code
         run: pnpm check
+
+  lint:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - *checkout
+
+      - *setup_pnpm
+
+      - *setup_node
+
+      - *install
+
+      - name: Lint code
+        run: pnpm lint
