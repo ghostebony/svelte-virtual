@@ -1,0 +1,33 @@
+name: Setup
+
+inputs:
+  NODE_VERSION:
+    required: false
+    default: '26'
+
+  PNPM_VERSION:
+    required: false
+    default: '12'
+
+runs:
+  using: composite
+
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v7
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v6
+      with:
+        version: ${{ inputs.PNPM_VERSION }}
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v7
+      with:
+        node-version: ${{ inputs.NODE_VERSION }}
+        cache: pnpm
+        registry-url: https://registry.npmjs.org
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile
